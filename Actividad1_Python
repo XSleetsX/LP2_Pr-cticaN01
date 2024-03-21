@@ -1,0 +1,7 @@
+#Programa que pide un número y determina si es mayor o menor igual que 10
+x=int(input("Ingrese un número: "))
+if x>10:
+  print(x," es mayor que 10")
+else:
+  print(x," es menor o igual a 10")
+  
