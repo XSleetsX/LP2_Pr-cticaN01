@@ -1,0 +1,10 @@
+#Programa orientado a objetos sobre marcas de autos
+class Coche:
+    def __init__(self, modelo, anio):
+        self.modelo = modelo
+        self.anio = anio
+
+    def acelerar(self):
+        print(f"El coche {self.modelo} está acelerando.")
+coche1 = Coche("TOYOTA", 2024)
+coche1.acelerar()
