@@ -1,0 +1,24 @@
+//Programa orientado a objetos sobre marcas de autos
+#include <iostream>
+using namespace std;
+class Coche{
+  private:
+    string modelo;
+    int anio;
+  public:
+    void Coche(string modelo, int anio){
+      this->modelo = modelo;
+      this->anio = anio;
+    }
+    void acelerar(){
+      cout << "El coche " << modelo << " está acelerando." << endl; 
+    }
+};
+
+int main(){
+  Coche coche1;
+  coche1.modelo = "TOYOTA";
+  coche1.anio = 2024;
+  coche1.acelerar();
+  return 0;
+}
