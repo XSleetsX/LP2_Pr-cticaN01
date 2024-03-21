@@ -1,3 +1,4 @@
+//Programa que pide dos números y determina cual es mayor
 #include <iostream>
 using namespace std:
 int main() {
