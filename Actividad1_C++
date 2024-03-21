@@ -1,0 +1,16 @@
+//Programa que pide un número y determina si es mayor o menor igual que 10
+include <iostream>
+
+using namespace std;
+
+int main(){
+  int num;
+  cout << "Ingrese un número" << endl;
+  cin >> num;
+  if (x > 10){
+    cout << "x es mayor que 10" << endl;
+  } else{
+    cout << "x es menor o igual que 10" << endl;
+  }
+  return 0;
+}
