@@ -1,0 +1,49 @@
+#Include <iostream>
+using namespace std;
+class Persona{
+  private:
+    string nombre;
+    int edad;
+  public:
+    void Persona(string nombre, int edad){
+      this->nombre = nombre;
+      this->edad = edad;
+    }
+    void saludar(){
+      cout << "Hola, soy " << nombre << " y tengo " << edad << " años.";
+    }
+};
+class Estudiante : Persona{
+  private:
+    string carrera;
+  public:
+    void Estudiante{string nombre, int edad, string carrera){
+      this->carrera = carrera;
+    }
+
+
+};
+public class Persona {
+ private String nombre;
+ private int edad;
+
+ public Persona(String nombre, int edad) {
+ this.nombre = nombre;
+this.edad = edad;
+ }
+ public void saludar() {
+ System.out.println("Hola, soy " + nombre + " y tengo " + edad + " años.");
+ }
+}
+public class Estudiante extends Persona {
+ private String carrera;
+
+ public Estudiante(String nombre, int edad, String carrera) {
+ super(nombre, edad);
+ this.carrera = carrera;
+ }
+
+ public void estudiar() {
+ System.out.println(nombre + " está estudiando " + carrera + ".");
+ }
+}
