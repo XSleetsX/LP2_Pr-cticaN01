@@ -1,0 +1,23 @@
+class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def saludar(self):
+        print("Hola, soy", self.nombre, "y tengo", self.edad, "años.")
+
+class Estudiante(Persona):
+    def __init__(self, nombre, edad, carrera):
+        super().__init__(nombre, edad)
+        self.carrera = carrera
+
+    def estudiar(self):
+        print(self.nombre, "está estudiando", self.carrera + ".")
+
+# Ejemplo de uso
+persona1 = Persona("Juan", 30)
+persona1.saludar()
+
+estudiante1 = Estudiante("Maria", 25, "Ingeniería")
+estudiante1.saludar()
+estudiante1.estudiar()
