@@ -20,30 +20,16 @@ class Estudiante : Persona{
     void Estudiante{string nombre, int edad, string carrera){
       this->carrera = carrera;
     }
-
-
+    void estudiar(){
+      cout << nombre << " está estudianto " << carrera << endl;
+    }
 };
-public class Persona {
- private String nombre;
- private int edad;
 
- public Persona(String nombre, int edad) {
- this.nombre = nombre;
-this.edad = edad;
- }
- public void saludar() {
- System.out.println("Hola, soy " + nombre + " y tengo " + edad + " años.");
- }
-}
-public class Estudiante extends Persona {
- private String carrera;
-
- public Estudiante(String nombre, int edad, String carrera) {
- super(nombre, edad);
- this.carrera = carrera;
- }
-
- public void estudiar() {
- System.out.println(nombre + " está estudiando " + carrera + ".");
- }
+int maing(){
+  Persona per1;
+  per1.nombre = "Luis";
+  per1.edad = 22;
+  per1.carrera = "Ingenieria de sistemas";
+  per1.saludar();
+  peri1.estudiar();
 }
