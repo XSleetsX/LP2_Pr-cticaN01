@@ -1,0 +1,44 @@
+class Punto:
+    def __init__(self):
+        self.modelo = ""
+        self.color = ""
+        self.velocidad = 0
+
+    def setModelo(self, modelo):
+        self.modelo = modelo
+
+    def getModelo(self):
+        return self.modelo
+
+    def setColor(self, color):
+        self.color = color
+
+    def getColor(self):
+        return self.color
+
+    def setVelocidad(self):
+        self.velocidad = 0
+
+    def getVelocidad(self):
+        return self.velocidad
+
+    def acelerar(self):
+        self.velocidad += 10
+
+    def frenar(self):
+        self.velocidad -= 10
+
+# Función principal
+if __name__ == "__main__":
+    auto1 = Punto()
+    auto1.setModelo("Toyota")
+    print(auto1.getModelo())
+    auto1.setColor("Rojo")
+    print(auto1.getColor())
+    auto1.setVelocidad()
+    auto1.acelerar()
+    print(auto1.getVelocidad())
+    auto1.acelerar()
+    print(auto1.getVelocidad())
+    auto1.frenar()
+    print(auto1.getVelocidad())
