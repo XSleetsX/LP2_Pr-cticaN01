@@ -1,0 +1,21 @@
+#include <iostream>
+
+using namespace std;
+
+int suma(int a,int b){
+  return a + b;
+}
+int resta(int a,int b){
+  return a - b;
+}
+int operar(int a, int b,int (*fcnComparacion)(int, int)){
+  return fcnComparacion(a,b);
+}
+int main(){
+  int resultado;
+  resultado = operar(5, 3, suma);
+  cout << resultado << endl;
+  resultado = operar(5, 3, resta);
+  cout << resultado << endl;
+  return 0;
+}
