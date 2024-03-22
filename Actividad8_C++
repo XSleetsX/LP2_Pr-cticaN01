@@ -1,1 +1,50 @@
+#include <iostream>
 
+using namespace std;
+
+class Punto{
+    private:
+        string modelo;
+        string color;
+        int velocidad;
+    public:
+        void setModelo(string modelo){
+            this->modelo = modelo;
+        }
+        string getModelo(){
+            return this->modelo;
+        }
+        void setColor(string color){
+            this->color = color;
+        }
+        string getColor(){
+            return this->color;
+        }
+        void setVelocidad(){
+            this->velocidad = 0;
+        }
+        int getVelocidad(){
+            return this->velocidad;
+        }
+        void acelerar(){
+            velocidad += 10;
+        }
+        void frenar(){
+            velocidad -= 10;
+        }
+};
+
+int main(){
+    Punto auto1;
+    auto1.setModelo("Toyota");
+    cout << auto1.getModelo() << endl;
+    auto1.setColor("Rojo");
+    cout << auto1.getColor() << endl;
+    auto1.setVelocidad();
+    auto1.acelerar();
+    cout << auto1.getVelocidad() << endl;
+    auto1.acelerar();
+    cout << auto1.getVelocidad() << endl;
+    auto1.frenar();
+    cout << auto1.getVelocidad() << endl;
+}
