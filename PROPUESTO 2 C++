@@ -1,0 +1,81 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+class Producto {
+public:
+Producto(string nombre, int cantidad) :
+nombre_(nombre),
+cantidad_(cantidad) {}
+string obtenerNombre() {
+return nombre_;
+}
+int obtenerCantidad() {
+return cantidad_;
+}
+void disminuirCantidad(int cantidad) {
+if (cantidad_ >= cantidad) {
+cantidad_ -= cantidad;
+} else {
+cout << "Cantidad insuficiente para el producto: " <<
+nombre_ << "\n";
+
+}
+}
+private:
+string nombre_;
+int cantidad_;
+};
+class Inventario {
+public:
+void agregarProducto(string nombre, int cantidad) {
+Producto producto(nombre, cantidad);
+productos_.push_back(producto);
+}
+void venderProducto(string nombre, int cantidad) {
+bool encontrado = false;
+for (auto& producto : productos_) {
+if (producto.obtenerNombre() == nombre) {
+producto.disminuirCantidad(cantidad);
+if (producto.obtenerCantidad() == 0) {
+productosAgotados_.push_back(producto);
+productos_.erase(remove(productos_.begin(),
+productos_.end(), producto), productos_.end());
+}
+encontrado = true;
+break;
+}
+}
+if (!encontrado) {
+cout << "Producto no encontrado: " << nombre << "\n";
+}
+}
+void imprimirProductos() {
+cout << "Productos disponibles:\n";
+for (auto& producto : productos_) {
+cout << producto.obtenerNombre() << " (" <<
+producto.obtenerCantidad() << ")\n";
+}
+cout << "\nProductos agotados:\n";
+for (auto& producto : productosAgotados_) {
+cout << producto.obtenerNombre() << " (" <<
+producto.obtenerCantidad() << ")\n";
+}
+}
+
+private:
+vector<Producto> productos_;
+vector<Producto> productosAgotados_;
+};
+int main() {
+Inventario inventario;
+inventario.agregarProducto("Laptop", 10);
+inventario.agregarProducto("Monitor", 5);
+inventario.agregarProducto("Teclado", 20);
+inventario.imprimirProductos();
+inventario.venderProducto("Laptop", 5);
+inventario.venderProducto("Monitor", 10);
+inventario.imprimirProductos();
+return 0;
+}
