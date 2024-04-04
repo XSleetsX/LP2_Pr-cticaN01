@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+class Auto {
+public:
+Auto(int velocidad) : velocidad_(velocidad) {}
+int obtenerVelocidad() {
+return velocidad_;
+}
+private:
+int velocidad_;
+};
+class Carrera {
+public:
+Carrera(int distancia, int dificultadComputadora) :
+distancia_(distancia),
+dificultadComputadora_(dificultadComputadora) {}
+void simularCarrera(Auto& jugador, Auto& computadora) {
+int progresoJugador = 0;
+int progresoComputadora = 0;
+while (progresoJugador < distancia_ && progresoComputadora <
+distancia_) {
+progresoJugador += jugador.obtenerVelocidad();
+progresoComputadora += dificultadComputadora_;
+}
+if (progresoJugador >= distancia_ && progresoComputadora >=
+distancia_) {
+cout << "¡Es un empate!\n";
+} else if (progresoJugador >= distancia_) {
+cout << "¡El jugador gana!\n";
+} else {
+cout << "¡La computadora gana!\n";
+}
+}
+private:
+int distancia_;
+int dificultadComputadora_;
+};
+int main() {
+Auto jugador(100); // Velocidad del jugador es 100
+Auto computadora(70); // Velocidad de la computadora es 70
+Carrera carrera(500, 80); // Distancia de la carrera es 500,
+dificultad de la computadora es 80
+carrera.simularCarrera(jugador, computadora);
+return 0;
+}
