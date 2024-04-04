@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+class Avion {
+private:
+int combustible;
+public:
+Avion(int combustible) : combustible(combustible) {}
+bool tieneSuficienteCombustible(int combustibleRequerido) {
+return combustibleRequerido <= combustible;
+}
+void repostar(int cantidad) {
+combustible += cantidad;
+}
+};
+class Mision {
+private:
+string destino;
+int duracion;
+int tripulacionRequerida;
+int combustibleRequerido;
+
+public:
+Mision(string destino, int duracion, int tripulacionRequerida, int
+combustibleRequerido) : destino(destino), duracion(duracion),
+tripulacionRequerida(tripulacionRequerida),
+combustibleRequerido(combustibleRequerido) {}
+bool puedeCompletarse() {
+// Aquí puedes agregar cualquier lógica adicional si es necesario,
+como verificar si hay suficientes miembros de la tripulación
+return true;
+}
+void simular() {
+// Aquí puedes agregar la lógica para la simulación de la misión
+}
+int obtenerCombustibleRequerido() {
+return combustibleRequerido;
+}
+};
+int main() {
+Avion avion(10000);
+Mision mision("AREQUIPA", 5, 4, 5000);
+if
+(avion.tieneSuficienteCombustible(mision.obtenerCombustibleRequerido())) {
+cout << "La misión puede ser completada\n";
+mision.simular();
+} else {
+cout << "La misión no puede ser completada por falta de
+combustible\n";
+}
+return 0;
+}
