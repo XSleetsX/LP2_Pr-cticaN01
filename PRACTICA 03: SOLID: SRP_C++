@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+class Tarea {
+    private:
+        int id;
+        string nombre;
+        string descripcion;
+    public:
+        Tarea(int id, string nombre, string descripcion) : id(id), nombre(nombre), descripcion(descripcion) {}
+        int getId(){
+        }
+        string getNombre(){
+        }
+        string getDescripcion(){
+        }
+};
+class Asignacion {
+    private:
+        int idTarea;
+        int idUsuario;
+    public:
+        Asignacion(int idTarea, int idUsuario) : idTarea(idTarea), idUsuario(idUsuario) {}
+        int getIdTarea(){
+        }
+        int getIdUsuario(){
+        }
+};
+class FechaLimite {
+    private:
+        int idTarea;
+        string fecha;
+    public:
+        FechaLimite(int idTarea, string fecha) : idTarea(idTarea), fecha(fecha) {}
+        int getIdTarea(){
+        }
+        string getFecha(){
+        }
+        bool esFechaLimite() {
+        }
+};
+class ProgresoTarea{
+    private:
+        float progreso;
+        bool completada;
+    public:
+        ProgresoTarea(float progreso) : progreso(progreso), completada(false) {}
+        float setProgreso(){
+        }
+        float getProgreso(){
+        }
+        bool esCompletada(){
+        }
+        void completar(){
+        } 
+};
