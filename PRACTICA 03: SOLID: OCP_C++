@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Tarea {
+    private:
+        int id;
+        string nombre;
+        string descripcion;
+    public:
+        Tarea(int id, string nombre, string descripcion) : id(id), nombre(nombre), descripcion(descripcion) {}
+        virtual ~Tarea() {}
+        int getId() {
+            return id;
+        }
+        string getNombre() {
+            return nombre;
+        }
+        string getDescripcion() {
+            return descripcion;
+        }
+        virtual void realizar() = 0;
+    };
+class TareaSimple : public Tarea {
+    public:
+        TareaSimple(int id, string nombre, string descripcion) : Tarea(id, nombre, descripcion) {}
+        void realizar() override {
+            cout << "Realizando tarea simple: " << nombre << endl;
+        }
+};
+class TareaCompleja : public Tarea {
+    private:
+        int complejidad;
+    public:
+        TareaCompleja(int id, string nombre, string descripcion, int complejidad) : Tarea(id, nombre, descripcion), complejidad(complejidad) {}
+        void realizar() override {
+            cout << "Realizando tarea compleja: " << nombre << " (Complejidad: " << complejidad << ")" << endl;
+        }
+};
+int main() {
+    TareaSimple tarea1(1, "Lavar los servicios", "Realizar algo simple");
+    tarea1.realizar();
+
+    TareaCompleja tarea2(2, "Limpiar el patio", "Realizar algo complejo", 5);
+    tarea2.realizar();
+    return 0;
+}
