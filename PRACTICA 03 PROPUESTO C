@@ -1,0 +1,75 @@
+#include <iostream>  
+
+// Clase base: Figura geométrica  
+
+class Figura {  
+
+public:  
+
+    virtual double area() const = 0;  
+
+};  
+
+// Subclase: Rectángulo  
+
+class Rectangulo : public Figura {  
+
+protected:  
+
+    double ancho;  
+
+    double altura;  
+
+public:  
+
+    Rectangulo(double w, double h) : ancho(w), altura(h) {}  
+
+    double area() const override {  
+
+        return ancho * altura;  
+
+    }    
+
+};    
+
+// Subclase: Cuadrado    
+
+class Cuadrado : public Figura {    
+
+protected:    
+
+    double lado;    
+
+public:   
+
+    Cuadrado(double s) : lado(s) {}    
+
+    double area() const override {    
+
+        return lado * lado;    
+
+    }    
+
+};    
+
+// Función para calcular el área de cualquier figura    
+
+double calcularArea(const Figura& figura) {    
+
+    return figura.area();    
+
+}    
+
+int main() {    
+
+    Rectangulo rectangulo(3, 4);  
+
+    Cuadrado cuadrado(5);  
+
+    std::cout << "Área del rectángulo: " << calcularArea(rectangulo) << std::endl;    
+
+    std::cout << "Área del cuadrado: " << calcularArea(cuadrado) << std::endl;    
+
+    return 0;    
+
+} 
