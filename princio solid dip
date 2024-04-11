@@ -1,0 +1,155 @@
+using namespace std;  
+
+class Tarea {  
+
+    public:  
+
+        virtual ~Tarea() {}  
+
+        virtual int getId() const = 0;  
+
+        virtual string getNombre() const = 0;  
+
+        virtual string getDescripcion() const = 0;  
+
+};  
+
+class Usuario {  
+
+    public:  
+
+        virtual ~Usuario() {}  
+
+        virtual int getId() const = 0;  
+
+        virtual string getNombre() const = 0;  
+
+};  
+
+class Asignacion {  
+
+    public:  
+
+        virtual ~Asignacion() {}  
+
+        virtual const Tarea& getTareaAsignada() const = 0;  
+
+        virtual const Usuario& getUsuarioAsignado() const = 0;  
+
+};  
+
+class FechaLimite {  
+
+    public:  
+
+        virtual ~FechaLimite() {}  
+
+        virtual const Tarea& getIdTarea() const = 0;  
+
+        virtual string getFecha() const = 0;  
+
+};  
+
+class TareaBasica : public Tarea {  
+
+    private:  
+
+        int id;  
+
+        string nombre;  
+
+        string descripcion;  
+
+    public:  
+
+        TareaBasica(int id, const string& nombre, const string& descripcion) : id(id), nombre(nombre), descripcion(descripcion) {}  
+
+        int getId() const override { return id; }  
+
+        string getNombre() const override { return nombre; }  
+
+        string getDescripcion() const override { return descripcion; }  
+
+};  
+
+class UsuarioBasico : public Usuario {  
+
+    private:  
+
+        int id;  
+
+        string nombre;  
+
+    public:  
+
+        UsuarioBasico(int id, const string& nombre) : id(id), nombre(nombre) {}  
+
+        int getId() const override { return id; }  
+
+        string getNombre() const override { return nombre; }  
+
+};  
+
+class AsignacionBasica : public Asignacion {  
+
+    private:  
+
+        const Tarea& tarea;  
+
+        const Usuario& usuario;  
+
+    public:  
+
+        AsignacionBasica(const Tarea& tarea, const Usuario& usuario) : tarea(tarea), usuario(usuario) {}  
+
+        const Tarea& getTareaAsignada() const override { return tarea; }  
+
+        const Usuario& getUsuarioAsignado() const override { return usuario; }  
+
+};  
+
+class FechaLimiteSimple : public FechaLimite {  
+
+    private:  
+
+        const Tarea& tarea;  
+
+        string fecha;  
+
+        bool completada;  
+
+    public:  
+
+        FechaLimiteSimple(const Tarea& tarea, string fecha) : tarea(tarea), fecha(fecha) {}  
+
+        const Tarea& getIdTarea() const override { return tarea; }  
+
+        string getFecha() const override { return fecha; }  
+
+};  
+
+int main() {  
+
+    TareaBasica tarea1(1, "Hacer las compras", "Ir al supermercado y comprar alimentos");  
+
+    TareaBasica tarea2(2, "Estudiar para el examen", "Repasar el material de estudio y hacer ejercicios");  
+
+    UsuarioBasico usuario1(1, "Juan");  
+
+    UsuarioBasico usuario2(2, "María");  
+
+    AsignacionBasica asignacion1(tarea1, usuario1);  
+
+    AsignacionBasica asignacion2(tarea2, usuario2);  
+
+    FechaLimiteSimple fecha1(tarea1, "14-04-2024");  
+
+    FechaLimiteSimple fecha2(tarea2, "14-06-2024");  
+
+    cout << "Tarea asignada a " << asignacion1.getUsuarioAsignado().getNombre() << ": " << asignacion1.getTareaAsignada().getNombre() << endl;  
+
+    cout << "Tarea asignada a " << asignacion2.getUsuarioAsignado().getNombre() << ": " << asignacion2.getTareaAsignada().getNombre() << endl;  
+
+    return 0;  
+
+} 
