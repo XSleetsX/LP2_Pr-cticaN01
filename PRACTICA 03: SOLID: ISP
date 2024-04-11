@@ -1,0 +1,87 @@
+#include <iostream>  
+#include <string>  
+using namespace std;  
+class Asignacion {  
+    public:  
+        virtual ~Asignacion() {}  
+        virtual int getIdTarea() const = 0; 
+        virtual int getIdUsuario() const = 0;  
+};  
+class FechaLimite {  
+    public:  
+        virtual ~FechaLimite() {}  
+        virtual int getIdTarea() const = 0;  
+        virtual string getFecha() const = 0;  
+        virtual bool esFechaLimiteCumplida() const = 0;  
+};  
+class ProgresoTarea {  
+    public:  
+        virtual ~ProgresoTarea() {}  
+        virtual float getProgreso() const = 0;  
+        virtual bool esCompletada() const = 0;  
+        virtual void completar() = 0;  
+};  
+class Tarea {  
+    protected:  
+        int id;  
+        string nombre;  
+        string descripcion;  
+    public:  
+        Tarea(int id, string nombre, string descripcion) : id(id), nombre(nombre), descripcion(descripcion) {}  
+        virtual ~Tarea() {}  
+        int getId() const {  
+            return id;  
+        }  
+        string getNombre() const {  
+            return nombre;  
+        }  
+        string getDescripcion() const {  
+            return descripcion;  
+        }  
+        virtual void realizar() const = 0;  
+};    
+class TareaSimple : public Tarea, public Asignacion {  
+    public:  
+        TareaSimple(int id, string nombre, string descripcion) : Tarea(id, nombre, descripcion) {}  
+        void realizar() const override {  
+            cout << "Realizando tarea simple: " << nombre << endl;  
+        }  
+        int getIdTarea() const override {  
+            return getId();  
+        }  
+        int getIdUsuario() const override {  
+            return 0;  
+        }  
+};  
+class TareaCompleja : public Tarea, public Asignacion, public FechaLimite, public ProgresoTarea {  
+    private:  
+        int complejidad;  
+    public:  
+        TareaCompleja(int id, string nombre, string descripcion, int complejidad) : Tarea(id, nombre, descripcion), complejidad(complejidad) {}  
+        void realizar() const override {  
+            cout << "Realizando tarea compleja: " << nombre << " (Complejidad: " << complejidad << ")" << endl;  
+        }  
+        int getIdTarea() const override {  
+            return getId();  
+        }  
+        int getIdUsuario() const override {  
+            return 0;  
+        }   
+        string getFecha() const override {  
+            return "";   
+        }  
+        bool esFechaLimiteCumplida() const override {  
+            return true;  
+        } 
+        float getProgreso() const override {  
+            return 0.0;   
+        }  
+        bool esCompletada() const override {  
+            return false;   
+        }  
+        void completar() override {  
+        }  
+};  
+void realizarTarea(const Tarea& tarea) {  
+    tarea.realizar();
+} 
