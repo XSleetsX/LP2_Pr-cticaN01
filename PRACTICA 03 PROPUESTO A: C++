@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+using namespace std; 
+// Módulo de Proyectos
+class Project {
+private:
+    string name;
+    vector<string> tasks;
+public:
+    Project(const string& projectName) : name(projectName) {}
+    void addTask(const string& task) {
+        tasks.push_back(task);
+    }
+    void printTasks() const {
+        cout << "Tareas para el proyecto '" << name << "':" << endl;
+        for (const auto& task : tasks) {
+            cout << "- " << task << endl;
+        }
+    }
+};
+// Módulo de Comentarios
+class Comment {
+private:
+    string text;
+public:
+    Comment(const string& commentText) : text(commentText) {}
+ 
+    void printComment() const {
+        cout << "Comentario: " << text << endl;
+    }
+};
+// Módulo de Archivos
+class File {
+private:
+    string name;
+    string content; 
+public:
+    File(const string& fileName, const string& fileContent) : name(fileName), content(fileContent) {}
+ 
+    void printFile() const {
+        cout << "Archivo: " << name << endl;
+        cout << "Contenido: " << content << endl;
+    }
+};
+int main() {
+    // Crear un proyecto y agregar algunas tareas
+    Project project("Proyecto A");
+    project.addTask("Tarea 1");
+    project.addTask("Tarea 2");
+    project.printTasks();
+    // Crear un comentario
+    Comment comment("Este es un comentario.");
+    comment.printComment();
+    // Crear un archivo y mostrar su contenido
+    File file("ejemplo.txt", "Este es el contenido del archivo.");
+    file.printFile();
+    return 0;
+}
