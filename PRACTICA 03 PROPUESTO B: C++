@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+using namespace std; // Incluyendo el espacio de nombres std
+// Interfaz para el módulo de tareas
+class TaskInterface {
+public:
+    virtual void printTask() const = 0;
+};
+// Implementación base de tarea
+class Task : public TaskInterface {
+protected:
+    string description;
+public:
+    Task(const string& desc) : description(desc) {}
+
+    void printTask() const override {
+        cout << "Tarea: " << description << endl;
+    }
+};
+// Nuevo módulo: Proyectos
+class Project {
+private:
+    string name;
+    vector<TaskInterface*> tasks;
+
+public:
+    Project(const string& projectName) : name(projectName) {}
+
+    void addTask(TaskInterface* task) {
+        tasks.push_back(task);
+    }
+    void printTasks() const {
+        cout << "Tareas para el proyecto '" << name << "':" << endl;
+        for (const auto& task : tasks) {
+            task->printTask();
+        }
+    }
+};
+int main() {
+    // Crear un proyecto y agregar algunas tareas
+    Project project("Proyecto A");
+    project.addTask(new Task("Tarea 1"));
+    project.addTask(new Task("Tarea 2"));
+    project.printTasks();
+    return 0;
+}
