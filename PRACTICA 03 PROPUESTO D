@@ -1,0 +1,102 @@
+#include <iostream>  
+
+// Interfaz para módulo de proyectos  
+
+class ProjectModule {  
+
+public:  
+
+    virtual void crearProyecto() = 0;  
+
+    virtual void eliminarProyecto() = 0;  
+
+};  
+
+// Interfaz para módulo de comentarios  
+
+class CommentModule {  
+
+public:  
+
+    virtual void agregarComentario() = 0;  
+
+    virtual void eliminarComentario() = 0;  
+
+};  
+
+// Interfaz para módulo de archivos  
+
+class FileModule {  
+
+public:  
+
+    virtual void subirArchivo() = 0;  
+
+    virtual void bajarArchivo() = 0;  
+
+};  
+
+// Clase que implementa módulo de proyectos  
+
+class ProjectManager : public ProjectModule {  
+
+public:  
+
+    void crearProyecto() override {  
+
+        std::cout << "Creando proyecto..." << std::endl;  
+
+    }  
+
+    void eliminarProyecto() override {  
+
+        std::cout << "Eliminando proyecto..." << std::endl;  
+
+    }  
+
+};  
+
+// Clase que implementa módulo de comentarios  
+
+class CommentManager : public CommentModule {  
+
+public:  
+
+    void agregarComentario() override {  
+
+        std::cout << "Agregando comentario..." << std::endl;  
+
+    }  
+
+    void eliminarComentario() override {  
+
+        std::cout << "Eliminando comentario..." << std::endl;  
+
+    }  
+
+};  
+
+// Clase que implementa módulo de archivos  
+
+class FileManager : public FileModule {  
+
+public:  
+
+    void subirArchivo() override {  
+
+        std::cout << "Subiendo archivo..." << std::endl;  
+    }  
+    void bajarArchivo() override {  
+        std::cout << "Bajando archivo..." << std::endl;  
+    }  
+};  
+int main() {  
+    ProjectManager projectManager;  
+    CommentManager commentManager;  
+    FileManager fileManager;  
+    // Ejemplo de uso de los módulos  
+    projectManager.crearProyecto();  
+    commentManager.agregarComentario();  
+    fileManager.subirArchivo();  
+    return 0;  
+} 
