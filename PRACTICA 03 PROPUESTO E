@@ -1,0 +1,79 @@
+#include <iostream>  
+
+// Interfaz para la base de datos  
+
+class BaseDeDatos {  
+
+public:  
+
+    virtual void guardarDatos(const std::string& datos) = 0;  
+
+};  
+
+// Implementación concreta de la base de datos MySQL  
+
+class BaseDeDatosMySQL : public BaseDeDatos {  
+
+public:  
+
+    void guardarDatos(const std::string& datos) override {  
+
+        std::cout << "Guardando datos en la base de datos MySQL: " << datos << std::endl;  
+
+    }  
+
+};  
+
+// Implementación concreta de la base de datos PostgreSQL  
+
+class BaseDeDatosPostgreSQL : public BaseDeDatos {  
+
+public:  
+
+    void guardarDatos(const std::string& datos) override {  
+
+        std::cout << "Guardando datos en la base de datos PostgreSQL: " << datos << std::endl;  
+
+    }  
+
+};  
+
+// Clase de alto nivel que depende de la interfaz BaseDeDatos  
+
+class GestorDatos {  
+
+private:  
+
+    BaseDeDatos* baseDeDatos;  
+
+public:  
+
+    GestorDatos(BaseDeDatos* bd) : baseDeDatos(bd) {}  
+
+    void guardarDatos(const std::string& datos) {  
+
+        baseDeDatos->guardarDatos(datos);  
+
+    }  
+
+};  
+
+int main() {  
+
+    // Creación de objetos de bajo nivel  
+
+    BaseDeDatosMySQL baseMySQL;  
+
+    BaseDeDatosPostgreSQL basePostgreSQL;  
+
+    // Creación de objeto de alto nivel  
+
+    GestorDatos gestorDatos(&baseMySQL); // Se inyecta una dependencia de bajo nivel  
+
+    // Uso del objeto de alto nivel  
+
+    gestorDatos.guardarDatos("Datos de ejemplo");  
+
+    return 0;  
+
+} 
