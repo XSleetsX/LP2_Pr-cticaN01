@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+class Padre {
+    private:
+        string nombre;
+        Hijo* hijos[5];
+        int numHijos;
+    public:
+        Padre(string nombre) : nombre(nombre), numHijos(0) {}
+        void getNombre(){
+            cout << nombre;
+        }
+        void agregarHijo(Hijo* hijo){
+            if (numHijos < 5) {
+                hijos[numHijos] = hijo;
+                numHijos += 1;
+            }
+        }
+        void imprimirInfo(){
+            cout << "El padre es: " << nombre << endl;
+            cout << "Los hijos son: ";
+            for (int i = 0; i < numHijos; i ++) {
+                cout << hijos[i] << ", ";
+            }
+        }
+};
+class Hijo {
+    private:
+        string nombre;
+    public:
+        Hijo(string nombre) : nombre(nombre) {}
+        void getNombre(){
+            cout << nombre;
+        }
+};
+int main(){
+    Padre padre1("Goofy");
+    Hijo hijo1("Kevin");
+    Hijo hijo2("José");
+    Hijo hijo3("Jorge");
+    padre1.agregarHijo(&hijo1);
+    padre1.agregarHijo(&hijo2);
+    padre1.agregarHijo(&hijo3);
+    padre1.imprimirInfo();
+    return 0;
+}
