@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//Este es el programa de la guía, cambiar según lo que pide la actividad, cambiar a otro ejemplo
+class Estudiante {
+    private:
+        string nombre;
+        int edad;
+        int numCuenta;
+    public:
+        Estudiante(string nombre, int edad, int numCuenta) : nombre(nombre), edad(edad), numCuenta(numCuenta) {}
+        string getNombre() { return nombre; }
+        int getEdad() { return edad; }
+        int getNumCuenta() { return numCuenta; }
+};
+
+class Universidad {
+    private:
+        string nombre;
+        Estudiante* estudiantes[100];
+        int numEstudiantes;
+    public:
+        Universidad(string nombre) {
+        this->nombre = nombre;
+        numEstudiantes = 0;
+        }   
+        void agregarEstudiante(Estudiante* estudiante) {
+            if (numEstudiantes < 100) {
+                estudiantes[numEstudiantes++] = estudiante;
+            } else {
+                cout << "No se pueden agregar más estudiantes" << endl;
+            }
+        }
+        void imprimirEstudiantes() {
+            cout << "Lista de estudiantes de la universidad " << nombre << endl;
+            for (int i = 0; i < numEstudiantes; i++) {
+                cout << estudiantes[i]->getNombre() << " - " << estudiantes[i]->getNumCuenta() << endl;
+            }
+        }
+};
+int main() {
+    Estudiante* e1 = new Estudiante("Juan", 20, 123456);
+    Estudiante* e2 = new Estudiante("Maria", 19, 234567);
+    Estudiante* e3 = new Estudiante("Pedro", 21, 345678);
+
+    Universidad* u1 = new Universidad("Universidad Nacional");
+    u1->agregarEstudiante(e1);
+    u1->agregarEstudiante(e2);
+    u1->agregarEstudiante(e3);
+    u1->imprimirEstudiantes();
+
+    delete e1;
+    delete e2;
+    delete e3;
+    delete u1;
+    return 0;
+}
+ 
