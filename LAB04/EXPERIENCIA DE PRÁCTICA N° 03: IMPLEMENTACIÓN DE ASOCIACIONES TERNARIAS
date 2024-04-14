@@ -1,0 +1,59 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Estudiante {
+    private:
+        string nombre;
+        int edad;
+    public:
+        Estudiante(string nombre, int edad) : nombre(nombre), edad(edad) {}
+        string getNombre() const { return nombre; }
+        int getEdad() const { return edad; }
+};
+
+class Docente {
+    private:
+        string nombre;
+        string especialidad;
+    public:
+        Docente(string nombre, string especialidad) : nombre(nombre), especialidad(especialidad) {}
+        string getNombre() const { return nombre; }
+        string getEspecialidad() const { return especialidad; }
+};
+
+class Curso {
+    private:
+        string nombre;
+        string codigo;
+    public:
+        Curso(string nombre, string codigo) : nombre(nombre), codigo(codigo) {}
+        string getNombre() const { return nombre; }
+        string getCodigo() const { return codigo; }
+};
+
+class Asociacion {
+    private:
+        Estudiante* estudiante;
+        Docente* docente;
+        Curso* curso;
+    public:
+        Asociacion(Estudiante* estudiante, Docente* docente, Curso* curso) : estudiante(estudiante), docente(docente), curso(curso) {}
+        Estudiante* getEstudiante() const { return estudiante; }
+        Docente* getDocente() const { return docente; }
+        Curso* getCurso() const { return curso; }
+};
+
+int main() {
+    Estudiante estudiante("Juan", 20);
+    Docente docente("Maria", "Matemáticas");
+    Curso curso("Álgebra", "MAT101");
+
+    Asociacion asociacion(&estudiante, &docente, &curso);
+
+    cout << "Estudiante: " << asociacion.getEstudiante()->getNombre() << endl;
+    cout << "Docente: " << asociacion.getDocente()->getNombre() << endl;
+    cout << "Curso: " << asociacion.getCurso()->getNombre() << endl;
+    return 0;
+}
