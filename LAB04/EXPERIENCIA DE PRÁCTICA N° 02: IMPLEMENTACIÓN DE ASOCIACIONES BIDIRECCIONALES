@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Curso {
+    private:
+        string nombre;
+        int codigo;
+        string descripcion;
+        string fecha_inicio;
+        string fecha_fin;
+        vector<Estudiante> Estudiantes;
+    public:
+        Curso(string nombre, int codigo, string descripcion, string fecha_inicio, string fecha_fin) : nombre(nombre), codigo(codigo), descripcion(descripcion), fecha_inicio(fecha_inicio), fecha_fin(fecha_fin) {}
+        void agregarEstudiante(Estudiante& estudiante) {
+            Estudiantes.push_back(estudiante);
+        }
+        void eliminarEstudiante(Estudiante& estudiante) {
+            for(const auto& estudiante : Estudiantes) {
+                Estudiantes.erase(estudiante);
+            }
+        }
+};
+
+class Estudiante {
+    private:
+        string nombre;
+        string apellido;
+        int ident;
+        string email;
+        vector<Curso> Cursos;
+    public:
+        Estudiante(string nombre, string apellido, int ident, string email) : nombre(nombre), apellido(apellido), ident(ident), email(email) {}
+        void agregarCurso(Curso& curso) {
+            Cursos.push_back(curso);
+        }
+        void eliminarCurso(Curso& curso) {
+            for(const auto& curso : Cursos) {
+                Cursos.erase(curso);
+            }
+        }
+};
+
+int main(){
+    Curso cursoA("Matemática", 1, "Se enseñará a usar los números", "13-04-2024", "30-11-2024");
+    Curso cursoB("Comunicación", 2, "Se enseñará el uso del lenguaje", "13-04-2024", "30-11-2024");
+    Estudiante est1("Angel", "Ordoñez", 2001, "angelo@gmail.com");
+    Estudiante est2("Luis", "Arizaga", 2002, "luisa@gmail.com");
+    Estudiante est3("Cesar", "Usnayo", 2003, "cesaru@gmail.com");
+    Estudiante est4("Alvaro", "Montoya", 2004, "alvarom@gmail.com");
+    cursoA.eliminarEstudiante(est1);
+    cursoA.eliminarEstudiante(est4);
+    est1.eliminarCurso(cursoA);
+    est4.eliminarCurso(cursoA);
+    return 0;
+}
