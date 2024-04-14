@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Colmena {
+    private:
+        int max_abejas = 100;
+        vector<Abeja> abejas;
+        int numAbejas;
+    public:
+        Colmena() : numAbejas(0) {}
+        void agregarAbeja(Abeja* abeja) {
+            abejas.push_back(abeja);
+            numAbejas += 1;
+        }
+        void eliminarAbeja(Abeja* abeja) {
+            for (auto i = abejas.begin(); i != abejas.end(); i++) {
+                if (i == abeja) {
+                    abejas.erase(i);
+                    delete abeja;
+                    break;
+                }
+            }
+        }
+        void solicitarAbeja(Abeja* abeja) {
+            for (auto j = abejas.begin(); j != abejas.end(); j++) {
+                if (j == abeja) {
+                    cout << "Abeja: " << abeja->getId() << ", " << abeja->getTarea();
+                } else {
+                    cout << "No existe esa abeja";
+                }
+            }
+        }
+};
+
+class Abeja {
+    private:
+        string id;
+        string tarea;
+    public:
+        Abeja(string id, string tarea) : id(id), tarea(tarea) {}
+        string getId() { return id; }
+        string getTarea() { return tarea; }
+};
+
+int main(){
+    Colmena colmena;
+    Abeja abeja1("AB01","Recolectar polen");
+    Abeja abeja2("AB02","Proteger la colmena");
+    colmena.agregarAbeja(abeja1);
+    colmena.agregarAbeja(abeja2);
+    colmena.solicitarAbeja(abeja1);
+    colmena.eliminarAbeja(abeja2);
+    return 0;
+}
