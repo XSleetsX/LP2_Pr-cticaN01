@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+// Declaración de las clases
+class Estudiante {
+public:
+    string nombre;
+    string direccion;
+    string numero_matricula;
+    vector<string> asignaturas_matriculadas;
+    vector<float> notas;
+    vector<int> faltas_asistencia;
+    Estudiante(string n, string dir, string matricula) : nombre(n), direccion(dir), numero_matricula(matricula) {}
+};
+class Profesor {
+public:
+    string nombre;
+    string direccion;
+    string numero_telefono;
+    vector<string> asignaturas_impartidas;
+    Profesor(string n, string dir, string tel) : nombre(n), direccion(dir), numero_telefono(tel) {}
+};
+class Asignatura {
+public:
+    string codigo;
+    string nombre;
+    string descripcion;
+    Profesor* profesor_asociado;
+    Asignatura(string cod, string nom, string desc, Profesor* prof) : codigo(cod), nombre(nom), descripcion(desc), profesor_asociado(prof) {}
+};
+// Función principal
+int main() {
+    // Creación de estudiantes
+    Estudiante estudiante1("Ana", "Calle 246", "54321");
+    Estudiante estudiante2("Pedro", "Avenida 789", "09876");
+    // Creación de profesores
+    Profesor profesor1("Profesor C", "Calle 135", "555-2468");
+    Profesor profesor2("Profesor D", "Avenida 357", "555-7890");
+    // Creación de asignaturas
+    Asignatura asignatura1("101", "Ciencias", "Curso de ciencias naturales", &profesor1);
+    Asignatura asignatura2("102", "Literatura", "Curso de literatura universal", &profesor2);
+    // Registro de notas y faltas de asistencia
+    estudiante1.asignaturas_matriculadas.push_back(asignatura1.nombre);
+    estudiante1.notas.push_back(9.0);
+    estudiante1.faltas_asistencia.push_back(0);
+
+    estudiante2.asignaturas_matriculadas.push_back(asignatura2.nombre);
+    estudiante2.notas.push_back(8.5);
+    estudiante2.faltas_asistencia.push_back(1);
+    // Ejemplo de uso: obtener información de un estudiante y sus asignaturas matriculadas
+    cout << "Estudiante: " << estudiante1.nombre << endl;
+    cout << "Asignaturas matriculadas:" << endl;
+    for (const string& asignatura : estudiante1.asignaturas_matriculadas) {
+        cout << "- " << asignatura << endl;
+    }
+    return 0;
+}
