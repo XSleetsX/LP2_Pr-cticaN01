@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Declaración de las clases
+class Cliente {
+public:
+    string nombre;
+    string direccion;
+    string numero_telefono;
+    vector<string> compras_realizadas;
+
+    Cliente(string n, string dir, string tel) : nombre(n), direccion(dir), numero_telefono(tel) {}
+};
+
+class Producto {
+public:
+    string codigo;
+    string descripcion;
+    float precio;
+    string proveedor_asociado;
+
+    Producto(string cod, string desc, float prec, string prov) : codigo(cod), descripcion(desc), precio(prec), proveedor_asociado(prov) {}
+};
+
+class Venta {
+public:
+    int numero_factura;
+    string fecha;
+    Cliente* cliente_asociado;
+    vector<Producto*> productos_vendidos;
+
+    Venta(int num, string fec, Cliente* cliente) : numero_factura(num), fecha(fec), cliente_asociado(cliente) {}
+};
+
+class Pago {
+public:
+    Cliente* cliente_pago;
+    float monto;
+    string fecha_pago;
+
+    Pago(Cliente* cliente, float m, string fecha) : cliente_pago(cliente), monto(m), fecha_pago(fecha) {}
+};
+
+// Función principal
+int main() {
+    // Creación de clientes
+    Cliente cliente1("Eddy", "Calle 123", "555-1234");
+    Cliente cliente2("María", "Avenida 456", "555-5678");
+
+    // Creación de productos
+    Producto producto1("001", "Camisa", 29.99, "Proveedor A");
+    Producto producto2("002", "Pantalón", 39.99, "Proveedor B");
+
+    // Registro de ventas
+    Venta venta1(1001, "01/01/2024", &cliente1);
+    venta1.productos_vendidos.push_back(&producto1);
+    venta1.productos_vendidos.push_back(&producto2);
+
+    Pago pago1(&cliente1, 50.00, "05/01/2024");
+    Pago pago2(&cliente2, 100.00, "10/01/2024");
+    cout << "Número de factura: " << venta1.numero_factura << endl;
+    cout << "Cliente asociado: " << venta1.cliente_asociado->nombre << endl;
+
+    return 0;
+}
