@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Trabajador {
+    protected:
+        string nombre;
+        int id;
+        Trabajador** companeros;
+        int numCompaneros;
+        const static int MAX_COMPANEROS = 10;
+    public:
+        Trabajador(string nombre, int id) : nombre(nombre), id(id) {
+            companeros = new Trabajador*[MAX_COMPANEROS];
+            numCompaneros = 0;
+        }
+        ~Trabajador() {
+            delete[] companeros;
+        }
+        string getNombre() const {
+            return nombre;
+        }
+        int getId() const {
+            return id;
+        }
+        void agregarCompanero(Trabajador* companero) {
+            if (numCompaneros < MAX_COMPANEROS) {
+                companeros[numCompaneros] = companero;
+                numCompaneros++;
+            } else {
+                cout << "No se puede agregar más compañeros" << endl;
+            }
+        }
+        void mostrarCompaneros() const {
+            cout << "Compañeros de " << nombre << ":" << endl;
+            for (int i = 0; i < numCompaneros; ++i) {
+                cout << companeros[i]->getNombre() << endl;
+            }
+        }
+};
+
+class Gerente : public Trabajador {
+    private:
+        Trabajador** trabajadoresACargo;
+        int numTrabajadoresACargo;
+    public:
+        Gerente(string nombre, int id) : Trabajador(nombre, id) {
+            trabajadoresACargo = new Trabajador*[MAX_COMPANEROS];
+            numTrabajadoresACargo = 0;
+        }
+        ~Gerente() {
+            delete[] trabajadoresACargo;
+        }
+        void agregarTrabajadorACargo(Trabajador* trabajador) {
+            if (numTrabajadoresACargo < MAX_COMPANEROS) {
+                trabajadoresACargo[numTrabajadoresACargo] = trabajador;
+                numTrabajadoresACargo++;
+            } else {
+                cout << "No se puede agregar más trabajadores a cargo" << endl;
+            }
+        }
+        void mostrarTrabajadoresACargo() const {
+            cout << "Trabajadores a cargo de " << nombre << ":" << endl;
+            for (int i = 0; i < numTrabajadoresACargo; ++i) {
+                cout << trabajadoresACargo[i]->getNombre() << endl;
+            }
+        }
+};
+
+int main() {
+    Trabajador trabajador1("Juan", 1);
+    Trabajador trabajador2("Maria", 2);
+    Trabajador trabajador3("Pedro", 3);
+
+    Gerente gerente("Luis", 100);
+
+    trabajador1.agregarCompanero(&trabajador2);
+    trabajador1.agregarCompanero(&trabajador3);
+
+    gerente.agregarTrabajadorACargo(&trabajador1);
+    gerente.agregarTrabajadorACargo(&trabajador2);
+
+    trabajador1.mostrarCompaneros();
+    gerente.mostrarTrabajadoresACargo();
+    return 0;
+}
