@@ -1,0 +1,58 @@
+#include "cliente.h"
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+// Clase Banco
+class Banco {
+private:
+    Cliente cliente;
+    int numero;
+    double saldo;
+public:
+    Banco (Cliente &cliente, int numero, double saldo) : cliente(cliente), numero(numero), saldo(saldo) {}
+
+    int getNumero() { return numero; }
+    double getSaldo() { return saldo; }
+
+    friend ostream& operator << (ostream&, Banco&);
+};
+
+int main() {
+    // Ejemplo de uso del mapa de métodos
+    Tarjeta tarjeta(1234, "01/23", 123);
+    Cliente cliente(tarjeta, "Juan", 30);
+    Banco banco(cliente, 9876, 1000.0);
+
+    // Menú de opciones
+    int opcion;
+    do {
+        cout << "Menu de opciones:" << endl;
+        cout << "1. Obtener numero de tarjeta" << endl;
+        cout << "2. Obtener nombre de cliente" << endl;
+        cout << "3. Obtener numero de cuenta bancaria" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Ingrese opcion: ";
+        cin >> opcion;
+
+        switch(opcion) {
+            case 1:
+                cout << "Numero de tarjeta: " << tarjeta.getNumero() << endl;
+                break;
+            case 2:
+                cout << "Nombre de cliente: " << cliente.getNombre() << endl;
+                break;
+            case 3:
+                cout << "Numero de cuenta bancaria: " << banco.getNumero() << endl;
+                break;
+            case 0:
+                cout << "Saliendo del programa..." << endl;
+                break;
+            default:
+                cout << "Opción inválida. Intente de nuevo." << endl;
+        }
+    } while(opcion!= 0);
+
+    return 0;
+}
