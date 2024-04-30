@@ -1,0 +1,16 @@
+from tarjeta import Tarjeta
+
+class Cliente:
+    def __init__(self, tarjeta, nombre, edad):
+        self.tarjeta = tarjeta
+        self.nombre = nombre
+        self.edad = edad
+
+    def getNombre(self):
+        return self.nombre
+
+    def getEdad(self):
+        return self.edad
+
+    def __str__(self):
+        return f"Nombre: {self.nombre}, Edad: {self.edad}, Tarjeta: {self.tarjeta}"
