@@ -1,0 +1,44 @@
+from cliente import Cliente
+from tarjeta import Tarjeta
+
+# Banco class
+class Banco:
+    def __init__(self, cliente, numero, saldo):
+        self.cliente = cliente
+        self.numero = numero
+        self.saldo = saldo
+
+    def getNumero(self):
+        return self.numero
+
+    def getSaldo(self):
+        return self.saldo
+
+    def __str__(self):
+        return f"Numero de Cuenta: {self.numero}, Saldo: {self.saldo}, Cliente: {self.cliente}"
+
+# Ejemplo de uso del mapa de métodos
+tarjeta = Tarjeta(1234, "01/23", 123)
+cliente = Cliente(tarjeta, "Juan", 30)
+banco = Banco(cliente, 9876, 1000.0)
+
+# Menú de opciones
+while True:
+    print("Menu de opciones:")
+    print("1. Obtener numero de tarjeta")
+    print("2. Obtener nombre de cliente")
+    print("3. Obtener numero de cuenta bancaria")
+    print("0. Salir")
+    opcion = int(input("Ingrese opcion: "))
+
+    if opcion == 1:
+        print("Numero de tarjeta:", tarjeta.getNumero())
+    elif opcion == 2:
+        print("Nombre de cliente:", cliente.getNombre())
+    elif opcion == 3:
+        print("Numero de cuenta bancaria:", banco.getNumero())
+    elif opcion == 0:
+        print("Saliendo del programa...")
+        break
+    else:
+        print("Opción inválida. Intente de nuevo.")
