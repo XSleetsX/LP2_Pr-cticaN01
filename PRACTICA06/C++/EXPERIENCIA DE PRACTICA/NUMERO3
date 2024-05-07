@@ -1,1 +1,33 @@
+#include <iostream>
+using namespace std;
+
+class Banco{
+    private:
+        string nombre;
+        static double tasa_interes;
+    public:
+        Banco(string nombre, double tasa_interes) : nombre(nombre), tasa_interes(tasa_interes) {}
+        static double getTasaInteres(){
+            return tasa_interes;
+        }
+        string getNombre(){
+            return nombre;
+        }
+};
+
+class CuentaBancaria{
+    private:
+        double saldo;
+    public:
+        CuentaBancaria(double saldo) : saldo(saldo) {}
+        void depositar(double dinero){
+            saldo += dinero;
+        }
+        void retirar(double dinero){
+            saldo -= dinero;
+        }
+        double getSaldo(){
+            return saldo;
+        }
+};
 
