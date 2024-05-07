@@ -1,1 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+
+using namespace std;
+
+class Alumno {
+
+public:
+    Alumno(const char* nombre, double calif1, double calif2, double calif3) {
+        strcpy(nombre_, nombre);
+        califs_[0] = calif1;
+        califs_[1] = calif2;
+        califs_[2] = calif3;
+     }
+    double promedio() const {
+        return (califs_[0] + califs_[1] + califs_[2]) / 3;
+    }
+
+    const char* nombre() const {
+        return nombre_;
+    }
+
+private:
+    char nombre_[50];
+    double califs_[3];
+};
+
+int main() {
+    // Crear un vector de objetos de la clase Alumno y llenarlo con información
+    vector<Alumno> alumnos = {
+        Alumno("Eddy", 17, 12, 15),
+        Alumno("Diego", 16, 16, 13),
+        Alumno("Santiago", 15, 14, 16),
+        Alumno("Luis", 17, 15, 18)
+    };
+    // Ordenar el vector de objetos por promedio
+    sort(alumnos.begin(), alumnos.end(), [](const Alumno& a, const Alumno& b) {
+     return a.promedio() < b.promedio();
+    });
+
+    // Imprimir los alumnos con promedio mayor a 85
+    cout << "Alumnos con promedio mayor a 16:\n";
+    for (const Alumno& alumno : alumnos) {
+        if (alumno.promedio() > 16) {
+            cout << alumno.nombre() << " - Promedio: " << alumno.promedio() << "\n";
+        }
+    }
+
+    return 0;
+}
 
