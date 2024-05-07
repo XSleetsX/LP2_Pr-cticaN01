@@ -1,0 +1,61 @@
+#include <iostream>
+
+using namespace std;
+
+const int NUM_ALUMNOS = 4;
+const int CALIFS_SIZE = 3;
+const int NOMBRE_SIZE = 50;
+
+class Alumno {
+public:
+    Alumno(const char* nombre, double califs[CALIFS_SIZE]) {
+        strcpy(nombre_, nombre);
+        memcpy(califs_, califs, CALIFS_SIZE * sizeof(double));
+    }
+
+    double promedio() const {
+        double sum = 0;
+        for (int i = 0; i < CALIFS_SIZE; i++) {
+            sum += califs_[i];
+        }
+        return sum / CALIFS_SIZE;
+    }
+
+    const char* nombre() const {
+        return nombre_;
+    }
+
+private:
+    char nombre_[NOMBRE_SIZE];
+    double califs_[CALIFS_SIZE];
+};
+
+int main() {
+    Alumno alumnos[NUM_ALUMNOS] = {
+        Alumno("Eddy", (double[]) {17, 12, 15}),
+        Alumno("Diego", (double[]) {16, 16, 13}),
+        Alumno("Santiago", (double[]) {15, 14, 16}),
+        Alumno("Luis", (double[]) {17, 15, 18})
+    };
+
+    // Ordenar el arreglo de objetos por promedio
+    for (int i = 0; i < NUM_ALUMNOS - 1; i++) {
+        for (int j = 0; j < NUM_ALUMNOS - i - 1; j++) {
+            if (alumnos[j].promedio() > alumnos[j+1].promedio()) {
+                Alumno temp = alumnos[j];
+                alumnos[j] = alumnos[j+1];
+                alumnos[j+1] = temp;
+            }
+        }
+    }
+
+    // Mostrar los alumnos con promedio mayor a 85
+    cout << "Alumnos con promedio mayor a 16:\n";
+    for (int i = 0; i < NUM_ALUMNOS; i++) {
+        if (alumnos[i].promedio() > 16) {
+            cout << alumnos[i].nombre() << " - Promedio: " << alumnos[i].promedio() << "\n";
+        }
+    }
+
+    return 0;
+}
