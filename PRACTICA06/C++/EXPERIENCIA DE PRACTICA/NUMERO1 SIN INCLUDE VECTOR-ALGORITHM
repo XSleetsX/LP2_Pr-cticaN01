@@ -1,61 +1,56 @@
 #include <iostream>
-
+#include <cstring> // Incluimos para usar strncpy
 using namespace std;
-
-const int NUM_ALUMNOS = 4;
-const int CALIFS_SIZE = 3;
-const int NOMBRE_SIZE = 50;
-
 class Alumno {
 public:
-    Alumno(const char* nombre, double califs[CALIFS_SIZE]) {
-        strcpy(nombre_, nombre);
-        memcpy(califs_, califs, CALIFS_SIZE * sizeof(double));
-    }
-
-    double promedio() const {
-        double sum = 0;
-        for (int i = 0; i < CALIFS_SIZE; i++) {
-            sum += califs_[i];
-        }
-        return sum / CALIFS_SIZE;
-    }
-
-    const char* nombre() const {
-        return nombre_;
-    }
-
+    // Constructor de la clase Alumno
+    Alumno(const char* nombre, double calif1, double calif2, double calif3);
+    // Método para calcular el promedio
+    double promedio() const;
+    // Método para obtener el nombre
+    const char* nombre() const;
 private:
-    char nombre_[NOMBRE_SIZE];
-    double califs_[CALIFS_SIZE];
+    char nombre_[50]; // Miembro de datos para el nombre
+    double califs_[3]; // Miembro de datos para las calificaciones
 };
-
+// Implementación de la clase Alumno
+Alumno::Alumno(const char* nombre, double calif1, double calif2, double calif3) {
+    strncpy(nombre_, nombre, 50); // Usamos strncpy para prevenir desbordamiento de búfer
+    califs_[0] = calif1;
+    califs_[1] = calif2;
+    califs_[2] = calif3;
+}
+double Alumno::promedio() const {
+    return (califs_[0] + califs_[1] + califs_[2]) / 3;
+}
+const char* Alumno::nombre() const {
+    return nombre_;
+}
 int main() {
-    Alumno alumnos[NUM_ALUMNOS] = {
-        Alumno("Eddy", (double[]) {17, 12, 15}),
-        Alumno("Diego", (double[]) {16, 16, 13}),
-        Alumno("Santiago", (double[]) {15, 14, 16}),
-        Alumno("Luis", (double[]) {17, 15, 18})
+    // Crear un arreglo de objetos de la clase Alumno y llenarlo con información
+    Alumno alumnos[4] = {
+        Alumno("Eddy", 17, 12, 15),
+        Alumno("Diego", 16, 16, 13),
+        Alumno("Santiago", 15, 14, 16),
+        Alumno("Luis", 17, 15, 18)
     };
-
-    // Ordenar el arreglo de objetos por promedio
-    for (int i = 0; i < NUM_ALUMNOS - 1; i++) {
-        for (int j = 0; j < NUM_ALUMNOS - i - 1; j++) {
-            if (alumnos[j].promedio() > alumnos[j+1].promedio()) {
+    // Ordenar el arreglo alumnos utilizando un algoritmo de ordenamiento burbuja
+    for (size_t i = 0; i < 4; i++) {
+        for (size_t j = 0; j < 4 - i - 1; j++) {
+            if (alumnos[j].promedio() < alumnos[j + 1].promedio()) {
+                // Intercambiar objetos
                 Alumno temp = alumnos[j];
-                alumnos[j] = alumnos[j+1];
-                alumnos[j+1] = temp;
+                alumnos[j] = alumnos[j + 1];
+                alumnos[j + 1] = temp;
             }
         }
     }
-
-    // Mostrar los alumnos con promedio mayor a 85
+    // Imprimir los alumnos con promedio mayor a 16
     cout << "Alumnos con promedio mayor a 16:\n";
-    for (int i = 0; i < NUM_ALUMNOS; i++) {
+    for (size_t i = 0; i < 4; i++) {
         if (alumnos[i].promedio() > 16) {
             cout << alumnos[i].nombre() << " - Promedio: " << alumnos[i].promedio() << "\n";
         }
     }
-
     return 0;
 }
