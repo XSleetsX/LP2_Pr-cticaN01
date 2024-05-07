@@ -1,1 +1,64 @@
+class Alumno:
+    def _init_(self, nombre, edad, promedio):
+        self.nombre = nombre
+        self.edad = edad
+        self.promedio = promedio
 
+    def _str_(self):
+        return f"Nombre: {self.nombre}, Edad: {self.edad}, Promedio: {self.promedio}"
+
+    def _lt_(self, otro):
+        return self.promedio < otro.promedio
+
+class Grupo:
+    def _init_(self, cantidad):
+        self.alumnos = []
+        self.cantidad = cantidad
+
+    def _str_(self):
+        return "\n".join(str(alumno) for alumno in self.alumnos)
+
+    def agregar_alumno(self, nombre, edad, promedio):
+        if len(self.alumnos) < self.cantidad:
+            self.alumnos.append(Alumno(nombre, edad, promedio))
+        else:
+            print("No se pueden agregar más alumnos.")
+
+    def ordenar_por_promedio(self):
+        self.alumnos.sort()
+
+    def promedio_grupo(self):
+        if self.alumnos:
+            total = sum(alumno.promedio for alumno in self.alumnos)
+            return total / len(self.alumnos)
+        else:
+            return 0
+
+    def mejor_promedio(self):
+        if self.alumnos:
+            return max(self.alumnos, key=lambda x: x.promedio)
+        else:
+            return None
+
+
+if _name_ == "_main_":
+    grupo = Grupo(5)
+
+    grupo.agregar_alumno("Luis", 20, 18.5)
+    grupo.agregar_alumno("Eddy", 18, 17.8)
+    grupo.agregar_alumno("Santiago", 16, 15.4)
+    grupo.agregar_alumno("Diego", 17, 16.7)
+    grupo.agregar_alumno("Hector", 15, 13.8)
+
+    print("Lista de Alumnos:")
+    print(grupo)
+
+    promedio_grupo = grupo.promedio_grupo()
+    print("\nPromedio de los promedios del grupo:", promedio_grupo)
+
+    mejor_promedio_alumno = grupo.mejor_promedio()
+    if mejor_promedio_alumno:
+        print("\nAlumno con mejor promedio:")
+        print(mejor_promedio_alumno)
+    else:
+        print("\nNo hay alumnos en el grupo.")
