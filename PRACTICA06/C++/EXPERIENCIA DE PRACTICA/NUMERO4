@@ -1,26 +1,40 @@
-#include <iostream>
-using namespace std;
-
-class Vector2D{
-    public:
-        double x,y;
-        Vector2D(const double x, const double y){
-            this -> x = x;
-            this -> y = y;
-        }
-        double getX() { return x; }
-        double getY() { return y; }
-};
-
-Vector2D& operator + (const Vector2D& p1, const Vector2D& p2){
-    return *(new Vector2D(p1.x + p2.x,p1.y + p2.y));
-}
-
-int main(){
-    Vector2D vc1(70,100);
-    Vector2D vc2(80,200);
-    Vector2D vc3 = vc1 + vc2;
-    cout << "x = " << vc3.x << ", " << vc3.y << endl;
-    return 0;
-}
+#include <iostream>  
+using namespace std;   
+class Vector2D {  
+public: 
+    double x, y;  // Variables miembro para las coordenadas x e y 
+    // Constructor de la clase que inicializa las coordenadas x e y 
+    Vector2D(const double x, const double y) { 
+        this->x = x;  // Inicializa la coordenada x con el valor pasado como parámetro 
+        this->y = y;  // Inicializa la coordenada y con el valor pasado como parámetro 
+    } 
+    // Métodos para obtener las coordenadas x e y 
+    double getX() { return x; }  // Devuelve la coordenada x 
+    double getY() { return y; }  // Devuelve la coordenada y 
+}; 
+// Sobrecarga del operador de suma para vectores 
+Vector2D& operator+(const Vector2D& p1, const Vector2D& p2) { 
+    // Crea un nuevo objeto Vector2D con las coordenadas sumadas de los dos vectores 
+    return *(new Vector2D(p1.x + p2.x, p1.y + p2.y)); 
+} 
+// Sobrecarga del operador de resta para vectores 
+Vector2D& operator-(const Vector2D& p1, const Vector2D& p2) { 
+    // Crea un nuevo objeto Vector2D con las coordenadas restadas de los dos vectores 
+    return *(new Vector2D(p1.x - p2.x, p1.y - p2.y)); 
+} 
+int main() { 
+    // Crear dos objetos Vector2D con coordenadas específicas 
+    Vector2D vc1(70, 100);   
+    Vector2D vc2(80, 200);   
+    // Realizar la suma y la resta de los vectores 
+    Vector2D vc3 = vc1 + vc2;  
+    Vector2D vc4 = vc2 - vc1;  
+    // Mostrar el resultado de la suma de vectores 
+    cout << "Suma de vectores: " << endl;  
+    cout << "x = " << vc3.x << ", " << vc3.y << endl;  
+    // Mostrar el resultado de la resta de vectores 
+    cout << "Resta de vectores: " << endl;  
+    cout << "x = " << vc4.x << ", " << vc4.y << endl;  
+    return 0;  // Indica que el programa finalizó correctamente 
+} 
 
