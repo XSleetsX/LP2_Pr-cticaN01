@@ -91,3 +91,23 @@ int main() {
     }
     return 0;
 }
+
+
+
+
+
+// SIN USAR SWAP PARTE DE CODIGO:
+void ordenarPorPromedio() {
+    for (int i = 0; i < numAlumnos - 1; ++i) {
+        for (int j = 0; j < numAlumnos - i - 1; ++j) {
+            if (alumnos[j].promedio < alumnos[j + 1].promedio) {
+                // Guardamos el alumno actual en una variable temporal
+                Alumno temp = alumnos[j];
+                // Movemos el alumno siguiente al lugar del actual
+                alumnos[j] = alumnos[j + 1];
+                // Movemos el alumno guardado en la variable temporal al lugar del siguiente
+                alumnos[j + 1] = temp;
+            }
+        }
+    }
+}
