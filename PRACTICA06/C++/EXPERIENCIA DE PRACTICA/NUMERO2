@@ -1,29 +1,24 @@
-#include <iostream>
-#include <cmath>
- 
-using namespace std;
- 
-class Circulo {
-public:
-    Circulo(double r) : radio_(r) {}
- 
-    friend double area(const Circulo& c);
- 
-private:
-    double radio_;
-};
- 
-double area(const Circulo& c) {
-    return M_PI * c.radio_ * c.radio_;
-}
- 
-int main() {
-    Circulo c1(5);
-    Circulo c2(3);
-    cout << "El área del círculo 1 es: " << area(c1) << endl;
-    cout << "El área del círculo 2 es: " << area(c2) << endl;
- 
-    return 0;
-}
-
+#include <iostream> 
+#include <cmath> 
+using namespace std; 
+class Circulo { 
+public: 
+// Constructor de la clase Circulo 
+    Circulo(double r) : radio_(r) {} 
+// Declara función area() como amiga de la clase ‘Circulo’ 
+    friend double area(const Circulo& c); 
+private: 
+    double radio_;	// Miembro de datos para el radio 
+}; 
+// Función area() que toma un objeto ‘Circulo’ como argumento y calcula 
+double area(const Circulo& c) { 
+    return M_PI * c.radio_ * c.radio_; 
+} 
+int main() { 
+    Circulo c1(5); 
+    Circulo c2(3); 
+    cout << "El área del círculo 1 es: " << area(c1) << endl; 
+    cout << "El área del círculo 2 es: " << area(c2) << endl; 
+    return 0; 
+} 
 
