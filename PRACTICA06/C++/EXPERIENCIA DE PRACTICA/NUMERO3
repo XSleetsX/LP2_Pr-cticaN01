@@ -1,33 +1,46 @@
-#include <iostream>
-using namespace std;
-
-class Banco{
-    private:
-        string nombre;
-        static double tasa_interes;
-    public:
-        Banco(string nombre, double tasa_interes) : nombre(nombre), tasa_interes(tasa_interes) {}
-        static double getTasaInteres(){
-            return tasa_interes;
-        }
-        string getNombre(){
-            return nombre;
-        }
-};
-
-class CuentaBancaria{
-    private:
-        double saldo;
-    public:
-        CuentaBancaria(double saldo) : saldo(saldo) {}
-        void depositar(double dinero){
-            saldo += dinero;
-        }
-        void retirar(double dinero){
-            saldo -= dinero;
-        }
-        double getSaldo(){
-            return saldo;
-        }
-};
+#include <iostream>   
+using namespace std;   
+class Banco{   
+    public:   
+        string nombre; 
+        static double tasa_interes;  
+        Banco() {  
+            this -> nombre = "BCP";  
+        }  
+        string getNombre(){   
+            return nombre;   
+        }   
+};   
+class CuentaBancaria{  
+    public:   
+        double saldo;  
+        CuentaBancaria(double saldo) {  
+            this -> saldo = saldo;  
+        }   
+        void depositar(double dinero){   
+            saldo += dinero;   
+        }   
+        void retirar(double dinero){   
+            saldo -= dinero;   
+        }   
+        double getSaldo(){   
+            return saldo;   
+        }  
+};   
+double Banco::tasa_interes = 0.0333;  
+int main(){  
+    int anio;  
+    Banco bc1;  
+    CuentaBancaria usuario1(50000);  
+    CuentaBancaria usuario2(100000);  
+    for (anio = 1; anio < 6; anio++) {  
+        bc1.tasa_interes + 0.0333;  
+        cout << "Saldo usuario 1: " << usuario1.getSaldo() << endl;  
+        usuario1.depositar(usuario1.getSaldo() * bc1.tasa_interes);  
+        cout << "Nuevo saldo: " << usuario1.getSaldo() << endl;  
+        cout << "Saldo usuario 2: " << usuario2.getSaldo() << endl;  
+        usuario2.depositar(usuario2.getSaldo() * bc1.tasa_interes);  
+        cout << "Nuevo saldo: " << usuario2.getSaldo() << endl;  
+    }  
+    return 0;  
 
