@@ -1,0 +1,103 @@
+#include <iostream> 
+
+using namespace std; 
+
+ 
+
+class Persona{ 
+
+    protected: 
+
+        string email; 
+
+    public: 
+
+        string nombre; 
+
+        int edad; 
+
+        double salario; 
+
+        Persona(string n, int e, double s, string m){ 
+
+            this->nombre = n; 
+
+            this->edad = e; 
+
+            this->salario = s; 
+
+            this->email = m; 
+
+        } 
+
+}; 
+
+ 
+
+class Empleado : protected Persona{ 
+
+    public: 
+
+        Empleado(string n, int e, double s, string m) : Persona(n,e,s,m) {} 
+
+        void setEmail(string m){ 
+
+            this->email = m; 
+
+        } 
+
+        string getEmail(){ 
+
+            return email; 
+
+        } 
+
+}; 
+
+ 
+
+class Cliente : protected Persona{ 
+
+    public: 
+
+        Cliente(string n, int e, double s, string m) : Persona(n,e,s,m) {} 
+
+        void setEmail(string m){ 
+
+            this->email = m; 
+
+        } 
+
+        string getEmail(){ 
+
+            return email; 
+
+        } 
+
+}; 
+
+ 
+
+int main(){ 
+
+    Empleado em1("Luis",22,5000,"lucho110901@gmail.com"); 
+
+    Cliente c1("Luis",22,5000,"lucho110901@gmail.com"); 
+
+    //Mostrando el correo del objeto em1 modificado 
+
+    cout << "Email del empleado: "; 
+
+    em1.setEmail("oscarGOD@gmail.com"); 
+
+    cout << em1.getEmail() << endl; 
+
+    //Mostrando el correo del objeto c1 sin modificar 
+
+    cout << "Email del cliente: "; 
+
+    cout << c1.getEmail() << endl; 
+
+    return 0; 
+
+} 
