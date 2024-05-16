@@ -1,0 +1,131 @@
+#include <iostream> 
+
+#include <string> 
+
+using namespace std; 
+
+// Definición de la clase base Vehículo 
+
+class Vehiculo { 
+
+protected: // Utilizamos protected en lugar de private para que las clases derivadas puedan acceder a estos atributos 
+
+    string marca; 
+
+    string modelo; 
+
+    int anioFabricacion; 
+
+    float precio; 
+
+public: 
+
+    // Constructor de la clase Vehículo 
+
+    Vehiculo(string _marca, string _modelo, int _anioFabricacion, float _precio)  
+
+        : marca(_marca), modelo(_modelo), anioFabricacion(_anioFabricacion), precio(_precio) {} 
+
+    // Método para imprimir los detalles del vehículo 
+
+    void mostrarDetalles() { 
+
+        cout << "Marca: " << marca << endl; 
+
+        cout << "Modelo: " << modelo << endl; 
+
+        cout << "Anio de fabricacion: " << anioFabricacion << endl; 
+
+        cout << "Precio: $" << precio << endl; 
+
+    } 
+
+}; 
+
+// Definición de la clase derivada Automovil 
+
+class Automovil : public Vehiculo { 
+
+private: 
+
+    int numPuertas; 
+
+    string tipoCombustible; 
+
+public: 
+
+    // Constructor de la clase Automovil 
+
+    Automovil(string _marca, string _modelo, int _anioFabricacion, float _precio, int _numPuertas, string _tipoCombustible)  
+
+        : Vehiculo(_marca, _modelo, _anioFabricacion, _precio), numPuertas(_numPuertas), tipoCombustible(_tipoCombustible) {} 
+
+ 
+
+    // Método para imprimir los detalles del automóvil, incluyendo los atributos específicos 
+
+    void mostrarDetalles() { 
+
+        Vehiculo::mostrarDetalles(); // Llama al método de la clase base para mostrar los detalles generales 
+
+        cout << "Numero de puertas: " << numPuertas << endl; 
+
+        cout << "Tipo de combustible: " << tipoCombustible << endl; 
+
+    } 
+
+}; 
+
+// Definición de la clase derivada Motocicleta 
+
+class Motocicleta : public Vehiculo { 
+
+private: 
+
+    int cilindrada; 
+
+public: 
+
+    // Constructor de la clase Motocicleta 
+
+    Motocicleta(string _marca, string _modelo, int _anioFabricacion, float _precio, int _cilindrada)  
+
+        : Vehiculo(_marca, _modelo, _anioFabricacion, _precio), cilindrada(_cilindrada) {} 
+
+ 
+
+    // Método para imprimir los detalles de la motocicleta, incluyendo los atributos específicos 
+
+    void mostrarDetalles() { 
+
+        Vehiculo::mostrarDetalles(); // Llama al método de la clase base para mostrar los detalles generales 
+
+        cout << "Cilindrada: " << cilindrada << "cc" << endl; 
+
+    } 
+
+}; 
+
+int main() { 
+
+    // Crear un objeto de la clase Automovil y mostrar sus detalles 
+
+    Automovil auto1("Toyota", "Corolla", 2020, 50000.0, 4, "Gasolina"); 
+
+    cout << "Detalles del automovil:" << endl; 
+
+    auto1.mostrarDetalles(); 
+
+    cout << endl; 
+
+    // Crear un objeto de la clase Motocicleta y mostrar sus detalles 
+
+    Motocicleta moto1("Honda", "CBR200R", 2019, 8000.0, 500); 
+
+    cout << "Detalles de la motocicleta:" << endl; 
+
+    moto1.mostrarDetalles(); 
+
+    return 0; 
+
+}
