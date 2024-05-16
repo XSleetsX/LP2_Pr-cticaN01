@@ -1,0 +1,119 @@
+#include <iostream> 
+
+#include <string> 
+
+using namespace std; 
+
+ 
+
+// Clase base "Móvil" 
+
+class Movil { 
+
+protected: 
+
+    string marca;          
+
+    string modelo;        
+
+    string sistemaOperativo;  
+
+public: 
+
+    // Constructor de la clase base 
+
+    Movil(const string& _marca, const string& _modelo, const string& _sistemaOperativo) 
+
+        : marca(_marca), modelo(_modelo), sistemaOperativo(_sistemaOperativo) { 
+
+        cout << "Se ha creado un movil: " << marca << " " << modelo << endl; 
+
+    } 
+
+    // Destructor de la clase base 
+
+    ~Movil() { 
+
+        cout << "Se ha destruido el movil: " << marca << " " << modelo << endl; 
+
+    } 
+
+}; 
+
+// Clase derivada "Telefono" 
+
+class Telefono : public Movil { 
+
+private: 
+
+    int numero;   
+
+public: 
+
+    // Constructor de la clase "Telefono" 
+
+    Telefono(const string& _marca, const string& _modelo, const string& _sistemaOperativo, int _numero) 
+
+        : Movil(_marca, _modelo, _sistemaOperativo), numero(_numero) { 
+
+        cout << "Se ha creado un telefono con numero: " << numero << endl; 
+
+    } 
+
+    // Destructor de la clase "Telefono" 
+
+    ~Telefono() { 
+
+        cout << "Se ha destruido el telefono con numero: " << numero << endl; 
+
+    } 
+
+}; 
+
+// Clase derivada "Tablet" 
+
+class Tablet : public Movil { 
+
+private: 
+
+    string resolucion;  
+
+public: 
+
+    // Constructor de la clase "Tablet" 
+
+    Tablet(const string& _marca, const string& _modelo, const string& _sistemaOperativo, 
+
+           const string& _resolucion) 
+
+        : Movil(_marca, _modelo, _sistemaOperativo), resolucion(_resolucion) { 
+
+        cout << "Se ha creado una tablet con resolucion: " << resolucion << endl; 
+
+    } 
+
+    // Destructor de la clase "Tablet" 
+
+    ~Tablet() { 
+
+        cout << "Se ha destruido la tablet con resolucion: " << resolucion << endl; 
+
+    } 
+
+}; 
+
+ 
+
+int main() { 
+
+    // Crear un objeto de la clase "Telefono" 
+
+    Telefono miTelefono("Samsung", "Galaxy S20", "Android", 123456789); 
+
+    // Crear un objeto de la clase "Tablet" 
+
+    Tablet miTablet("Apple", "iPad Pro", "iOS", "2732x2048"); 
+
+    return 0; 
+
+} 
