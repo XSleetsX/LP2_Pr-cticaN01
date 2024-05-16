@@ -1,0 +1,64 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class Cliente {
+protected:
+    // Atributo protegido para almacenar el número de cuenta
+    string num_cuenta;
+    // Atributo protegido para almacenar la contraseña
+    string contrasena;
+public:
+    // Atributo público para almacenar el DNI
+    string dni;
+    // Atributo público para almacenar el nombre
+    string nombre;
+    // Atributo público para almacenar el saldo
+    int saldo;
+    // Constructor para la clase Cliente
+    Cliente(string id, string nc, string ct, string no, int sl)
+        : dni(id), num_cuenta(nc), contrasena(ct), nombre(no), saldo(sl) {}
+};
+class ClienteSeguro : public Cliente {
+private:
+    // Atributo privado para almacenar el token
+    string token;
+public:
+    // Constructor para la clase ClienteSeguro
+ClienteSeguro(string tkn, string id, string nc, string ct, string no, int sl)
+        : Cliente(id, nc, ct, no, sl), token(tkn) {}
+    // Método para cifrar la información sensible
+    void Encriptar_INFO() {
+        for (char& c : contrasena) { // Cifrar la contraseña
+            if (c >= 'a' && c <= 'z') {
+                c = 'z' - (c - 'a');
+            } else if (c >= 'A' && c <= 'Z') {
+                c = 'Z' - (c - 'A');
+            }
+        }
+        for (char& c : token) { // Cifrar el token
+            if (c >= 'a' && c <= 'z') {
+                c = 'z' - (c - 'a');
+            } else if (c >= 'A' && c <= 'Z') {
+                c = 'Z' - (c - 'A');
+            }
+        }
+    }
+    // Método para mostrar la información
+    void Mostrar_INFO() {
+        cout << "Nombre: " << nombre << endl;
+        cout << "DNI: " << dni << endl;
+        cout << "Numero de cuenta: " << num_cuenta << endl;
+        cout << "Contrasena: " << contrasena << endl; // Mostrar la contraseña cifrada
+        cout << "Saldo: " << saldo << endl;
+        cout << "Token: " << token << endl; // Mostrar el token cifrado
+    }
+};
+int main() {
+    ClienteSeguro cliente("jalare", "12345678", "1234567890", "contrasenia", "Alexander Velasquez", 1000);
+    cout << "Informacion antes de encriptar:" << endl;
+    cliente.Mostrar_INFO();
+    cliente.Encriptar_INFO();
+    cout << "Informacion despues de encriptar:" << endl;
+    cliente.Mostrar_INFO();
+    return 0;
+}
