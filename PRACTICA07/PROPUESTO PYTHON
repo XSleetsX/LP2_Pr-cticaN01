@@ -1,0 +1,71 @@
+class Persona: 
+
+    def __init__(self, nombre: str, edad: int, salario: float, email: str): 
+
+        self.__nombre = nombre 
+
+        self.__edad = edad 
+
+        self.__salario = salario 
+
+        self.__email = email 
+
+    def get_nombre(self) -> str: 
+
+        return self.__nombre 
+
+    def get_edad(self) -> int: 
+
+        return self.__edad 
+
+    def get_salario(self) -> float: 
+
+        return self.__salario 
+
+ 
+
+    def get_email(self) -> str: 
+
+        return self.__email 
+
+ 
+
+    def set_email(self, email: str) -> None: 
+
+        self.__email = email 
+
+ 
+
+class Empleado(Persona): 
+
+    def __init__(self, nombre: str, edad: int, salario: float, email: str): 
+
+        super().__init__(nombre, edad, salario, email) 
+
+ 
+
+class Cliente(Persona): 
+
+    def __init__(self, nombre: str, edad: int, salario: float, email: str): 
+
+        super().__init__(nombre, edad, salario, email) 
+
+ 
+
+emp1 = Empleado("Luis", 22, 5000.0, "lucho110901@gmail.com") 
+
+c1 = Cliente("Luis", 22, 5000.0, "lucho110901@gmail.com") 
+
+ 
+
+print("Correo del objeto emp1 modificado: ") 
+
+emp1.set_email("oscarGOD@gmail.com") 
+
+print(emp1.get_email()) 
+
+ 
+
+print("Correo del objeto c1 sin modificar: ") 
+
+print(c1.get_email()) 
