@@ -62,3 +62,40 @@ int main() {
     cliente.Mostrar_INFO();
     return 0;
 }
+/******************************************************************************
+
+for (int i = 0; i < contrasena.length(); ++i) { // Cifrar la contraseña
+            if (contrasena[i] >= 'a' && contrasena[i] <= 'z') {
+                contrasena[i] = 'z' - (contrasena[i] - 'a');
+            } else if (contrasena[i] >= 'A' && contrasena[i] <= 'Z') {
+                contrasena[i] = 'Z' - (contrasena[i] - 'A');
+            }
+        }
+        for (int i = 0; i < token.length(); ++i) { // Cifrar el token
+            if (token[i] >= 'a' && token[i] <= 'z') {
+                token[i] = 'z' - (token[i] - 'a');
+            } else if (token[i] >= 'A' && token[i] <= 'Z') {
+                token[i] = 'Z' - (token[i] - 'A');
+            }
+        }
+
+*******************************************************************************/
+/******************************************************************************
+
+for (int i = 0; i < contrasena.length(); ++i) { // Cifrar la contraseña
+            char& c = contrasena[i];
+            if (c >= 'a' && c <= 'z') {
+                c = 'z' - (c - 'a');
+            } else if (c >= 'A' && c <= 'Z') {
+                c = 'Z' - (c - 'A');
+            }
+       }
+        for (int i = 0; i < token.length(); ++i) { // Cifrar el token
+            char& c = token[i];
+            if (c >= 'a' && c <= 'z') {
+                c = 'z' - (c - 'a');
+            } else if (c >= 'A' && c <= 'Z') {
+                c = 'Z' - (c - 'A');
+            }
+        }
+*******************************************************************************/
