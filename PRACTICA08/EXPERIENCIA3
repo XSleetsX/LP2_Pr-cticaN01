@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+// Clase base "Animal"
+class Animal {
+public:
+    // Método virtual "hacerSonido()"
+    virtual void hacerSonido() {
+        cout << "El animal hace un sonido." << endl;
+    }
+};
+
+// Clase derivada "Leon"
+class Leon : public Animal {
+public:
+    // Redefinición del método "hacerSonido()"
+    void hacerSonido() override {
+        cout << "El león ruge." << endl;
+    }
+};
+
+// Clase derivada "Loro"
+class Loro : public Animal {
+public:
+    // Redefinición del método "hacerSonido()"
+    void hacerSonido() override {
+        cout << "El loro chilla." << endl;
+    }
+};
+
+// Clase derivada "Vaca"
+class Vaca : public Animal {
+public:
+    // Redefinición del método "hacerSonido()"
+    void hacerSonido() override {
+        cout << "La vaca muuge." << endl;
+    }
+};
+
+int main() {
+    // Creación de instancias de diferentes animales
+    Animal* animal1 = new Leon();
+    Animal* animal2 = new Loro();
+    Animal* animal3 = new Vaca();
+
+    // Llamada al método "hacerSonido()" para cada animal
+    animal1->hacerSonido(); // El león ruge.
+    animal2->hacerSonido(); // El loro chilla.
+    animal3->hacerSonido(); // La vaca muuge.
+
+    // Liberación de la memoria dinámica
+    delete animal1;
+    delete animal2;
+    delete animal3;
+
+    return 0;
+}
