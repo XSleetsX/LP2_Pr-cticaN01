@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+// Clase base "Vehículo"
+class Vehiculo {
+public:
+    // Método "acelerar()"
+    void acelerar() {
+        cout << "Acelerando el vehiculo" << endl;
+    }
+};
+
+// Clase derivada "Coche"
+class Coche : public Vehiculo {
+public:
+    // Redefinición del método "acelerar()"
+    void acelerar() {
+        cout << "Acelerando el coche" << endl;
+    }
+
+    // Nuevo método "encenderLuces()"
+    void encenderLuces() {
+        cout << "Luces del coche encendidas" << endl;
+    }
+};
+
+// Clase derivada "Motocicleta"
+class Motocicleta : public Vehiculo {
+public:
+    // Redefinición del método "acelerar()"
+    void acelerar() {
+        cout << "Acelerando la motocicleta" << endl;
+    }
+};
+
+int main() {
+    // Crear una instancia de la clase "Coche"
+    Coche miCoche;
+    miCoche.acelerar(); // Acelerando el coche
+
+    // Crear una instancia de la clase "Motocicleta"
+    Motocicleta miMotocicleta;
+    miMotocicleta.acelerar(); // Acelerando la motocicleta
+
+    // Llamar al método "encenderLuces()" en la instancia de "Coche"
+    miCoche.encenderLuces(); // Luces del coche encendidas
+
+    return 0;
+}
