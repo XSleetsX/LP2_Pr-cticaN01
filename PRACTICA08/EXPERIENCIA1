@@ -2,9 +2,18 @@
 using namespace std;
 
 class Figura{
-    public:
-        virtual double calcularArea() = 0;
+protected:
+    static int numObjetos;
+public:
+    Figura(){
+        numObjetos++;
+        cout << "Creando objeto de la clase base Figura. Use las subclases Circulo, Rectangulo o Triangulo." << endl;
+    }
+    virtual double calcularArea() = 0;
 };
+
+int Figura::numObjetos = 0;
+
 
 class Circulo : public Figura{
     private:
