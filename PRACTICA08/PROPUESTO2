@@ -1,0 +1,39 @@
+#include <iostream>
+
+using namespace std;
+
+// Parte 1: Definición de la Interfaz
+class Reproductor {
+public:
+    virtual void reproducir() = 0;
+    virtual void pausar() = 0;
+    virtual void detener() = 0;
+
+    // Destructor virtual
+    virtual ~Reproductor() {}
+};
+// Parte 2: Creacion de la clase derivada
+class ReproductorMP3 : public Reproductor {
+public:
+    void reproducir() override {
+        cout << "Reproduciendo archivo de audio MP3..." << endl;
+    }
+
+    void pausar() override {
+        cout << "Pausando reproduccion de archivo de audio MP3..." << endl;
+    }
+
+    void detener() override {
+        cout << "Deteniendo reproduccion de archivo de audio MP3..." << endl;
+    }
+};
+// Parte 3: Crear la instancia
+int main() {
+    // Crear una instancia de ReproductorMP3
+    ReproductorMP3 mp3Player;
+    // Probar los métodos
+    mp3Player.reproducir();
+    mp3Player.pausar();
+    mp3Player.detener();
+    return 0;
+}
