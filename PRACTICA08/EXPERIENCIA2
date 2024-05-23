@@ -1,1 +1,85 @@
-aa
+#include <iostream>
+using namespace std;
+
+class Forma{
+    public:
+        virtual double calcularPerimetro() = 0;
+};
+
+class Circulo : public Forma{
+    private:
+        double radio;
+    public:
+        Circulo(double radio) : radio(radio) {}
+        double calcularPerimetro(){
+            return 2 * 3.1415 * radio;
+        }
+};
+
+class Rectangulo : public Forma{
+    private:
+        double base;
+        double altura;
+    public:
+        Rectangulo(double base, double altura) : base(base), altura(altura) {}
+        double calcularPerimetro(){
+            return (2 * base) + (2 * altura);
+        }
+};
+
+class Triangulo : public Forma{
+    private:
+        double lado1;
+        double lado2;
+        double lado3;
+    public:
+        Triangulo(double lado1, double lado2, double lado3) : lado1(lado1), lado2(lado2), lado3(lado3) {}
+        double calcularPerimetro(){
+            return lado1 + lado2 + lado3;
+        }
+};
+
+int main(){
+    int opc;
+    double r,b,h,l1,l2,l3;
+    cout << "**MENU**" << endl;
+    cout << "1. Circulo" << endl;
+    cout << "2. Rectangulo" << endl;
+    cout << "3. Triangulo" << endl;
+    cout << "Escoja una figura: ";
+    cin >> opc;
+    switch (opc){
+        case 1:{
+            cout << "Ingrese el radio: ";
+            cin >> r;
+            Circulo c1(r);
+            cout << c1.calcularPerimetro() << endl;
+            break;
+        }
+        case 2:{
+            cout << "Ingrese la base: ";
+            cin >> b;
+            cout << "Ingrese la altura: ";
+            cin >> h;
+            Rectangulo r1(b,h);
+            cout << r1.calcularPerimetro() << endl;
+            break;
+        }
+        case 3:{
+            cout << "Ingrese el 1°lado: ";
+            cin >> l1;
+            cout << "Ingrese el 2°lado: ";
+            cin >> l2;
+            cout << "Ingrese el 3°lado: ";
+            cin >> l3;
+            Triangulo t1(l1,l2,l3);
+            cout << t1.calcularPerimetro() << endl;
+            break;
+        }
+        default:{
+            cout << "Opción no válida";
+            break;
+        }
+    }
+    return 0;
+}
