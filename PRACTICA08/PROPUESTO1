@@ -1,0 +1,82 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+// Clase abstracta Figura
+class Figura {
+public:
+    // Métodos abstractos
+    virtual void dibujar() const = 0;
+    virtual double calcularArea() const = 0;
+
+    // Destructor virtual
+    virtual ~Figura() {}
+};
+class Circulo : public Figura {
+private:
+    double radio;
+
+public:
+    Circulo(double r) : radio(r) {}
+
+    void dibujar() const override {
+        cout << "Dibujando un circulo con radio: " << radio << endl;
+    }
+
+    double calcularArea() const override {
+        return M_PI * radio * radio;
+    }
+};
+
+class Rectangulo : public Figura {
+private:
+    double largo, ancho;
+
+public:
+    Rectangulo(double l, double a) : largo(l), ancho(a) {}
+
+    void dibujar() const override {
+        cout << "Dibujando un rectangulo de " << largo << " x " << ancho << endl;
+    }
+
+    double calcularArea() const override {
+        return largo * ancho;
+    }
+};
+
+class Triangulo : public Figura {
+private:
+    double base, altura;
+
+public:
+    Triangulo(double b, double h) : base(b), altura(h) {}
+
+    void dibujar() const override {
+        cout << "Dibujando un triangulo de base " << base << " y altura " << altura << endl;
+    }
+
+    double calcularArea() const override {
+        return 0.5 * base * altura;
+    }
+};
+
+int main() {
+    // Crear instancias de las figuras
+    Circulo c(5.0);
+    Rectangulo r(4.0, 6.0);
+    Triangulo t(3.0, 7.0);
+
+    // Crear un arreglo de punteros a Figura
+    Figura* figuras[3];
+    figuras[0] = &c;
+    figuras[1] = &r;
+    figuras[2] = &t;
+
+    // Probar los métodos dibujar y calcularArea
+    for (int i = 0; i < 3; ++i) {
+        figuras[i]->dibujar();
+        cout << "Area: " << figuras[i]->calcularArea() << endl << endl;
+    }
+    return 0;
+}
