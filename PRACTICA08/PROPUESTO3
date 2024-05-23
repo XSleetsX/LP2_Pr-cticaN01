@@ -1,0 +1,59 @@
+#include <iostream>
+
+using namespace std;
+
+// Clase base Empleado
+class Empleado {
+public:
+    // Método virtual para calcular el salario
+    virtual float calcularSalario() = 0;
+
+    // Destructor virtual
+    virtual ~Empleado() {}
+};
+
+// Clase derivada EmpleadoTiempoCompleto
+class Empleadofulltimer : public Empleado {
+private:
+    float salarioMensual;
+
+public:
+    // Constructor para inicializar el salario mensual
+    Empleadofulltimer(float _salarioMensual) : salarioMensual(_salarioMensual) {}
+
+    // Redefinición del método calcularSalario
+    float calcularSalario() override {
+        return salarioMensual;
+    }
+};
+
+/// Clase derivada EmpleadoMedioTiempo
+class EmpleadoMedioTiempo : public Empleado {
+private:
+    float tarifaPorHora;
+    int horasTrabajadas;
+
+public:
+    // Constructor para inicializar la tarifa por hora y las horas trabajadas
+    EmpleadoMedioTiempo(float _tarifaPorHora, int _horasTrabajadas) 
+        : tarifaPorHora(_tarifaPorHora), horasTrabajadas(_horasTrabajadas) {}
+
+    // Redefinición del método calcularSalario
+    float calcularSalario() override {
+        return tarifaPorHora * horasTrabajadas;
+    }
+}; 
+
+int main() {
+    // Crear una instancia de EmpleadoTiempoCompleto
+    Empleadofulltimer empCompleto(5000.0); // Salario mensual de 3000
+
+    // Crear una instancia de EmpleadoMedioTiempo
+    EmpleadoMedioTiempo empMedio(20.0, 80); // Tarifa por hora de 20 y 80 horas trabajadas
+
+    // Mostrar el salario de cada empleado
+    cout << "Salario del empleado a tiempo completo: " << empCompleto.calcularSalario()<<" soles." << endl;
+    cout << "Salario del empleado a medio tiempo: " << empMedio.calcularSalario()<<" soles." << endl;
+
+    return 0;
+}
