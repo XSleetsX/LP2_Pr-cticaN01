@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include <cmath>
 using namespace std;
 
 // Clase abstracta Forma
@@ -18,10 +18,10 @@ private:
 public:
     Circulo(double r) : radio(r) {}
     double area() override {
-        return 3.14159 * radio * radio;
+        return 3.14 * radio * radio;
     }
     double perimetro() override {
-        return 2 * 3.14159 * radio;
+        return 2 * 3.14 * radio;
     }
     string toString() override {
         return "Circulo de radio " + to_string(radio);
