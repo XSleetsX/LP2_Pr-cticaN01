@@ -1,0 +1,91 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Clase abstracta Forma
+class Forma {
+public:
+    virtual double area() = 0;
+    virtual double perimetro() = 0;
+    virtual string toString() = 0;
+};
+
+// Clase Circulo
+class Circulo : public Forma {
+private:
+    double radio;
+public:
+    Circulo(double r) : radio(r) {}
+    double area() override {
+        return 3.14159 * radio * radio;
+    }
+    double perimetro() override {
+        return 2 * 3.14159 * radio;
+    }
+    string toString() override {
+        return "Circulo de radio " + to_string(radio);
+    }
+};
+
+// Clase Rectangulo
+class Rectangulo : public Forma {
+private:
+    double ancho;
+    double alto;
+public:
+    Rectangulo(double a, double b) : ancho(a), alto(b) {}
+    double area() override {
+        return ancho * alto;
+    }
+    double perimetro() override {
+        return 2 * (ancho + alto);
+    }
+    string toString() override {
+        return "Rectangulo de ancho " + to_string(ancho) + " y alto " + to_string(alto);
+    }
+};
+
+// Clase Triangulo
+class Triangulo : public Forma {
+private:
+    double base;
+    double altura;
+public:
+    Triangulo(double b, double h) : base(b), altura(h) {}
+    double area() override {
+        return 0.5 * base * altura;
+    }
+    double perimetro() override {
+        // Suponemos que el triangulo es isosceles
+        return base + 2 * sqrt(pow(base, 2) + pow(altura, 2));
+    }
+    string toString() override {
+        return "Triangulo de base " + to_string(base) + " y altura " + to_string(altura);
+    }
+};
+
+int main() {
+    // Creamos un array de formas
+    Forma* formas[3];
+
+    // Agregamos formas al array
+    formas[0] = new Circulo(5.0);
+    formas[1] = new Rectangulo(4.0, 6.0);
+    formas[2] = new Triangulo(3.0, 4.0);
+
+    // Mostramos información de cada forma
+    for (int i = 0; i < 3; i++) {
+        cout << "Forma " << i + 1 << ": " << formas[i]->toString() << endl;
+        cout << "Area: " << formas[i]->area() << endl;
+        cout << "Perimetro: " << formas[i]->perimetro() << endl;
+        cout << endl;
+    }
+
+    // Liberamos memoria
+    for (int i = 0; i < 3; i++) {
+        delete formas[i];
+    }
+
+    return 0;
+}
