@@ -1,0 +1,102 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Clase base Producto
+class Producto {
+protected:
+    string codigo_barras;
+    string nombre;
+    float precio;
+
+public:
+    Producto(string codigo_barras, string nombre, float precio)
+        : codigo_barras(codigo_barras), nombre(nombre), precio(precio) {}
+
+    virtual void mostrarDetalles() = 0; // Método virtual puro para forzar la implementación en las clases derivadas
+
+    // Getters
+    string get_codigo_barras() const { return codigo_barras; }
+    string get_nombre() const { return nombre; }
+    float get_precio() const { return precio; }
+};
+
+// Clase derivada Libro
+class Libro : public Producto {
+private:
+    string autor;
+    int num_paginas;
+
+public:
+    Libro(string codigo_barras, string nombre, float precio, string autor, int num_paginas)
+        : Producto(codigo_barras, nombre, precio), autor(autor), num_paginas(num_paginas) {}
+
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Autor: " << autor
+             << ", Numero de Paginas: " << num_paginas << endl;
+    }
+};
+
+// Clase derivada Electronico
+class Electronico : public Producto {
+private:
+    string marca;
+    string modelo;
+
+public:
+    Electronico(string codigo_barras, string nombre, float precio, string marca, string modelo)
+        : Producto(codigo_barras, nombre, precio), marca(marca), modelo(modelo) {}
+
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Marca: " << marca
+             << ", Modelo: " << modelo << endl;
+    }
+};
+
+// Clase derivada Ropa
+class Ropa : public Producto {
+private:
+    string talla;
+    string color;
+
+public:
+    Ropa(string codigo_barras, string nombre, float precio, string talla, string color)
+        : Producto(codigo_barras, nombre, precio), talla(talla), color(color) {}
+
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Talla: " << talla
+             << ", Color: " << color << endl;
+    }
+};
+
+int main() {
+    // Crear un arreglo de punteros a Producto
+    Producto* productos[3];
+
+    // Llenar el arreglo con objetos de diferentes tipos
+    productos[0] = new Libro("LIB001", "El Quijote", 15.99, "Miguel de Cervantes", 1056);
+    productos[1] = new Electronico("ELC001", "Smartphone", 299.99, "Samsung", "Galaxy A51");
+    productos[2] = new Ropa("ROP001", "Camiseta", 9.99, "M", "Rojo");
+
+    // Demostrar el polimorfismo llamando a mostrarDetalles() para cada producto
+    for (Producto* producto : productos) {
+        producto->mostrarDetalles();
+    }
+
+    // Liberar memoria
+    for (Producto* producto : productos) {
+        delete producto;
+    }
+
+    return 0;
+}
