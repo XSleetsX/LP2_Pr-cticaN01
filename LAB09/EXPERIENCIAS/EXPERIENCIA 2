@@ -1,1 +1,24 @@
+#include <iostream>
+using namespace std;
+
+class Calculadora {
+public:
+    int sumar(int a, int b) {  //Definición del metodo tipo int
+        return a + b;
+    }
+    double sumar(double a, double b) {  //Definición del método tipo double
+        return a + b;
+    }
+    string sumar(string a, string b) {  //Definición del método tipo string
+        return a + b;
+    }
+};
+
+int main(){
+    Calculadora cal1;
+    cout << cal1.sumar(5,10) << endl;  //Llamada al método con argumentos tipo int
+    cout << cal1.sumar(5.0,10.0) << endl;  //Llamada al método con argumentos tipo double
+    cout << cal1.sumar("5","10") << endl;  //Llamada al método con argumentos tipo string
+    return 0;
+}
 
