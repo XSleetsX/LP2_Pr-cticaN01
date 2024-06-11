@@ -1,1 +1,163 @@
+// Definición de la clase abstracta FiguraGeometrica
 
+#include <iostream>
+
+#include <cmath>
+
+ 
+
+using namespace std;
+
+ 
+
+class FiguraGeometrica {
+
+public:
+
+    // Métodos virtuales puros para calcular el área y perímetro
+
+    virtual double calcularArea() const = 0;
+
+    virtual double calcularPerimetro() const = 0;
+
+};
+
+ 
+
+// Definición de la clase Circulo, derivada de FiguraGeometrica
+
+class Circulo : public FiguraGeometrica {
+
+private:
+
+    double radio;
+
+public:
+
+    Circulo(double r) : radio(r) {}
+
+   
+
+    // Implementación de los métodos abstractos
+
+    double calcularArea() const override {
+
+        return M_PI * radio * radio;
+
+    }
+
+   
+
+    double calcularPerimetro() const override {
+
+        return 2 * M_PI * radio;
+
+    }
+
+};
+
+ 
+
+// Definición de la clase Rectangulo, derivada de FiguraGeometrica
+
+class Rectangulo : public FiguraGeometrica {
+
+private:
+
+    double largo, ancho;
+
+public:
+
+    Rectangulo(double l, double a) : largo(l), ancho(a) {}
+
+   
+
+    // Implementación de los métodos abstractos
+
+    double calcularArea() const override {
+
+        return largo * ancho;
+
+    }
+
+   
+
+    double calcularPerimetro() const override {
+
+        return 2 * (largo + ancho);
+
+    }
+
+};
+
+ 
+
+// Definición de la clase Triangulo, derivada de FiguraGeometrica
+
+class Triangulo : public FiguraGeometrica {
+
+private:
+
+    double base, altura;
+
+public:
+
+    Triangulo(double b, double h) : base(b), altura(h) {}
+
+   
+
+    // Implementación de los métodos abstractos
+
+    double calcularArea() const override {
+
+        return 0.5 * base * altura;
+
+    }
+
+   
+
+    double calcularPerimetro() const override {
+
+        // Suponiendo que es un triángulo equilátero
+
+        return 3 * base;
+
+    }
+
+};
+
+ 
+
+int main() {
+
+    // Crear objetos de diferentes tipos de figuras geométricas
+
+    Circulo c(5.0);
+
+    Rectangulo r(4.0, 3.0);
+
+    Triangulo t(6.0, 4.0);
+
+   
+
+    // Almacenar los objetos en un arreglo de punteros a FiguraGeometrica
+
+    FiguraGeometrica* figuras[] = {&c, &r, &t};
+
+   
+
+    // Recorrer el arreglo y llamar a los métodos virtuales
+
+    for (FiguraGeometrica* figura : figuras) {
+
+        cout << "Área: " << figura->calcularArea() << endl;
+
+        cout << "Perímetro: " << figura->calcularPerimetro() << endl;
+
+    }
+
+   
+
+    return 0;
+
+}
