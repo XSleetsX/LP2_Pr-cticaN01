@@ -25,7 +25,7 @@ public:
     }
     // Implementación del método moverse para Mamifero
     void moverse() const override {
-        cout << "El mamifero esta moviéndose..." << endl;
+        cout << "El mamifero esta moviendose..." << endl;
     }
 };
 
