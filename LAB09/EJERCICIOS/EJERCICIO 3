@@ -1,0 +1,103 @@
+#include <iostream>
+using namespace std;
+
+// Clase base Empleado
+class Empleado {
+public:
+    // Método virtual puro para calcular el salario, debe ser implementado por las clases derivadas
+    virtual double calcularSalario() const = 0;
+    // Destructor virtual para asegurar la destrucción adecuada de objetos derivados
+    virtual ~Empleado() {}
+};
+
+// Clase derivada Asalariado que hereda de Empleado
+class Asalariado : public Empleado {
+private:
+    double salarioMensual; // Salario mensual del empleado
+public:
+    // Constructor que inicializa el salario mensual
+    Asalariado(double salario) : salarioMensual(salario) {}
+    // Implementación del método calcularSalario para empleados asalariados
+    double calcularSalario() const override {
+        return salarioMensual;
+    }
+};
+
+// Clase derivada PorHora que hereda de Empleado
+class PorHora : public Empleado {
+private:
+    double tarifaHora; // Tarifa por hora del empleado
+    double horasTrabajadas; // Horas trabajadas por el empleado
+public:
+    // Constructor que inicializa la tarifa por hora y las horas trabajadas
+    PorHora(double tarifa, double horas) : tarifaHora(tarifa), horasTrabajadas(horas) {}
+    // Implementación del método calcularSalario para empleados por hora
+    double calcularSalario() const override {
+        return tarifaHora * horasTrabajadas;
+    }
+};
+
+// Clase derivada Comisionista que hereda de Empleado
+class Comisionista : public Empleado {
+private:
+    double ventasBrutas; // Ventas brutas del empleado
+    double tasaComision; // Tasa de comisión del empleado
+public:
+    // Constructor que inicializa las ventas brutas y la tasa de comisión
+    Comisionista(double ventas, double tasa) : ventasBrutas(ventas), tasaComision(tasa) {}
+    // Implementación del método calcularSalario para empleados comisionistas
+    double calcularSalario() const override {
+        return ventasBrutas * tasaComision;
+    }
+};
+
+// Clase Nomina que gestiona los empleados
+class Nomina {
+private:
+    Empleado* empleados[3]; // Arreglo de punteros a Empleado
+    int indice; // Índice para llevar la cuenta de los empleados agregados
+public:
+    // Constructor que inicializa el índice a 0
+    Nomina() : indice(0) {}
+
+    // Método para agregar un empleado al arreglo
+    void agregarEmpleado(Empleado* empleado) {
+        if (indice < 3) { // Verificar que no se exceda el tamaño del arreglo
+            empleados[indice++] = empleado;
+        }
+    }
+
+    // Método para calcular y mostrar los salarios de todos los empleados
+    void calcularSalarios() const {
+        for (int i = 0; i < indice; i++) { // Recorrer todos los empleados agregados
+            cout << "Salario: S/" << empleados[i]->calcularSalario() << endl;
+        }
+    }
+
+    // Destructor que elimina los objetos de empleados creados dinámicamente
+    ~Nomina() {
+        for (int i = 0; i < indice; i++) {
+            delete empleados[i];
+        }
+    }
+};
+
+int main() {
+    Nomina nomina; // Crear una instancia de Nomina
+
+    // Crear instancias de diferentes empleados
+    Empleado* asalariado = new Asalariado(3000.0);
+    Empleado* porHora = new PorHora(15.0, 160);
+    Empleado* comisionista = new Comisionista(50000.0, 0.10);
+
+    // Agregar empleados a la nómina
+    nomina.agregarEmpleado(asalariado);
+    nomina.agregarEmpleado(porHora);
+    nomina.agregarEmpleado(comisionista);
+
+    // Calcular y mostrar los salarios
+    nomina.calcularSalarios();
+
+    // La memoria de los empleados será liberada por el destructor de Nomina
+    return 0;
+}
