@@ -1,0 +1,102 @@
+#include <iostream>
+using namespace std;
+
+// Clase base Animal con métodos virtuales
+class Animal {
+public:
+    virtual void comer() const = 0; // Método virtual puro
+    virtual void dormir() const = 0; // Método virtual puro
+    virtual void moverse() const = 0; // Método virtual puro
+    virtual ~Animal() {} // Destructor virtual
+};
+
+// Clase derivada Mamifero
+class Mamifero : public Animal {
+public:
+    void comer() const override {
+        cout << "El mamífero está comiendo..." << endl;
+    }
+    void dormir() const override {
+        cout << "El mamífero está durmiendo..." << endl;
+    }
+    void moverse() const override {
+        cout << "El mamífero está moviéndose..." << endl;
+    }
+};
+
+// Clase derivada Ave
+class Ave : public Animal {
+public:
+    void comer() const override {
+        cout << "El ave está comiendo..." << endl;
+    }
+    void dormir() const override {
+        cout << "El ave está durmiendo..." << endl;
+    }
+    void moverse() const override {
+        cout << "El ave está volando..." << endl;
+    }
+};
+
+// Clase derivada Reptil
+class Reptil : public Animal {
+public:
+    void comer() const override {
+        cout << "El reptil está comiendo..." << endl;
+    }
+    void dormir() const override {
+        cout << "El reptil está durmiendo..." << endl;
+    }
+    void moverse() const override {
+        cout << "El reptil está reptando..." << endl;
+    }
+};
+
+// Simulador de Animales
+class SimuladorDeAnimales {
+private:
+    Animal* animales[3]; // Arreglo de punteros a Animal
+    int indice; // Índice para llevar la cuenta de los animales agregados
+public:
+    SimuladorDeAnimales() : indice(0) {}
+    
+    void agregarAnimal(Animal* animal) {
+        if (indice < 3) { // Verificamos que no se exceda el tamaño del arreglo
+            animales[indice++] = animal;
+        }
+    }
+    
+    void simular() const {
+        for (int i = 0; i < indice; i++) {
+            animales[i]->comer();
+            animales[i]->dormir();
+            animales[i]->moverse();
+            cout << "SIGUIENTE CLASE" << endl;
+        }
+    }
+    
+    ~SimuladorDeAnimales() {
+        for (int i = 0; i < indice; i++) {
+            delete animales[i];
+        }
+    }
+};
+
+int main() {
+    SimuladorDeAnimales simulador;
+
+    // Crear instancias de diferentes animales
+    Animal* mamifero = new Mamifero();
+    Animal* ave = new Ave();
+    Animal* reptil = new Reptil();
+
+    // Agregar animales al simulador
+    simulador.agregarAnimal(mamifero);
+    simulador.agregarAnimal(ave);
+    simulador.agregarAnimal(reptil);
+
+    // Ejecutar la simulación
+    simulador.simular();
+
+    return 0;
+}
