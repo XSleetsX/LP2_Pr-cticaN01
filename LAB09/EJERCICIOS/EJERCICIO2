@@ -17,15 +17,15 @@ class Mamifero : public Animal {
 public:
     // Implementación del método comer para Mamifero
     void comer() const override {
-        cout << "El mamifero está comiendo..." << endl;
+        cout << "El mamifero esta comiendo..." << endl;
     }
     // Implementación del método dormir para Mamifero
     void dormir() const override {
-        cout << "El mamifero está durmiendo..." << endl;
+        cout << "El mamifero esta durmiendo..." << endl;
     }
     // Implementación del método moverse para Mamifero
     void moverse() const override {
-        cout << "El mamifero está moviéndose..." << endl;
+        cout << "El mamifero esta moviéndose..." << endl;
     }
 };
 
@@ -116,3 +116,4 @@ int main() {
     // La memoria de los animales será liberada por el destructor de SimuladorDeAnimales
     return 0;
 }
+
