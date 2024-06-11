@@ -1,1 +1,88 @@
+#include <iostream>
 
+#include <string>
+
+using namespace std;
+// Clase base 'Producto'
+
+class Producto {
+
+public:
+
+    Producto(string nombre, double precio) : nombre(nombre), precio(precio) {}
+
+    virtual double getValorInventario() = 0;
+
+    virtual double aplicarDescuento(double porcentaje) = 0;
+
+    string getNombre() { return nombre; }
+
+    double getPrecio() { return precio; }
+
+ 
+
+protected:
+
+    string nombre;
+
+    double precio;
+
+};
+
+// Clase 'ProductoElectronico' derivada de 'Producto'
+class ProductoElectronico : public Producto {
+public:
+    ProductoElectronico(string nombre, double precio, int garantia) : Producto(nombre, precio), garantia(garantia) {}
+    double getValorInventario() override { return precio; }
+    double aplicarDescuento(double porcentaje) override { return precio * (1 - porcentaje); }
+
+private:
+    int garantia;
+};
+
+// Clase 'Ropa' derivada de 'Producto'
+class Ropa : public Producto {
+public:
+    Ropa(string nombre, double precio, string talla) : Producto(nombre, precio), talla(talla) {}
+    double getValorInventario() override { return precio; }
+    double aplicarDescuento(double porcentaje) override { return precio * (1 - porcentaje); }
+private:
+
+    string talla;
+
+};
+
+// Clase 'Alimento' derivada de 'Producto'
+class Alimento : public Producto {
+public:
+    Alimento(string nombre, double precio, int diasVencimiento) : Producto(nombre, precio), diasVencimiento(diasVencimiento) {}
+    double getValorInventario() override { return precio; }
+    double aplicarDescuento(double porcentaje) override {
+
+        if (diasVencimiento <= 5) {
+            return precio * 0.5; // Descuento del 50% para alimentos a punto de vencer
+        } else {
+            return precio * (1 - porcentaje);
+        }
+    }
+
+private:
+
+    int diasVencimiento;
+};
+
+int main() {
+    // Creación de los productos
+    ProductoElectronico computadora("Computadora", 1000, 2);
+    Ropa camiseta("Camiseta", 25, "M");
+    Alimento manzana("Manzana", 2, 7);
+    // Calcular el valor total del inventario
+    double valorTotal = computadora.getValorInventario() + camiseta.getValorInventario() + manzana.getValorInventario();
+    cout << "Valor total del inventario: $" << valorTotal << endl;
+    // Aplicar descuentos
+    double descuento = 0.2; // 20% de descuento
+    cout << "Producto: " << computadora.getNombre() << ", Precio con descuento: $" << computadora.aplicarDescuento(descuento) << endl;
+    cout << "Producto: " << camiseta.getNombre() << ", Precio con descuento: $" << camiseta.aplicarDescuento(descuento) << endl;
+    cout << "Producto: " << manzana.getNombre() << ", Precio con descuento: $" << manzana.aplicarDescuento(descuento) << endl;
+    return 0;
+}
