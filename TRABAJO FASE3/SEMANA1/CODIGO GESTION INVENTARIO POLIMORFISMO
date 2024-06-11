@@ -92,9 +92,9 @@ int main() {
     Producto* productos[3];
 
     // Llenar el arreglo con objetos de diferentes tipos de productos
-    productos[0] = new Libro("LIB001", "El Quijote", 15.99, "Miguel de Cervantes", 1056);
-    productos[1] = new Electronico("ELC001", "Smartphone", 299.99, "Samsung", "Galaxy A51");
-    productos[2] = new Ropa("ROP001", "Camiseta", 9.99, "M", "Rojo");
+    productos[0] = new Libro("LIB001", "El Diario de Alex", 69.69, "Alexander Velasquez", 666);
+    productos[1] = new Electronico("ELC001", "Celular", 4500.99, "AIPHONE", "14 ULTRA PRO MAX VERSION BEN 10");
+    productos[2] = new Ropa("ROP001", "Camiseta", 89.99, "XXXL", "VINOTINTO COMO AREQUIPA");
 
     // Demostrar el polimorfismo llamando a mostrarDetalles() para cada producto
     for (Producto* producto : productos) {
@@ -108,4 +108,5 @@ int main() {
 
     return 0;
 }
+
 
