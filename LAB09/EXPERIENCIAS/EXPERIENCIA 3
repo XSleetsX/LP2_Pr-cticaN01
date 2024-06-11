@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+class Figura {
+public:
+    virtual double calcularArea() const = 0;  //Definir método virtual constante
+};
+class Circulo : public Figura {
+private:
+    double radio;
+public:
+    Circulo(double radio) : radio(radio) {}
+    double calcularArea() const override  {  //Redefinir el método sobremontado y constante en la clase Círculo
+        return 3.1415 * radio * radio;
+    }
+};
+
+class Rectangulo : public Figura {
+private:
+    double base;
+    double altura;
+public:
+    Rectangulo(double base, double altura) : base(base), altura(altura) {}
+    double calcularArea() const override  {  //Redefinir el método sobremontado y constante en la clase Rectángulo
+        return base * altura;
+    }
+};
+class Triangulo : public Figura {
+private:
+    double base;
+    double altura;
+public:
+    Triangulo(double base, double altura) : base(base), altura(altura) {}
+    double calcularArea() const override  {  //Redefinir el método sobremontado y constante en la clase Triángulo
+        return base * altura / 2;
+    }
+};
+
+int main() {
+    Figura *figuras[3];  //Crear un arreglo de 3 puntreos tipo Figura
+    figuras[0] = new Circulo(8.0);  //Asignar un objeto tipo Círculo a la posición 0
+    figuras[1] = new Rectangulo(2.0, 7.0);  //Asignar un objeto tipo Rectángulo a la posición 1
+    figuras[2] = new Triangulo(5.0, 10.0);  //Asignar un objeto tipo Triángulo a la posición 2
+
+    for (int i = 0; i < 3; i++) {  //Iterar en el arreglo para mostrar la salida de los métodos
+        cout << "Área " << i + 1 << ": " << figuras[i]->calcularArea() << endl;
+    }
+    
+    delete figuras[0];
+    delete figuras[1];
+    delete figuras[2];
+    return 0;
+}
