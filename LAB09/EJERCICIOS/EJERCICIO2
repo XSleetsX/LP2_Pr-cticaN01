@@ -4,77 +4,92 @@ using namespace std;
 // Clase base Animal con métodos virtuales
 class Animal {
 public:
-    virtual void comer() const = 0; // Método virtual puro
-    virtual void dormir() const = 0; // Método virtual puro
-    virtual void moverse() const = 0; // Método virtual puro
-    virtual ~Animal() {} // Destructor virtual
+    // Métodos virtuales puros que deben ser implementados por las clases derivadas
+    virtual void comer() const = 0;
+    virtual void dormir() const = 0;
+    virtual void moverse() const = 0;
+    // Destructor virtual para permitir la eliminación adecuada de objetos derivados
+    virtual ~Animal() {}
 };
 
-// Clase derivada Mamifero
+// Clase derivada Mamifero que hereda de Animal
 class Mamifero : public Animal {
 public:
+    // Implementación del método comer para Mamifero
     void comer() const override {
         cout << "El mamífero está comiendo..." << endl;
     }
+    // Implementación del método dormir para Mamifero
     void dormir() const override {
         cout << "El mamífero está durmiendo..." << endl;
     }
+    // Implementación del método moverse para Mamifero
     void moverse() const override {
         cout << "El mamífero está moviéndose..." << endl;
     }
 };
 
-// Clase derivada Ave
+// Clase derivada Ave que hereda de Animal
 class Ave : public Animal {
 public:
+    // Implementación del método comer para Ave
     void comer() const override {
         cout << "El ave está comiendo..." << endl;
     }
+    // Implementación del método dormir para Ave
     void dormir() const override {
         cout << "El ave está durmiendo..." << endl;
     }
+    // Implementación del método moverse para Ave
     void moverse() const override {
         cout << "El ave está volando..." << endl;
     }
 };
 
-// Clase derivada Reptil
+// Clase derivada Reptil que hereda de Animal
 class Reptil : public Animal {
 public:
+    // Implementación del método comer para Reptil
     void comer() const override {
         cout << "El reptil está comiendo..." << endl;
     }
+    // Implementación del método dormir para Reptil
     void dormir() const override {
         cout << "El reptil está durmiendo..." << endl;
     }
+    // Implementación del método moverse para Reptil
     void moverse() const override {
         cout << "El reptil está reptando..." << endl;
     }
 };
 
-// Simulador de Animales
+// Clase SimuladorDeAnimales que contiene un arreglo de punteros a Animal
 class SimuladorDeAnimales {
 private:
     Animal* animales[3]; // Arreglo de punteros a Animal
     int indice; // Índice para llevar la cuenta de los animales agregados
 public:
+    // Constructor que inicializa el índice a 0
     SimuladorDeAnimales() : indice(0) {}
     
+    // Método para agregar un animal al arreglo
     void agregarAnimal(Animal* animal) {
         if (indice < 3) { // Verificamos que no se exceda el tamaño del arreglo
             animales[indice++] = animal;
         }
     }
     
+    // Método para simular las acciones de los animales
     void simular() const {
-        for (int i = 0; i < indice; i++) {
+        for (int i = 0; i < indice; i++) { // Recorremos los animales agregados
             animales[i]->comer();
             animales[i]->dormir();
             animales[i]->moverse();
-            cout << "SIGUIENTE CLASE" << endl;
+            cout << "SIGUIENTE CLASE" << endl; // Separador entre clases
         }
     }
     
+    // Destructor que elimina los objetos de animales creados dinámicamente
     ~SimuladorDeAnimales() {
         for (int i = 0; i < indice; i++) {
             delete animales[i];
@@ -83,7 +98,7 @@ public:
 };
 
 int main() {
-    SimuladorDeAnimales simulador;
+    SimuladorDeAnimales simulador; // Creamos una instancia de SimuladorDeAnimales
 
     // Crear instancias de diferentes animales
     Animal* mamifero = new Mamifero();
@@ -98,5 +113,6 @@ int main() {
     // Ejecutar la simulación
     simulador.simular();
 
+    // La memoria de los animales será liberada por el destructor de SimuladorDeAnimales
     return 0;
 }
