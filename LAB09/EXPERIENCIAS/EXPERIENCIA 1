@@ -1,1 +1,51 @@
+ENLACE TEMPRANO
+#include <iostream>
+using namespace std;
+
+class Animal{
+public:
+    void hacerSonido() {  //Método no virtual para establecer el enlace temprano
+        cout << "Animal haciendo sonido" << endl;
+    }    
+};
+
+class Perro : public Animal{
+public:
+    void hacerSonido() {  //Redefinición del método
+        cout << "Guau" << endl;
+    }
+};
+
+int main() {
+    Animal *animal1 = new Perro();  //Definir el puntero animal1
+    animal1->hacerSonido();  //Llamada no polimórfica (llama al método de la clase base)
+
+    delete animal1;
+    return 0;
+}
+ENLACE TARDÍO
+#include <iostream>
+using namespace std;
+
+class Animal{
+public:
+    virtual void hacerSonido() {  //Método virtual para establecer el enlace tardío
+        cout << "Animal haciendo sonido" << endl;
+    }    
+};
+
+class Perro : public Animal{
+public:
+    void hacerSonido() override {  //Redefinición del método sobremontado(override)
+        cout << "Guau" << endl;
+    }
+};
+
+int main() {
+    Animal *animal1 = new Perro();  //Definición del puntero animal1
+    animal1->hacerSonido(); //Llamada polimórfica(llama al método de la clase derivada)
+
+    delete animal1;
+    return 0;
+}
 
