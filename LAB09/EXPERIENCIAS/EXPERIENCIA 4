@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+
+// Clase base Animal con un método virtual hacerSonido()
+class Animal {
+public:
+    // Método virtual que será redefinido en las clases derivadas
+    virtual void hacerSonido() const {
+        cout << "Un animal hace un sonido." << endl;
+    }
+
+    // Destructor virtual para asegurar la correcta destrucción de objetos derivados
+    virtual ~Animal() {}
+};
+
+// Clase derivada Perro
+class Perro : public Animal {
+public:
+    // Redefinición del método hacerSonido() en la clase Perro
+    void hacerSonido() const override {
+        cout << "El perro dice: Guau!" << endl;
+    }
+};
+
+// Clase derivada Gato
+class Gato : public Animal {
+public:
+    // Redefinición del método hacerSonido() en la clase Gato
+    void hacerSonido() const override {
+        cout << "El gato dice: Miau!" << endl;
+    }
+};
+
+// Clase derivada Vaca
+class Vaca : public Animal {
+public:
+    // Redefinición del método hacerSonido() en la clase Vaca
+    void hacerSonido() const override {
+        cout << "La vaca dice: Muuu!" << endl;
+    }
+};
+
+int main() {
+    // Crear un arreglo de punteros a Animal
+    Animal* animales[3]; //como en todo orden, inicia desde el 0 y sube hasta un numero antes del limite, en este caso el 2
+
+    // Almacenar objetos de diferentes tipos de animales en el arreglo
+    animales[0] = new Perro();
+    animales[1] = new Gato();
+    animales[2] = new Vaca();
+
+    // Recorrer el arreglo y llamar al método hacerSonido() para cada objeto
+    for (int i = 0; i < 3; ++i) {  // Uso del bucle para hacer el llamado, iniciando con el valor 0(Perro), luego se imprime el 1(gato), para finalmente llegar al 2(vaca)
+        animales[i]->hacerSonido(); // Llamada polimórfica
+    }
+
+    // Liberar la memoria asignada
+    for (int i = 0; i < 3; ++i) {
+        delete animales[i];
+    }
+
+    return 0;
+}
