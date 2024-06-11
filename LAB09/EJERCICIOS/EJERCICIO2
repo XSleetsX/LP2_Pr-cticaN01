@@ -17,15 +17,15 @@ class Mamifero : public Animal {
 public:
     // Implementación del método comer para Mamifero
     void comer() const override {
-        cout << "El mamífero está comiendo..." << endl;
+        cout << "El mamifero está comiendo..." << endl;
     }
     // Implementación del método dormir para Mamifero
     void dormir() const override {
-        cout << "El mamífero está durmiendo..." << endl;
+        cout << "El mamifero está durmiendo..." << endl;
     }
     // Implementación del método moverse para Mamifero
     void moverse() const override {
-        cout << "El mamífero está moviéndose..." << endl;
+        cout << "El mamifero está moviéndose..." << endl;
     }
 };
 
@@ -34,15 +34,15 @@ class Ave : public Animal {
 public:
     // Implementación del método comer para Ave
     void comer() const override {
-        cout << "El ave está comiendo..." << endl;
+        cout << "El ave esta comiendo..." << endl;
     }
     // Implementación del método dormir para Ave
     void dormir() const override {
-        cout << "El ave está durmiendo..." << endl;
+        cout << "El ave esta durmiendo..." << endl;
     }
     // Implementación del método moverse para Ave
     void moverse() const override {
-        cout << "El ave está volando..." << endl;
+        cout << "El ave esta volando..." << endl;
     }
 };
 
@@ -51,15 +51,15 @@ class Reptil : public Animal {
 public:
     // Implementación del método comer para Reptil
     void comer() const override {
-        cout << "El reptil está comiendo..." << endl;
+        cout << "El reptil esta comiendo..." << endl;
     }
     // Implementación del método dormir para Reptil
     void dormir() const override {
-        cout << "El reptil está durmiendo..." << endl;
+        cout << "El reptil esta durmiendo..." << endl;
     }
     // Implementación del método moverse para Reptil
     void moverse() const override {
-        cout << "El reptil está reptando..." << endl;
+        cout << "El reptil esta reptando..." << endl;
     }
 };
 
