@@ -1,1 +1,179 @@
+#include <iostream>
+
+#include <string>
+
+ 
+
+using namespace std;
+
+ 
+
+// Clase base 'Personaje' que representa a los personajes del juego
+
+class Personaje {
+
+public:
+
+    // Constructor que inicializa el nombre, salud, fuerza y defensa del personaje
+
+    Personaje(string nombre, int salud, int fuerza, int defensa) : nombre(nombre), salud(salud), fuerza(fuerza), defensa(defensa) {}
+
+ 
+
+    // Métodos virtuales puros que deben ser implementados por las clases derivadas
+
+    virtual void atacar(Personaje* objetivo) = 0;
+
+    virtual void defender() = 0;
+
+    virtual void usarHabilidadEspecial() = 0;
+
+ 
+
+    // Métodos para obtener el nombre y la salud del personaje
+
+    string getNombre() { return nombre; }
+
+    int getSalud() { return salud; }
+
+ 
+
+    // Método para que el personaje reciba daño
+
+    void recibirDanio(int danio) { salud -= danio; }
+
+ 
+
+protected:
+
+    // Atributos protegidos que pueden ser accedidos por las clases derivadas
+
+    string nombre;
+
+    int salud, fuerza, defensa;
+
+};
+
+ 
+
+// Clase 'Guerrero' derivada de 'Personaje'
+
+class Guerrero : public Personaje {
+
+public:
+
+    // Constructor que llama al constructor de la clase base
+
+    Guerrero(string nombre, int salud, int fuerza, int defensa) : Personaje(nombre, salud, fuerza, defensa) {}
+
+ 
+
+    // Implementación de los métodos virtuales puros
+
+    void atacar(Personaje* objetivo) override { cout << nombre << " ataca con un poderoso golpe de espada." << endl; objetivo->recibirDanio(fuerza); }
+
+    void defender() override { cout << nombre << " levanta su escudo para bloquear el ataque entrante." << endl; }
+
+    void usarHabilidadEspecial() override { cout << nombre << " lanza un poderoso grito, aumentando su poder de ataque." << endl; }
+
+};
+
+ 
+
+// Clase 'Mago' derivada de 'Personaje'
+
+class Mago : public Personaje {
+
+public:
+
+    // Constructor que llama al constructor de la clase base
+
+    Mago(string nombre, int salud, int fuerza, int defensa) : Personaje(nombre, salud, fuerza, defensa) {}
+
+ 
+
+    // Implementación de los métodos virtuales puros
+
+    void atacar(Personaje* objetivo) override { cout << nombre << " lanza un poderoso hechizo de fuego contra el enemigo." << endl; objetivo->recibirDanio(fuerza); }
+
+    void defender() override { cout << nombre << " crea un escudo mágico para protegerse." << endl; }
+
+    void usarHabilidadEspecial() override { cout << nombre << " invoca una tormenta de fragmentos de hielo, dañando a todos los enemigos." << endl; }
+
+};
+
+ 
+
+// Clase 'Arquero' derivada de 'Personaje'
+
+class Arquero : public Personaje {
+
+public:
+
+    // Constructor que llama al constructor de la clase base
+
+    Arquero(string nombre, int salud, int fuerza, int defensa) : Personaje(nombre, salud, fuerza, defensa) {}
+
+ 
+
+    // Implementación de los métodos virtuales puros
+
+    void atacar(Personaje* objetivo) override { cout << nombre << " dispara una flecha veloz al objetivo." << endl; objetivo->recibirDanio(fuerza); }
+
+    void defender() override { cout << nombre << " usa su agilidad para esquivar el ataque entrante." << endl; }
+
+    void usarHabilidadEspecial() override { cout << nombre << " dispara una lluvia de flechas sobre el enemigo." << endl; }
+
+};
+
+ 
+
+int main() {
+
+    // Creación de los personajes
+
+    Guerrero guerrero("Aragorn", 100, 20, 15);
+
+    Mago mago("Gandalf", 80, 18, 12);
+
+    Arquero arquero("Legolas", 90, 22, 14);
+
+ 
+
+    // Ejecución de las acciones
+
+    guerrero.atacar(&mago);
+
+    mago.defender();
+
+    mago.usarHabilidadEspecial();
+
+    cout << mago.getNombre() << " tiene " << mago.getSalud() << " puntos de salud restantes." << endl;
+
+ 
+
+    mago.atacar(&arquero);
+
+    arquero.defender();
+
+    arquero.usarHabilidadEspecial();
+
+    cout << arquero.getNombre() << " tiene " << arquero.getSalud() << " puntos de salud restantes." << endl;
+
+ 
+
+    arquero.atacar(&guerrero);
+
+    guerrero.defender();
+
+    guerrero.usarHabilidadEspecial();
+
+    cout << guerrero.getNombre() << " tiene " << guerrero.getSalud() << " puntos de salud restantes." << endl;
+
+ 
+
+    return 0;
+
+}
+
 
