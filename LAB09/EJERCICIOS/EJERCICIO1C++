@@ -3,77 +3,102 @@
 #include <cmath>
 using namespace std;
 
-// Clase abstracta Forma
+// Clase abstracta Forma que define la interfaz para todas las formas
 class Forma {
 public:
+    // Métodos virtuales puros que deben ser implementados por las clases derivadas
     virtual double area() = 0;
     virtual double perimetro() = 0;
     virtual string toString() = 0;
 };
 
-// Clase Circulo
+// Clase Circulo que hereda de Forma
 class Circulo : public Forma {
 private:
-    double radio;
+    double radio; // Atributo privado para almacenar el radio del círculo
 public:
+    // Constructor que inicializa el radio
     Circulo(double r) : radio(r) {}
+    
+    // Implementación del método area para el círculo
     double area() override {
         return 3.14 * radio * radio;
     }
+    
+    // Implementación del método perimetro para el círculo
     double perimetro() override {
         return 2 * 3.14 * radio;
     }
+    
+    // Implementación del método toString para el círculo
     string toString() override {
+        // Convertimos el valor de radio a cadena de texto usando to_string
         return "Circulo de radio " + to_string(radio);
     }
 };
 
-// Clase Rectangulo
+// Clase Rectangulo que hereda de Forma
 class Rectangulo : public Forma {
 private:
-    double ancho;
-    double alto;
+    double ancho; // Atributo privado para almacenar el ancho del rectángulo
+    double alto;  // Atributo privado para almacenar el alto del rectángulo
 public:
+    // Constructor que inicializa el ancho y el alto
     Rectangulo(double a, double b) : ancho(a), alto(b) {}
+    
+    // Implementación del método area para el rectángulo
     double area() override {
         return ancho * alto;
     }
+    
+    // Implementación del método perimetro para el rectángulo
     double perimetro() override {
         return 2 * (ancho + alto);
     }
+    
+    // Implementación del método toString para el rectángulo
     string toString() override {
+        // Convertimos los valores de ancho y alto a cadena de texto usando to_string
         return "Rectangulo de ancho " + to_string(ancho) + " y alto " + to_string(alto);
     }
 };
 
-// Clase Triangulo
+// Clase Triangulo que hereda de Forma
 class Triangulo : public Forma {
 private:
-    double base;
-    double altura;
+    double base;   // Atributo privado para almacenar la base del triángulo
+    double altura; // Atributo privado para almacenar la altura del triángulo
 public:
+    // Constructor que inicializa la base y la altura
     Triangulo(double b, double h) : base(b), altura(h) {}
+    
+    // Implementación del método area para el triángulo
     double area() override {
         return 0.5 * base * altura;
     }
+    
+    // Implementación del método perimetro para el triángulo
+    // Suponemos que el triángulo es isósceles
     double perimetro() override {
-        // Suponemos que el triangulo es isosceles
         return base + 2 * sqrt(pow(base, 2) + pow(altura, 2));
     }
+    
+    // Implementación del método toString para el triángulo
     string toString() override {
+        // Convertimos los valores de base y altura a cadena de texto usando to_string
         return "Triangulo de base " + to_string(base) + " y altura " + to_string(altura);
     }
 };
 
 int main() {
-    // Creamos un array de formas
+    // Creamos un array de punteros a objetos de tipo Forma
     Forma* formas[3];
-
-    // Agregamos formas al array
+    
+    // Agregamos diferentes formas al array
     formas[0] = new Circulo(5.0);
     formas[1] = new Rectangulo(4.0, 6.0);
     formas[2] = new Triangulo(3.0, 4.0);
-
+    
     // Mostramos información de cada forma
     for (int i = 0; i < 3; i++) {
         cout << "Forma " << i + 1 << ": " << formas[i]->toString() << endl;
@@ -81,11 +106,11 @@ int main() {
         cout << "Perimetro: " << formas[i]->perimetro() << endl;
         cout << endl;
     }
-
-    // Liberamos memoria
+    
+    // Liberamos memoria asignada dinámicamente
     for (int i = 0; i < 3; i++) {
         delete formas[i];
     }
-
+    
     return 0;
 }
