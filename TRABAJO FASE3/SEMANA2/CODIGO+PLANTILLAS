@@ -1,1 +1,110 @@
+#include <iostream>
+#include <string>
 
+using namespace std;
+
+// Clase base Producto
+class Producto {
+protected:
+    string codigo_barras; // Código de barras del producto
+    string nombre; // Nombre del producto
+    float precio; // Precio del producto
+
+public:
+    // Constructor de Producto que inicializa los atributos
+    Producto(string codigo_barras, string nombre, float precio)
+        : codigo_barras(codigo_barras), nombre(nombre), precio(precio) {}
+
+    // Método virtual puro para mostrar detalles del producto
+    virtual void mostrarDetalles() = 0;
+
+    // Getters para los atributos del producto
+    string get_codigo_barras() const { return codigo_barras; }
+    string get_nombre() const { return nombre; }
+    float get_precio() const { return precio; }
+};
+
+// Clase derivada Libro que hereda de Producto
+class Libro : public Producto {
+private:
+    string autor; // Autor del libro
+    int num_paginas; // Número de páginas del libro
+
+public:
+    // Constructor de Libro que inicializa los atributos del libro y los de la clase base Producto
+    Libro(string codigo_barras, string nombre, float precio, string autor, int num_paginas)
+        : Producto(codigo_barras, nombre, precio), autor(autor), num_paginas(num_paginas) {}
+
+    // Implementación del método mostrarDetalles para la clase Libro
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Autor: " << autor
+             << ", Numero de Paginas: " << num_paginas << endl;
+    }
+};
+
+// Clase derivada Electronico que hereda de Producto
+class Electronico : public Producto {
+private:
+    string marca; // Marca del producto electrónico
+    string modelo; // Modelo del producto electrónico
+
+public:
+    // Constructor de Electronico que inicializa los atributos del producto electrónico y los de la clase base Producto
+    Electronico(string codigo_barras, string nombre, float precio, string marca, string modelo)
+        : Producto(codigo_barras, nombre, precio), marca(marca), modelo(modelo) {}
+
+    // Implementación del método mostrarDetalles para la clase Electronico
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Marca: " << marca
+             << ", Modelo: " << modelo << endl;
+    }
+};
+
+// Clase derivada Ropa que hereda de Producto
+class Ropa : public Producto {
+private:
+    string talla; // Talla de la prenda de ropa
+    string color; // Color de la prenda de ropa
+
+public:
+    // Constructor de Ropa que inicializa los atributos de la prenda de ropa y los de la clase base Producto
+    Ropa(string codigo_barras, string nombre, float precio, string talla, string color)
+        : Producto(codigo_barras, nombre, precio), talla(talla), color(color) {}
+
+    // Implementación del método mostrarDetalles para la clase Ropa
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Talla: " << talla
+             << ", Color: " << color << endl;
+    }
+};
+
+int main() {
+    // Crear un arreglo de punteros a Producto para almacenar diferentes tipos de productos
+    Producto* productos[3];
+
+    // Llenar el arreglo con objetos de diferentes tipos de productos
+    productos[0] = new Libro("LIB001", "El Diario de Alex", 69.69, "Alexander Velasquez", 666);
+    productos[1] = new Electronico("ELC001", "Celular", 4500.99, "AIPHONE", "14 ULTRA PRO MAX VERSION BEN 10");
+    productos[2] = new Ropa("ROP001", "Camiseta", 89.99, "XXXL", "VINOTINTO COMO AREQUIPA");
+
+    // Demostrar el polimorfismo llamando a mostrarDetalles() para cada producto
+    for (Producto* producto : productos) {
+        producto->mostrarDetalles();
+    }
+
+    // Liberar memoria asignada dinámicamente para evitar fugas de memoria
+    for (Producto* producto : productos) {
+        delete producto;
+    }
+
+    return 0;
+}
