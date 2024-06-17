@@ -114,3 +114,242 @@ int main() {
 Hola me pidieron implementar una plantilla de la clase inventario<T> que pueda almacenar cualquier tipo de producto. Agregar métodos a la plantilla para agregar eliminar buscar y listar prodructos. Utilizar la plantilla para crear inventarios de diferentes tipos de productos.
 Tambien me pidierion agregar un menu, verificar al momentode agregar un producto que no este el mimo. Validar todos los datos.
 Ten encuenta de no agregar otras librerias, solo usar iostream, string, y el using namespace sdt; .
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Clase base Producto
+class Producto {
+protected:
+    string codigo_barras; // Código de barras del producto
+    string nombre; // Nombre del producto
+    float precio; // Precio del producto
+
+public:
+    // Constructor de Producto que inicializa los atributos
+    Producto(string codigo_barras, string nombre, float precio)
+        : codigo_barras(codigo_barras), nombre(nombre), precio(precio) {}
+
+    // Método virtual puro para mostrar detalles del producto
+    virtual void mostrarDetalles() = 0;
+
+    // Getters para los atributos del producto
+    string get_codigo_barras() const { return codigo_barras; }
+    string get_nombre() const { return nombre; }
+    float get_precio() const { return precio; }
+};
+
+// Clase derivada Libro que hereda de Producto
+class Libro : public Producto {
+private:
+    string autor; // Autor del libro
+    int num_paginas; // Número de páginas del libro
+
+public:
+    // Constructor de Libro que inicializa los atributos del libro y los de la clase base Producto
+    Libro(string codigo_barras, string nombre, float precio, string autor, int num_paginas)
+        : Producto(codigo_barras, nombre, precio), autor(autor), num_paginas(num_paginas) {}
+
+    // Implementación del método mostrarDetalles para la clase Libro
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Autor: " << autor
+             << ", Numero de Paginas: " << num_paginas << endl;
+    }
+};
+
+// Clase derivada Electronico que hereda de Producto
+class Electronico : public Producto {
+private:
+    string marca; // Marca del producto electrónico
+    string modelo; // Modelo del producto electrónico
+
+public:
+    // Constructor de Electronico que inicializa los atributos del producto electrónico y los de la clase base Producto
+    Electronico(string codigo_barras, string nombre, float precio, string marca, string modelo)
+        : Producto(codigo_barras, nombre, precio), marca(marca), modelo(modelo) {}
+
+    // Implementación del método mostrarDetalles para la clase Electronico
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Marca: " << marca
+             << ", Modelo: " << modelo << endl;
+    }
+};
+
+// Clase derivada Ropa que hereda de Producto
+class Ropa : public Producto {
+private:
+    string talla; // Talla de la prenda de ropa
+    string color; // Color de la prenda de ropa
+
+public:
+    // Constructor de Ropa que inicializa los atributos de la prenda de ropa y los de la clase base Producto
+    Ropa(string codigo_barras, string nombre, float precio, string talla, string color)
+        : Producto(codigo_barras, nombre, precio), talla(talla), color(color) {}
+
+    // Implementación del método mostrarDetalles para la clase Ropa
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Talla: " << talla
+             << ", Color: " << color << endl;
+    }
+};
+
+// Clase template Inventario para almacenar productos de cualquier tipo
+template <typename T>
+class Inventario {
+private:
+    vector<T*> productos; // Vector para almacenar productos
+
+public:
+    // Método para agregar un producto al inventario
+    void agregarProducto(T* producto) {
+        bool existe = false;
+        for (T* p : productos) {
+            if (p->get_codigo_barras() == producto->get_codigo_barras()) {
+                existe = true;
+                break;
+            }
+        }
+        if (!existe) {
+            productos.push_back(producto);
+            cout << "Producto agregado con éxito." << endl;
+        } else {
+            cout << "El producto ya existe en el inventario." << endl;
+        }
+    }
+
+    // Método para eliminar un producto del inventario
+    void eliminarProducto(string codigo_barras) {
+        for (auto it = productos.begin(); it!= productos.end(); ++it) {
+            if ((*it)->get_codigo_barras() == codigo_barras) {
+                delete *it;
+                productos.erase(it);
+                cout << "Producto eliminado con éxito." << endl;
+                return;
+            }
+        }
+        cout << "El producto no existe en el inventario." << endl;
+    }
+
+    // Método para buscar un producto en el inventario
+    void buscarProducto(string codigo_barras) {
+        for (T* producto : productos) {
+            if (producto->get_codigo_barras() == codigo_barras) {
+                producto->mostrarDetalles();
+                return;
+            }
+        }
+        cout << "El producto no existe en el inventario." << endl;
+    }
+
+    // Método para listar todos los productos en el inventario
+    void listarProductos() {
+        for (T* producto : productos) {
+            producto->mostrarDetalles();
+        }
+    }
+};
+
+int main() {
+    Inventario<Producto> inventario;
+
+    int opcion;
+    do {
+        cout << "Menu:" << endl;
+        cout << "1. Agregar producto" << endl;
+        cout << "2. Eliminar producto" << endl;
+        cout << "3. Buscar producto" << endl;
+        cout << "4. Listar productos" << endl;
+        cout << "5. Salir" << endl;
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1: {
+                string codigo_barras, nombre;
+                float precio;
+                cout << "Ingrese código de barras: ";
+                cin >> codigo_barras;
+                cout << "Ingrese nombre: ";
+                cin >> nombre;
+                cout << "Ingrese precio: ";
+                cin >> precio;
+
+                int tipo_producto;
+                cout << "Ingrese tipo de producto (1. Libro, 2. Electronico, 3. Ropa): ";
+                cin >> tipo_producto;
+
+                switch (tipo_producto) {
+                    case 1: {
+                        string autor;
+                        int num_paginas;
+                        cout << "Ingrese autor: ";
+                        cin >> autor;
+                        cout << "Ingrese número de páginas: ";
+                        cin >> num_paginas;
+                        inventario.agregarProducto(new Libro(codigo_barras, nombre, precio, autor, num_paginas));
+                        break;
+                    }
+                    case 2: {
+                        string marca, modelo;
+                        cout << "Ingrese marca: ";
+                        cin >> marca;
+                        cout << "Ingrese modelo: ";
+                        cin >> modelo;
+                        inventario.agregarProducto(new Electronico(codigo_barras, nombre, precio, marca, modelo));
+                        break;
+                    }
+                    case 3: {
+                        string talla, color;
+                        cout << "Ingrese talla: ";
+                        cin >> talla;
+                        cout << "Ingrese color: ";
+                        cin >> color;
+                        inventario.agregarProducto(new Ropa(codigo_barras, nombre, precio, talla, color));
+                        break;
+                    }
+                    default:
+                        cout << "Opción inválida." << endl;
+                        break;
+                }
+                break;
+            }
+            case 2: {
+                string codigo_barras;
+                cout << "Ingrese código de barras del producto a eliminar: ";
+                cin >> codigo_barras;
+                inventario.eliminarProducto(codigo_barras);
+                break;
+            }
+            case 3: {
+                string codigo_barras;
+                cout << "Ingrese código de barras del producto a buscar: ";
+                cin >> codigo_barras;
+                inventario.buscarProducto(codigo_barras);
+                break;
+            }
+            case 4:
+                inventario.listarProductos();
+                break;
+            case 5:
+                break;
+            default:
+                cout << "Opción inválida." << endl;
+                break;
+        }
+    } while (opcion!= 5);
+
+    return 0;
+}
