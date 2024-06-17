@@ -24,6 +24,10 @@ public:
     float get_precio() const { return precio; }
 };
 
+Hola me pidieron implementar una plantilla de la clase inventario<T> que pueda almacenar cualquier tipo de producto. Agregar métodos a la plantilla para agregar eliminar buscar y listar prodructos. Utilizar la plantilla para crear inventarios de diferentes tipos de productos.
+Tambien me pidierion agregar un menu, verificar al momentode agregar un producto que no este el mimo. Validar todos los datos.
+Ten encuenta de no agregar otras librerias, solo usar iostream, string, y el using namespace sdt; .
+
 // Clase derivada Libro que hereda de Producto
 class Libro : public Producto {
 private:
