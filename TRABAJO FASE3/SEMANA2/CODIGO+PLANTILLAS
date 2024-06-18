@@ -237,6 +237,10 @@ int main() {
                         }
 
                         inventario.agregarProducto(new Libro(codigo_barras, nombre, precio, autor, num_paginas));
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el código..." << endl;
                         break;
                     }
                     case 2: {
@@ -249,6 +253,10 @@ int main() {
                         cin.ignore();
                         getline(cin, modelo);
                         inventario.agregarProducto(new Electronico(codigo_barras, nombre, precio, marca, modelo));
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el código..." << endl;
                         break;
                     }
                     case 3: {
@@ -268,6 +276,10 @@ int main() {
                         cin.ignore();
                         getline(cin, color);
                         inventario.agregarProducto(new Ropa(codigo_barras, nombre, precio, talla, color));
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el código..." << endl;
                         break;
                     }
                     default:
@@ -282,6 +294,10 @@ int main() {
                 cout << "Ingrese codigo de barras del producto a eliminar: ";
                 cin >> codigo_barras;
                 inventario.eliminarProducto(codigo_barras);
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el código..." << endl;
                 break;
             }
             case 3: {
@@ -290,11 +306,19 @@ int main() {
                 cout << "Ingrese codigo de barras del producto a buscar: ";
                 cin >> codigo_barras;
                 inventario.buscarProducto(codigo_barras);
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el código..." << endl;
                 break;
             }
             case 4:
                 // Listar todos los productos
                 inventario.listarProductos();
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el código..." << endl;
                 break;
             case 5:
                 // Salir del programa
