@@ -1,1 +1,72 @@
+#include <iostream>
+using namespace std;
+
+// Definición de la plantilla de clase Recipiente
+template <typename T>
+class Recipiente {
+private:
+    T* arr;  // Puntero al arreglo de tipo T
+    int n;   // Tamaño del arreglo
+
+public:
+    // Constructor que inicializa el arreglo con los valores dados y su tamaño
+    Recipiente(T arr[], int n) {
+        this->n = n;  // Asignar el tamaño del arreglo
+        this->arr = new T[n];  // Reservar memoria para el arreglo
+        // Copiar los elementos del arreglo dado al nuevo arreglo
+        for (int i = 0; i < n; ++i) {
+            this->arr[i] = arr[i];
+        }
+    }
+
+    // Destructor para liberar la memoria reservada
+    ~Recipiente() {
+        delete[] arr;
+    }
+
+    // Método para ordenar el arreglo utilizando el algoritmo de burbuja
+    void ordenar() {
+        // Recorrer el arreglo
+        for (int i = 0; i < n-1; ++i) {
+            // Comparar y cambiar de posición si es necesario
+            for (int j = 0; j < n-i-1; ++j) {
+                if (arr[j] > arr[j+1]) {
+                    swap(arr[j], arr[j+1]);
+                }
+            }
+        }
+    }
+
+    // Método para imprimir el arreglo
+    void imprimir() const {
+        // Recorrer el arreglo e imprimir cada elemento
+        for (int i = 0; i < n; ++i) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;  // Nueva línea al final
+    }
+};
+
+int main() {
+    // Arreglo de enteros a ser ordenado
+    int arr[] = {5, 2, 9, 1, 5, 6};
+    int n = sizeof(arr)/sizeof(arr[0]);  // Calcular el tamaño del arreglo
+
+    // Crear un objeto Recipiente con el arreglo de enteros
+    Recipiente<int> recipiente(arr, n);
+
+    // Imprimir el arreglo original
+    cout << "Arreglo original: ";
+    recipiente.imprimir();
+
+    // Ordenar el arreglo
+    recipiente.ordenar();
+
+    // Imprimir el arreglo ordenado
+    cout << "Arreglo ordenado: ";
+    recipiente.imprimir();
+
+    return 0;  // Terminar el programa
+}
+
 
