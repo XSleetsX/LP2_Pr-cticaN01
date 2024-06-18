@@ -208,7 +208,8 @@ int main() {
                 }
 
                 cout << "Ingrese nombre: ";
-                cin >> nombre;
+                cin.ignore();
+                getline(cin, nombre);
                 cout << "Ingrese precio: ";
                 cin >> precio;
 
@@ -222,7 +223,10 @@ int main() {
                         string autor;
                         int num_paginas;
                         cout << "Ingrese autor: ";
-                        cin >> autor;
+                        cin.ignore();
+                        getline(cin, autor);
+                        
+                        
                         cout << "Ingrese numero de paginas: ";
                         cin >> num_paginas;
 
@@ -299,3 +303,4 @@ int main() {
 
     return 0;
 }
+
