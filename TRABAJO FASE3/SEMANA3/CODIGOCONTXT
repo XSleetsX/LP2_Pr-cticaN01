@@ -70,6 +70,8 @@ public:
              << ", Marca: " << marca
              << ", Modelo: " << modelo << endl;
     }
+
+    string get_modelo() const { return modelo; }
 };
 
 // Clase derivada Ropa que hereda de Producto
@@ -163,6 +165,37 @@ public:
             productos[i]->mostrarDetalles();
         }
     }
+
+    // Método para verificar si un código de barras ya existe en el inventario
+    bool existeCodigoBarras(const string& codigo) const {
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->get_codigo_barras() == codigo) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Método para verificar si un nombre ya existe en el inventario
+    bool existeNombre(const string& nombre) const {
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->get_nombre() == nombre) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Método para verificar si un modelo ya existe en el inventario (solo para electrónicos)
+    bool existeModelo(const string& modelo) const {
+        for (int i = 0; i < num_productos; i++) {
+            Electronico* electronico = dynamic_cast<Electronico*>(productos[i]);
+            if (electronico != nullptr && electronico->get_modelo() == modelo) {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 // Función para validar el código de barras
@@ -207,9 +240,30 @@ int main() {
                     break;
                 }
 
+                // Verificar si el código de barras ya existe
+                if (inventario.existeCodigoBarras(codigo_barras)) {
+                    cout << "Error: El codigo de barras ya existe." << endl;
+                    cout << "Presiona Enter para continuar...";
+                    cin.ignore();
+                    cin.get();  // Espera a que el usuario presione Enter
+                    cout << "Continuando con el código..." << endl;
+                    break;
+                }
+
                 cout << "Ingrese nombre: ";
                 cin.ignore();
                 getline(cin, nombre);
+
+                // Verificar si el nombre ya existe
+                if (inventario.existeNombre(nombre)) {
+                    cout << "Error: El nombre ya existe." << endl;
+                    cout << "Presiona Enter para continuar...";
+                    cin.ignore();
+                    cin.get();  // Espera a que el usuario presione Enter
+                    cout << "Continuando con el código..." << endl;
+                    break;
+                }
+
                 cout << "Ingrese precio: ";
                 cin >> precio;
 
@@ -226,7 +280,6 @@ int main() {
                         cin.ignore();
                         getline(cin, autor);
                         
-                        
                         cout << "Ingrese numero de paginas: ";
                         cin >> num_paginas;
 
@@ -237,10 +290,6 @@ int main() {
                         }
 
                         inventario.agregarProducto(new Libro(codigo_barras, nombre, precio, autor, num_paginas));
-                        cout << "Presiona Enter para continuar...";
-                        cin.ignore();
-                        cin.get();  // Espera a que el usuario presione Enter
-                        cout << "Continuando con el código..." << endl;
                         break;
                     }
                     case 2: {
@@ -250,13 +299,15 @@ int main() {
                         cin.ignore();
                         getline(cin, marca);
                         cout << "Ingrese modelo: ";
-                        cin.ignore();
                         getline(cin, modelo);
+
+                        // Verificar si el modelo ya existe
+                        if (inventario.existeModelo(modelo)) {
+                            cout << "Error: El modelo ya existe." << endl;
+                            break;
+                        }
+
                         inventario.agregarProducto(new Electronico(codigo_barras, nombre, precio, marca, modelo));
-                        cout << "Presiona Enter para continuar...";
-                        cin.ignore();
-                        cin.get();  // Espera a que el usuario presione Enter
-                        cout << "Continuando con el código..." << endl;
                         break;
                     }
                     case 3: {
@@ -268,11 +319,14 @@ int main() {
                         // Validar talla
                         if (talla != "S" && talla != "M" && talla != "L" && talla != "XL" && talla != "XXL" && talla != "XXXL") {
                             cout << "Error: Talla inválida. Debe ser una de las siguientes: S, M, L, XL, XXL, XXXL." << endl;
+                            cout << "Presiona Enter para continuar...";
+                            cin.ignore();
+                            cin.get();  // Espera a que el usuario presione Enter
+                            cout << "Continuando con el código..." << endl;
                             break;
                         }
 
                         cout << "Ingrese color: ";
-                        
                         cin.ignore();
                         getline(cin, color);
                         inventario.agregarProducto(new Ropa(codigo_barras, nombre, precio, talla, color));
@@ -284,6 +338,10 @@ int main() {
                     }
                     default:
                         cout << "Opcion invalida." << endl;
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el código..." << endl;
                         break;
                 }
                 break;
@@ -331,4 +389,3 @@ int main() {
 
     return 0;
 }
-
