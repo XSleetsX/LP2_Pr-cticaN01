@@ -1,1 +1,334 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Clase base Producto
+class Producto {
+protected:
+    string codigo_barras; // Codigo de barras del producto
+    string nombre; // Nombre del producto
+    float precio; // Precio del producto
+
+public:
+    // Constructor de Producto que inicializa los atributos
+    Producto(string codigo_barras, string nombre, float precio)
+        : codigo_barras(codigo_barras), nombre(nombre), precio(precio) {}
+
+    // Metodo virtual puro para mostrar detalles del producto
+    virtual void mostrarDetalles() = 0;
+
+    // Getters para los atributos del producto
+    string get_codigo_barras() const { return codigo_barras; }
+    string get_nombre() const { return nombre; }
+    float get_precio() const { return precio; }
+};
+
+// Clase derivada Libro que hereda de Producto
+class Libro : public Producto {
+private:
+    string autor; // Autor del libro
+    int num_paginas; // Número de páginas del libro
+
+public:
+    // Constructor de Libro que inicializa los atributos del libro y los de la clase base Producto
+    Libro(string codigo_barras, string nombre, float precio, string autor, int num_paginas)
+        : Producto(codigo_barras, nombre, precio), autor(autor), num_paginas(num_paginas) {
+            // Validar que el número de páginas no sea negativo
+            if (num_paginas < 0) {
+                cout << "Error: El número de páginas no puede ser negativo." << endl;
+                this->num_paginas = 0; // Asignar un valor por defecto válido
+            }
+        }
+
+    // Implementación del método mostrarDetalles para la clase Libro
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Autor: " << autor
+             << ", Numero de Paginas: " << num_paginas << endl;
+    }
+};
+
+// Clase derivada Electronico que hereda de Producto
+class Electronico : public Producto {
+private:
+    string marca; // Marca del producto electrónico
+    string modelo; // Modelo del producto electrónico
+
+public:
+    // Constructor de Electronico que inicializa los atributos del producto electrónico y los de la clase base Producto
+    Electronico(string codigo_barras, string nombre, float precio, string marca, string modelo)
+        : Producto(codigo_barras, nombre, precio), marca(marca), modelo(modelo) {}
+
+    // Implementación del método mostrarDetalles para la clase Electronico
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Marca: " << marca
+             << ", Modelo: " << modelo << endl;
+    }
+};
+
+// Clase derivada Ropa que hereda de Producto
+class Ropa : public Producto {
+private:
+    string talla; // Talla de la prenda de ropa
+    string color; // Color de la prenda de ropa
+
+public:
+    // Constructor de Ropa que inicializa los atributos de la prenda de ropa y los de la clase base Producto
+    Ropa(string codigo_barras, string nombre, float precio, string talla, string color)
+        : Producto(codigo_barras, nombre, precio), talla(talla), color(color) {
+            // Validar que la talla sea una de las permitidas
+            if (talla != "S" && talla != "M" && talla != "L" && talla != "XL" && talla != "XXL" && talla != "XXXL") {
+                cout << "Error: Talla inválida. Debe ser una de las siguientes: S, M, L, XL, XXL, XXXL." << endl;
+                this->talla = "S"; // Asignar una talla por defecto válida
+            }
+        }
+
+    // Implementación del método mostrarDetalles para la clase Ropa
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Talla: " << talla
+             << ", Color: " << color << endl;
+    }
+};
+
+// Clase template Inventario para almacenar productos de cualquier tipo
+template <typename T>
+class Inventario {
+private:
+    T* productos[100]; // Array para almacenar punteros a productos
+    int num_productos; // Número de productos en el inventario
+
+public:
+    // Constructor de Inventario que inicializa el numero de productos
+    Inventario() : num_productos(0) {}
+
+    // Método para agregar un producto al inventario
+    void agregarProducto(T* producto) {
+        bool existe = false;
+        // Verificar si el producto ya existe en el inventario
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->get_codigo_barras() == producto->get_codigo_barras()) {
+                existe = true;
+                break;
+            }
+        }
+        // Si el producto no existe, agregarlo al inventario
+        if (!existe) {
+            productos[num_productos++] = producto;
+            cout << "Producto agregado con exito." << endl;
+        } else {
+            cout << "El producto ya existe en el inventario." << endl;
+        }
+    }
+
+    // Método para eliminar un producto del inventario
+    void eliminarProducto(string codigo_barras) {
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->get_codigo_barras() == codigo_barras) {
+                delete productos[i];
+                // Desplazar los productos para llenar el hueco dejado por el producto eliminado
+                for (int j = i; j < num_productos - 1; j++) {
+                    productos[j] = productos[j + 1];
+                }
+                num_productos--;
+                cout << "Producto eliminado con exito." << endl;
+                return;
+            }
+        }
+        cout << "El producto no existe en el inventario." << endl;
+    }
+
+    // Método para buscar un producto en el inventario
+    void buscarProducto(string codigo_barras) {
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->get_codigo_barras() == codigo_barras) {
+                productos[i]->mostrarDetalles();
+                return;
+            }
+        }
+        cout << "El producto no existe en el inventario." << endl;
+    }
+
+    // Método para listar todos los productos en el inventario
+    void listarProductos() {
+        for (int i = 0; i < num_productos; i++) {
+            productos[i]->mostrarDetalles();
+        }
+    }
+};
+
+// Función para validar el código de barras
+bool validarCodigoBarras(string codigo_barras) {
+    if (codigo_barras.length() != 6) {
+        cout << "Error: El codigo de barras debe tener 6 caracteres." << endl;
+        return false;
+    }
+    return true;
+}
+
+int main() {
+    Inventario<Producto> inventario; // Crear un inventario para productos
+
+    // Pre-cargar productos
+    inventario.agregarProducto(new Libro("LIB001", "El Diario de Alex", 69.69, "Alexander Velasquez", 666));
+    inventario.agregarProducto(new Electronico("ELC001", "Celular", 4500.99, "AIPHONE", "14 ULTRA PRO MAX VERSION BEN 10"));
+    inventario.agregarProducto(new Ropa("ROP001", "Camiseta", 89.99, "XXXL", "VINOTINTO COMO AREQUIPA"));
+
+    int opcion;
+    do {
+        // Mostrar menu de opciones
+        cout << "Menu:" << endl;
+        cout << "1. Agregar producto" << endl;
+        cout << "2. Eliminar producto" << endl;
+        cout << "3. Buscar producto" << endl;
+        cout << "4. Listar productos" << endl;
+        cout << "5. Salir" << endl;
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1: {
+                // Agregar un producto
+                string codigo_barras, nombre;
+                float precio;
+                cout << "Ingrese codigo de barras: ";
+                cin >> codigo_barras;
+
+                // Validar el código de barras
+                if (!validarCodigoBarras(codigo_barras)) {
+                    break;
+                }
+
+                cout << "Ingrese nombre: ";
+                cin.ignore();
+                getline(cin, nombre);
+                cout << "Ingrese precio: ";
+                cin >> precio;
+
+                int tipo_producto;
+                cout << "Ingrese tipo de producto (1. Libro, 2. Electronico, 3. Ropa): ";
+                cin >> tipo_producto;
+
+                switch (tipo_producto) {
+                    case 1: {
+                        // Agregar un libro
+                        string autor;
+                        int num_paginas;
+                        cout << "Ingrese autor: ";
+                        cin.ignore();
+                        getline(cin, autor);
+                        
+                        
+                        cout << "Ingrese numero de paginas: ";
+                        cin >> num_paginas;
+
+                        // Validar número de páginas
+                        if (num_paginas < 0) {
+                            cout << "Error: El número de páginas no puede ser negativo." << endl;
+                            break;
+                        }
+
+                        inventario.agregarProducto(new Libro(codigo_barras, nombre, precio, autor, num_paginas));
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el código..." << endl;
+                        break;
+                    }
+                    case 2: {
+                        // Agregar un producto electrónico
+                        string marca, modelo;
+                        cout << "Ingrese marca: ";
+                        cin.ignore();
+                        getline(cin, marca);
+                        cout << "Ingrese modelo: ";
+                        cin.ignore();
+                        getline(cin, modelo);
+                        inventario.agregarProducto(new Electronico(codigo_barras, nombre, precio, marca, modelo));
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el código..." << endl;
+                        break;
+                    }
+                    case 3: {
+                        // Agregar una prenda de ropa
+                        string talla, color;
+                        cout << "Ingrese talla: ";
+                        cin >> talla;
+
+                        // Validar talla
+                        if (talla != "S" && talla != "M" && talla != "L" && talla != "XL" && talla != "XXL" && talla != "XXXL") {
+                            cout << "Error: Talla inválida. Debe ser una de las siguientes: S, M, L, XL, XXL, XXXL." << endl;
+                            break;
+                        }
+
+                        cout << "Ingrese color: ";
+                        
+                        cin.ignore();
+                        getline(cin, color);
+                        inventario.agregarProducto(new Ropa(codigo_barras, nombre, precio, talla, color));
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el código..." << endl;
+                        break;
+                    }
+                    default:
+                        cout << "Opcion invalida." << endl;
+                        break;
+                }
+                break;
+            }
+            case 2: {
+                // Eliminar un producto
+                string codigo_barras;
+                cout << "Ingrese codigo de barras del producto a eliminar: ";
+                cin >> codigo_barras;
+                inventario.eliminarProducto(codigo_barras);
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el código..." << endl;
+                break;
+            }
+            case 3: {
+                // Buscar un producto
+                string codigo_barras;
+                cout << "Ingrese codigo de barras del producto a buscar: ";
+                cin >> codigo_barras;
+                inventario.buscarProducto(codigo_barras);
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el código..." << endl;
+                break;
+            }
+            case 4:
+                // Listar todos los productos
+                inventario.listarProductos();
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el código..." << endl;
+                break;
+            case 5:
+                // Salir del programa
+                break;
+            default:
+                cout << "Opcion invalida." << endl;
+                break;
+        }
+    } while (opcion != 5);
+
+    return 0;
+}
 
