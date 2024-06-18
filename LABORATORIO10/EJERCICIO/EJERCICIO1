@@ -1,1 +1,106 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+ 
+// Función para calcular la distancia entre dos puntos (x1, y1) y (x2, y2)
+template <typename A>
+A calcularDistancia(A px1, A py1, A px2, A py2) {
+    // Usar fórmula de distancia euclidiana: sqrt((x2 - x1)^2 + (y2 - y1)^2)
+    return sqrt(pow(px2 - px1, 2) + pow(py2 - py1, 2));
+}
+ 
+// Función para calcular el tiempo de entrega dado la distancia y la velocidad
+template <typename B>
+B tiempoEntrega(B dis, B vel) {
+    // Dividir la distancia entre la velocidad para obtener el tiempo
+    return dis / vel;
+}
+ 
+// Función para generar un reporte con la ruta, distancia y tiempo estimado
+template <typename C, typename D>
+void generarReporte(C r, D d, D t) {
+    cout << "REPORTE" << endl;
+    cout << "Nombre de la Ruta: " << r << endl;
+    cout << "Distancia: " << d << " metros" << endl;
+    cout << "Tiempo estimado: " << t << " horas" << endl;
+}
+ 
+// Función para ordenar un arreglo de forma ascendente usando el algoritmo de burbuja
+template <typename T>
+void ordenarArreglo(T arr[], int tamanio) {
+    for (int i = 0; i < tamanio - 1; i++) {
+        for (int j = 0; j < tamanio - i - 1; j++) {
+            // Comparar elementos adyacentes y intercambiarlos si están en orden incorrecto
+            if (arr[j] > arr[j + 1]) {
+                T temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+ 
+// Función para imprimir un arreglo ordenado
+template <typename T>
+void imprimirArreglo(T arr[], int tamanio) {
+    cout << "Arreglo ordenado: ";
+    for (int i = 0; i < tamanio; i++) {
+        // Imprimir cada elemento del arreglo separado por un espacio
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+ 
+int main() {
+    int x1, y1, x2, y2, vel, dis, temp;
+    
+    // Solicitar al usuario que ingrese el punto de partida
+    cout << "Ingresar el punto de partida: " << endl;
+    cout << "x: ";
+    cin >> x1;
+    cout << "y: ";
+    cin >> y1;
+    
+    // Solicitar al usuario que ingrese el punto de llegada
+    cout << "Ingresar el punto de llegada: " << endl;
+    cout << "x: ";
+    cin >> x2;
+    cout << "y: ";
+    cin >> y2;
+    
+    // Solicitar al usuario que ingrese la velocidad
+    cout << "Ingresa la velocidad: " << endl;
+    cin >> vel;
+    
+    // Calcular la distancia entre los puntos de partida y llegada
+    dis = calcularDistancia(x1, y1, x2, y2);
+    
+    // Calcular el tiempo estimado de entrega
+    temp = tiempoEntrega(dis, vel);
+    
+    // Generar un reporte con la ruta, distancia y tiempo estimado
+    generarReporte("Arequipa-Chivay", dis, temp);
+    
+    // Solicitar al usuario que ingrese el tamaño del arreglo
+    int tamanio;
+    cout << "Ingrese el tamaño del arreglo: ";
+    cin >> tamanio;
+    
+    // Crear un arreglo con el tamaño especificado
+    int arr[tamanio];
+    
+    // Solicitar al usuario que ingrese los elementos del arreglo
+    cout << "Ingrese los elementos del arreglo:\n";
+    for (int i = 0; i < tamanio; i++) {
+        cin >> arr[i];
+    }
+    
+    // Ordenar el arreglo de forma ascendente
+    ordenarArreglo(arr, tamanio);
+    
+    // Imprimir el arreglo ordenado
+    imprimirArreglo(arr, tamanio);
+    
+    return 0;
+}
 
