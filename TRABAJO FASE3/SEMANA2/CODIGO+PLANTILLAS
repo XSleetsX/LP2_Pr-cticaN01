@@ -243,9 +243,11 @@ int main() {
                         // Agregar un producto electrónico
                         string marca, modelo;
                         cout << "Ingrese marca: ";
-                        cin >> marca;
+                        cin.ignore();
+                        getline(cin, marca);
                         cout << "Ingrese modelo: ";
-                        cin >> modelo;
+                        cin.ignore();
+                        getline(cin, modelo);
                         inventario.agregarProducto(new Electronico(codigo_barras, nombre, precio, marca, modelo));
                         break;
                     }
@@ -262,7 +264,9 @@ int main() {
                         }
 
                         cout << "Ingrese color: ";
-                        cin >> color;
+                        
+                        cin.ignore();
+                        getline(cin, color);
                         inventario.agregarProducto(new Ropa(codigo_barras, nombre, precio, talla, color));
                         break;
                     }
@@ -303,4 +307,3 @@ int main() {
 
     return 0;
 }
-
