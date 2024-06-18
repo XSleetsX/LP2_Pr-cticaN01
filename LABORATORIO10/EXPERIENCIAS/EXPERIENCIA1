@@ -1,1 +1,42 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+template <typename A>  //Creamos la plantilla para la funcion calcularDistancia()
+A calcularDistancia(A px1, A py1, A px2, A py2){  //Todos los parametros son del mismo tipo
+    return sqrt(pow(px2 - px1, 2) + pow(py2 - py1, 2));
+}
+
+template <typename B>  //Creamos la plantilla para la funcion tiempoEntrega()
+B tiempoEntrega(B dis, B vel){  //Todos los parametros son del mismo tipo 
+    return dis / vel;
+}
+
+template <typename C, typename D>  //Creamos la plantilla para la funcion generarReporte() para que acepte 2 tipos de datos
+void generarReporte(C r, D d, D t){  //El parametro r es de un tipo y los parámetros d y t son de otro
+    cout << "REPORTE" << endl;
+    cout << "Nombre de la Ruta: " << r << endl;
+    cout << "Distancia: " << d << " metros" << endl;
+    cout << "Tiempo estimado: " << t << " horas" << endl;
+}
+
+int main(){
+    int x1,y1,x2,y2,vel,dis,temp;  //Ingresamos el tipo de dato que requerimos
+    cout << "Ingresar el punto de partida: " << endl;
+    cout << "x: ";
+    cin >> x1;
+    cout << "y: ";
+    cin >> y1;
+    cout << "Ingresar el punto de llegada: " << endl;
+    cout << "x: ";
+    cin >> x2;
+    cout << "y: ";
+    cin >> y2;
+    cout << "Ingresa la velocidad: " << endl;
+    cin >> vel;
+    dis = calcularDistancia(x1,y1,x2,y2);  //Calculamos la distancia entre puntos
+    temp = tiempoEntrega(dis,vel);  //Calculamos el tiempo estimado en horas
+generarReporte("Arequipa-Chivay",dis, temp);  //Se genera el reporte correspondiente
+    return 0;
+}
 
