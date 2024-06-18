@@ -1,1 +1,130 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+ 
+// Clase Ruta
+class Ruta {
+private:
+    // Atributos de la clase Ruta
+    string origen;
+    string destino;
+ 
+public:
+    // Constructor de la clase Ruta
+    Ruta(string origen, string destino) : origen(origen), destino(destino) {}
+ 
+    // Métodos de acceso (getters) para los atributos de la clase Ruta
+    string getOrigen() {
+        return this->origen;
+    }
+    string getDestino() {
+        return this->destino;
+    }
+ 
+    // Método plantilla para asignar un vehículo a una ruta
+    template <typename A, typename B>
+    void asignarVehiculo(A vehiculo, B velocidad) {
+        cout << "Se asigno el vehiculo " << vehiculo << " a la ruta " << origen << "-" << destino << " con velocidad: " << velocidad << endl;
+    }
+ 
+    // Método plantilla para calcular la distancia entre dos puntos
+    template <typename C>
+    C calcularDistancia(C px1, C py1, C px2, C py2) {
+        return sqrt(pow(px2 - px1, 2) + pow(py2 - py1, 2));
+    }
+};
+ 
+// Clase Entrega
+class Entrega {
+private:
+    // Atributo de la clase Entrega
+    string direccion;
+ 
+public:
+    // Constructor de la clase Entrega
+    Entrega(string direccion) : direccion(direccion) {}
+ 
+    // Método plantilla para calcular el tiempo de entrega
+    template <typename D>
+    D tiempoEntrega(D dis, D vel) {
+        return dis / vel;
+    }
+};
+ 
+// Clase Reporte
+class Reporte {
+private:
+    // Atributos de la clase Reporte
+    string persona;
+    int num_reporte;
+ 
+public:
+    // Constructor de la clase Reporte
+    Reporte(string persona, int num_reporte) : persona(persona), num_reporte(num_reporte) {}
+ 
+    // Método plantilla para generar un reporte
+    template <typename E, typename F>
+    void generarReporte(E r, F d, F t) {
+        cout << "REPORTE" << endl;
+        cout << "Nombre de la Ruta: " << r << endl;
+        cout << "Distancia: " << d << " metros" << endl;
+        cout << "Tiempo estimado: " << t << " horas" << endl;
+    }
+};
+ 
+// Función plantilla para ordenar un arreglo
+template <typename T>
+void ordenarArreglo(T arr[], int tamanio) {
+    for (int i = 0; i < tamanio - 1; i++) {
+        for (int j = 0; j < tamanio - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                T temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+ 
+// Función plantilla para imprimir un arreglo
+template <typename T>
+void imprimirArreglo(T arr[], int tamanio) {
+    cout << "Arreglo ordenado: ";
+    for (int i = 0; i < tamanio; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+ 
+int main() {
+    // Crear un objeto Ruta
+    Ruta r1("Arequipa", "Chivay");
+    cout << "Ruta: " << r1.getOrigen() << "-" << r1.getDestino() << endl;
+    cout << "Distancia: " << r1.calcularDistancia(50, 100, 450, 300) << " metros" << endl;
+    r1.asignarVehiculo("Bus A", 60);
+ 
+    // Crear un objeto Entrega
+    Entrega e1("Chivay");
+    cout << "Tiempo estimado: " << e1.tiempoEntrega(r1.calcularDistancia(50, 100, 450, 300), 60) << " horas" << endl;
+ 
+    // Crear un objeto Reporte
+    Reporte rep1("Luis", 01);
+    rep1.generarReporte(r1.getOrigen() + r1.getDestino(), r1.calcularDistancia(50, 100, 450, 300), e1.tiempoEntrega(r1.calcularDistancia(50, 100, 450, 300), 60));
+ 
+    // Ordenar un arreglo
+    int tamanio;
+    cout << "Ingrese el tamaño del arreglo: ";
+    cin >> tamanio;
+ 
+    int arr[tamanio];
+    cout << "Ingrese los elementos del arreglo:\n";
+    for (int i = 0; i < tamanio; i++) {
+        cin >> arr[i];
+    }
+ 
+    ordenarArreglo(arr, tamanio);
+    imprimirArreglo(arr, tamanio);
+ 
+    return 0;
+}
 
