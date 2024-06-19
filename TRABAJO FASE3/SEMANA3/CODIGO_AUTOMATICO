@@ -1,0 +1,331 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Producto {
+protected:
+    string codigo_barras; 
+    string nombre; 
+    float precio; 
+
+public:
+    Producto(string codigo_barras, string nombre, float precio)
+        : codigo_barras(codigo_barras), nombre(nombre), precio(precio) {}
+
+    virtual void mostrarDetalles() = 0;
+
+    string get_codigo_barras() const { return codigo_barras; }
+    string get_nombre() const { return nombre; }
+    float get_precio() const { return precio; }
+};
+
+class Libro : public Producto {
+private:
+    string autor; 
+    int num_paginas; 
+
+public:
+    Libro(string codigo_barras, string nombre, float precio, string autor, int num_paginas)
+        : Producto(codigo_barras, nombre, precio), autor(autor), num_paginas(num_paginas) {}
+
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Autor: " << autor
+             << ", Numero de Paginas: " << num_paginas << endl;
+    }
+};
+
+class Electronico : public Producto {
+private:
+    string marca; 
+    string modelo; 
+
+public:
+    Electronico(string codigo_barras, string nombre, float precio, string marca, string modelo)
+        : Producto(codigo_barras, nombre, precio), marca(marca), modelo(modelo) {}
+
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Marca: " << marca
+             << ", Modelo: " << modelo << endl;
+    }
+
+    string get_modelo() const { return modelo; }
+};
+
+class Ropa : public Producto {
+private:
+    string talla; 
+    string color; 
+
+public:
+    Ropa(string codigo_barras, string nombre, float precio, string talla, string color)
+        : Producto(codigo_barras, nombre, precio), talla(talla), color(color) {}
+
+    void mostrarDetalles() override {
+        cout << "Codigo de Barras: " << get_codigo_barras()
+             << ", Nombre: " << get_nombre()
+             << ", Precio: " << get_precio()
+             << ", Talla: " << talla
+             << ", Color: " << color << endl;
+    }
+};
+
+template <typename T>
+class Inventario {
+private:
+    T* productos[100]; 
+    int num_productos; 
+
+public:
+    Inventario() : num_productos(0) {}
+
+    void agregarProducto(T* producto) {
+        bool existe = false;
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->get_codigo_barras() == producto->get_codigo_barras()) {
+                existe = true;
+                break;
+            }
+        }
+        if (!existe) {
+            productos[num_productos++] = producto;
+            cout << "Producto agregado con exito." << endl;
+        } else {
+            cout << "El producto ya existe en el inventario." << endl;
+        }
+    }
+
+    void eliminarProducto(string codigo_barras) {
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->get_codigo_barras() == codigo_barras) {
+                delete productos[i];
+                for (int j = i; j < num_productos - 1; j++) {
+                    productos[j] = productos[j + 1];
+                }
+                num_productos--;
+                cout << "Producto eliminado con exito." << endl;
+                return;
+            }
+        }
+        cout << "El producto no existe en el inventario." << endl;
+    }
+
+    void buscarProducto(string codigo_barras) {
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->get_codigo_barras() == codigo_barras) {
+                productos[i]->mostrarDetalles();
+                return;
+            }
+        }
+        cout << "El producto no existe en el inventario." << endl;
+    }
+
+    void listarProductos() {
+        for (int i = 0; i < num_productos; i++) {
+            productos[i]->mostrarDetalles();
+        }
+    }
+
+    bool existeCodigoBarras(const string& codigo) const {
+        for (int i = 0; i < num_productos; i++) {
+            if(productos[i]->get_codigo_barras() == codigo) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool existeNombre(const string& nombre) const {
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->get_nombre() == nombre) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool existeModelo(const string& modelo) const {
+        for (int i = 0; i < num_productos; i++) {
+            Electronico* electronico = (Electronico*)productos[i];
+            if (electronico!= nullptr && electronico->get_modelo() == modelo) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+bool validarCodigoBarras(string codigo_barras) {
+    if (codigo_barras.length()!= 6) {
+        cout << "Error: El codigo de barras debe tener 6 caracteres." << endl;
+        return false;
+    }
+    return true;
+}
+
+int leerOpcion() {
+    string entrada;
+    int opcion;
+    while (true) {
+        cout << "Opcion: ";
+        cin >> entrada;
+        try {
+            opcion = stoi(entrada); 
+            break; 
+        } catch (invalid_argument&) {
+            cout << "Entrada invalida. Por favor, ingrese un numero." << endl;
+        }
+    }
+    return opcion;
+}
+
+string generarCodigoBarras(string tipo_producto) {
+    int ultimo_numero = 0;
+    string ultimo_codigo_barras;
+    if (tipo_producto == "Libro") {
+        ultimo_codigo_barras = "LIB";
+    } else if (tipo_producto == "Electronico") {
+        ultimo_codigo_barras = "ELEC";
+    } else if (tipo_producto == "Ropa") {
+        ultimo_codigo_barras = "ROPA";
+    }
+
+    for (int i = 0; i < 100; i++) {
+        string codigo_barras = ultimo_codigo_barras + to_string(ultimo_numero);
+        if (ultimo_numero < 10) {
+            codigo_barras += "00" + to_string(ultimo_numero);
+        } else if (ultimo_numero < 100) {
+            codigo_barras += "0" + to_string(ultimo_numero);
+        } else {
+            codigo_barras += to_string(ultimo_numero);
+        }
+
+        if (!validarCodigoBarras(codigo_barras)) {
+            ultimo_numero++;
+            i--;
+            continue;
+        }
+
+        return codigo_barras;
+    }
+
+    return "";
+}
+
+int main() {
+    Inventario<Producto> inventario; 
+    
+    int opcion;
+    do {
+        cout << "Menu:" << endl;
+        cout << "1. Agregar producto" << endl;
+        cout << "2. Eliminar producto" << endl;
+        cout << "3. Buscar producto" << endl;
+        cout << "4. Listar productos" << endl;
+        cout << "5. Salir" << endl;
+
+        opcion = leerOpcion();
+
+        switch (opcion) {
+            case 1: {
+                string nombre;
+                float precio;
+                int tipo_producto;
+                cout << "Ingrese tipo de producto (1. Libro, 2. Electronico, 3. Ropa): ";
+                tipo_producto = leerOpcion();
+
+                string tipo_producto_str;
+                if (tipo_producto == 1) {
+                    tipo_producto_str = "Libro";
+                } else if (tipo_producto == 2) {
+                    tipo_producto_str = "Electronico";
+                } else if (tipo_producto == 3) {
+                    tipo_producto_str = "Ropa";
+                }
+
+                string codigo_barras = generarCodigoBarras(tipo_producto_str);
+
+                cout << "Ingrese nombre: ";
+                cin.ignore();
+                getline(cin, nombre);
+
+                cout << "Ingrese precio: ";
+                cin >> precio;
+
+                if (tipo_producto == 1) {
+                    string autor;
+                    int num_paginas;
+                    cout << "Ingrese autor: ";
+                    cin.ignore();
+                    getline(cin, autor);
+                    cout << "Ingrese numero de paginas: ";
+                    cin >> num_paginas;
+
+                    inventario.agregarProducto(new Libro(codigo_barras, nombre, precio, autor, num_paginas));
+                } else if (tipo_producto == 2) {
+                    string marca, modelo;
+                    cout << "Ingrese marca: ";
+                    cin.ignore();
+                    getline(cin, marca);
+                    cout << "Ingrese modelo: ";
+                    getline(cin, modelo);
+
+                    inventario.agregarProducto(new Electronico(codigo_barras, nombre, precio, marca, modelo));
+                } else if (tipo_producto == 3) {
+                    string talla, color;
+                    cout << "Ingrese talla: ";
+                    cin >> talla;
+                    cout <<"Ingrese color: ";
+                    cin.ignore();
+                    getline(cin, color);
+
+                    inventario.agregarProducto(new Ropa(codigo_barras, nombre, precio, talla, color));
+                }
+
+                break;
+            }
+            case 2: {
+                string codigo_barras;
+                cout << "Ingrese codigo de barras del producto a eliminar: ";
+                cin >> codigo_barras;
+                inventario.eliminarProducto(codigo_barras);
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  
+                cout << "Continuando con el código..." << endl;
+                break;
+            }
+            case 3: {
+                string codigo_barras;
+                cout << "Ingrese codigo de barras del producto a buscar: ";
+                cin >> codigo_barras;
+                inventario.buscarProducto(codigo_barras);
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  
+                cout << "Continuando con el código..." << endl;
+                break;
+            }
+            case 4:
+                inventario.listarProductos();
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  
+                cout << "Continuando con el código..." << endl;
+                break;
+            case 5:
+                break;
+            default:
+                cout << "Opcion invalida." << endl;
+                break;
+        }
+    } while (opcion!= 5);
+
+    return 0;
+}
