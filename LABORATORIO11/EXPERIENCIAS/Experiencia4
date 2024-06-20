@@ -1,0 +1,77 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+// Definir tus propias clases de excepción
+class PrecioNegativoException : public exception {
+public:
+    const char* what() const throw() {
+        return "El precio no puede ser negativo.";
+    }
+};
+
+class CodigoVacioException : public exception {
+public:
+    const char* what() const throw() {
+        return "El codigo no puede estar vacio.";
+    }
+};
+
+class ArchivoNoEncontradoException : public exception {
+public:
+    const char* what() const throw() {
+        return "Error al abrir el archivo de inventario.";
+    }
+};
+
+class Producto {
+private:
+    string nombre;
+    double precio;
+    string codigo;
+public:
+    Producto(string n, double p, string c) : nombre(n), precio(p), codigo(c) {
+        if (precio < 0) {
+            throw PrecioNegativoException();
+        }
+        if (codigo.empty()) {
+            throw CodigoVacioException();
+        }
+    }
+    // Métodos getter y setter
+};
+
+class GestorInventario {
+private:
+    Producto* productos[50];
+    int num_productos;
+public:
+    GestorInventario() : num_productos(0) {}
+    void agregarProducto(Producto* p) {
+        // Código para agregar el producto
+        ofstream Inventario;
+        Inventario.open("inventario.txt", ios::app);
+        if (!Inventario) {
+            throw ArchivoNoEncontradoException();
+        }
+        // Resto del código
+    }
+};
+
+int main() {
+    GestorInventario inv;
+    try {
+        inv.agregarProducto(new Producto("Laptop", 1500, "L001"));
+        inv.agregarProducto(new Producto("Smartphone", -800, "S002")); // Excepción PrecioNegativoException
+        inv.agregarProducto(new Producto("Tablet", 600, "")); // Excepción CodigoVacioException
+    } catch (const PrecioNegativoException& e) {
+        cerr << "Error: " << e.what() << endl;
+    } catch (const CodigoVacioException& e) {
+        cerr << "Error: " << e.what() << endl;
+    } catch (const ArchivoNoEncontradoException& e) {
+        cerr << "Error: " << e.what() << endl;
+    }
+
+    return 0;
+}
