@@ -1,0 +1,32 @@
+#include <iostream>
+#include <fstream> //Sirve para operar con el archivo
+#include <string>
+
+int main() {
+    std::string nombreArchivo;
+    std::ifstream archivo;
+
+    // Solicitar al usuario el nombre del archivo de texto
+    std::cout << "Ingrese el nombre del archivo de texto: ";
+    std::getline(std::cin, nombreArchivo);
+
+    // Intentar abrir el archivo
+    archivo.open(nombreArchivo);
+
+    // Verificar si el archivo se abrió correctamente
+    if (!archivo) {
+        std::cerr << "Error: No se pudo abrir el archivo \"" << nombreArchivo << "\". Verifique que el archivo exista y que el nombre sea correcto." << std::endl;
+        return 1;
+    }
+
+    // Leer y mostrar el contenido del archivo
+    std::string linea;
+    while (std::getline(archivo, linea)) {
+        std::cout << linea << std::endl;
+    }
+
+    // Cerrar el archivo
+    archivo.close();
+
+    return 0;
+}
