@@ -1,0 +1,84 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Producto {
+private:
+    string nombre;
+    double precio;
+    string codigo;
+public:
+    Producto(string n, double p, string c) : nombre(n), precio(p), codigo(c) {}
+    string getNombre() { return nombre; }
+    double getPrecio() { return precio; }
+    string getCodigo() { return codigo; }
+};
+
+class GestorInventario {
+private:
+    Producto* productos[50];
+    int num_productos;
+public:
+    GestorInventario() : num_productos(0) {}
+    void agregarProducto(Producto* p) {
+        bool existe = false;
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i]->getCodigo() == p->getCodigo()) {
+                existe = true;
+                break;
+            }
+        }
+        if (!existe) {
+            ofstream Inventario;
+            Inventario.open("inventario.txt", ios::app);
+            Inventario << p->getNombre() << "," << p->getPrecio() << "," << p->getCodigo() << endl;
+            Inventario.close();
+            productos[num_productos++] = p;
+            cout << "Producto agregado con exito." << endl;
+        } else {
+            cout << "El producto ya existe en el inventario." << endl;
+        }
+    }
+
+    Producto* buscarProducto(string codigo) {
+        ifstream indice("indice.txt");
+        string linea;
+        long posicion;
+        while (getline(indice, linea)) {
+            if (linea.substr(0, linea.find(',')) == codigo) {
+                posicion = stol(linea.substr(linea.find(',') + 1));
+                indice.close();
+                break;
+            }
+        }
+        indice.close();
+
+        ifstream archivo("inventario.txt", ios::in | ios::binary);
+        archivo.seekg(posicion, ios::beg);
+        string nombre, cod;
+        double precio;
+        getline(archivo, nombre, ',');
+        archivo >> precio >> cod;
+        archivo.close();
+
+        return new Producto(nombre, precio, cod);
+    }
+};
+
+int main() {
+    GestorInventario inv;
+    inv.agregarProducto(new Producto("Laptop", 1500, "L001"));
+    inv.agregarProducto(new Producto("Smartphone", 800, "S002"));
+    inv.agregarProducto(new Producto("Tablet", 600, "T003"));
+
+    Producto* producto = inv.buscarProducto("S002");
+    if (producto) {
+        cout << "Producto encontrado: " << producto->getNombre() << ", " << producto->getPrecio() << ", " << producto->getCodigo() << endl;
+        delete producto;
+    } else {
+        cout << "Producto no encontrado" << endl;
+    }
+
+    return 0;
+}
