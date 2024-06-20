@@ -17,12 +17,14 @@ public:
 
 class GestorInventario {
 private:
-    Producto* productos[50];
-    int num_productos;
+    Producto* productos[50];  // Array para almacenar productos (máximo 50)
+    int num_productos;  // Número actual de productos almacenados
 public:
-    GestorInventario() : num_productos(0) {}
+    GestorInventario() : num_productos(0) {}  // Constructor inicializa el número de productos a 0
+
     void agregarProducto(Producto* p) {
         bool existe = false;
+        // Verificar si el producto ya existe en el inventario
         for (int i = 0; i < num_productos; i++) {
             if (productos[i]->getCodigo() == p->getCodigo()) {
                 existe = true;
@@ -30,21 +32,24 @@ public:
             }
         }
         if (!existe) {
+            // Si el producto no existe, agregarlo al archivo "inventario.txt"
             ofstream Inventario;
-            Inventario.open("inventario.txt", ios::app);
-            Inventario << p->getNombre() << "," << p->getPrecio() << "," << p->getCodigo() << endl;
+            Inventario.open("inventario.txt", ios::app);  // Abrir en modo append
+            Inventario << p->getNombre() << "," << p->getPrecio() << "," << p->getCodigo() << endl;  // Guardar nombre, precio y código
             Inventario.close();
+            // Almacenar el producto en el array de productos y aumentar el contador
             productos[num_productos++] = p;
-            cout << "Producto agregado con exito." << endl;
+            cout << "Producto agregado con éxito." << endl;
         } else {
             cout << "El producto ya existe en el inventario." << endl;
         }
     }
 
     Producto* buscarProducto(string codigo) {
+        // Buscar el producto por su código en el archivo "indice.txt" para obtener la posición en "inventario.txt"
         ifstream indice("indice.txt");
         string linea;
-        long posicion;
+        long posicion = 0;
         while (getline(indice, linea)) {
             if (linea.substr(0, linea.find(',')) == codigo) {
                 posicion = stol(linea.substr(linea.find(',') + 1));
@@ -54,31 +59,36 @@ public:
         }
         indice.close();
 
+        // Abrir "inventario.txt" y leer el producto en la posición obtenida
         ifstream archivo("inventario.txt", ios::in | ios::binary);
         archivo.seekg(posicion, ios::beg);
         string nombre, cod;
         double precio;
-        getline(archivo, nombre, ',');
-        archivo >> precio >> cod;
+        getline(archivo, nombre, ',');  // Leer nombre
+        archivo >> precio >> cod;  // Leer precio y código
         archivo.close();
 
-        return new Producto(nombre, precio, cod);
+        return new Producto(nombre, precio, cod);  // Crear y devolver el producto encontrado
     }
 };
 
 int main() {
     GestorInventario inv;
+
+    // Agregar productos al inventario
     inv.agregarProducto(new Producto("Laptop", 1500, "L001"));
     inv.agregarProducto(new Producto("Smartphone", 800, "S002"));
     inv.agregarProducto(new Producto("Tablet", 600, "T003"));
 
+    // Buscar un producto por su código
     Producto* producto = inv.buscarProducto("S002");
     if (producto) {
         cout << "Producto encontrado: " << producto->getNombre() << ", " << producto->getPrecio() << ", " << producto->getCodigo() << endl;
-        delete producto;
+        delete producto;  // Liberar memoria del producto encontrado
     } else {
         cout << "Producto no encontrado" << endl;
     }
 
     return 0;
 }
+
