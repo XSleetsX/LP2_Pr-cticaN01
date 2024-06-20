@@ -1,0 +1,117 @@
+#include <iostream>
+using namespace std;
+
+class Producto{
+private:
+    string nombre;
+    double precio;
+    string codigo;
+public:
+    Producto(string n, double p, string c) : nombre(n), precio(p), codigo(c) {}
+    void setNombre(string n){
+        this -> nombre = n;
+    }
+    void setPrecio(double p){
+        this -> precio = p;
+    }
+    void setCodigo(string c){
+        this -> codigo = c;
+    }
+    string getNombre(){
+        return nombre;
+    }
+    double getPrecio(){
+        return precio;
+    }
+    string getCodigo(){
+        return codigo;
+    }
+};
+
+class GestorInventario{
+private:
+    Producto* productos[50];
+    int num_productos;
+public:
+    GestorInventario() : num_productos(0) {}
+    void agregarProducto(Producto* p){
+        bool existe = false;
+        for (int i = 0; i < num_productos; i++) {
+            if (productos[i] -> getCodigo() == p-> getCodigo()) {
+                existe = true;
+                break;
+            }
+        }
+        if (!existe) {
+            productos[num_productos++] = p;
+            cout << "Producto agregado con exito." << endl;
+        } else {
+            cout << "El producto ya existe en el inventario." << endl;  //Acá se puede agregar una excepción
+        }
+    }
+    void venderProducto(string c){
+        for (int i = 0; i < num_productos; i++){
+            if (productos[i] -> getCodigo() == c){
+                delete productos[i];
+                for (int j = i; j < num_productos - 1; j++) {
+                    productos[j] = productos[j + 1];
+                }
+                num_productos--;
+                cout << "Se vendio el producto." << endl;
+                return;
+            }
+        }
+        cout << "El producto no existe" << endl;  //Acá se puede poner una excepción
+    }
+    void generarInforme(){
+        cout << "Cantidad de productos en el inventario: " << num_productos << endl;
+        for (int i = 0; i < num_productos; i++){
+            cout << productos[i] -> getNombre() << ", " << productos[i] -> getPrecio() << ", " << productos[i] -> getCodigo() << endl;
+        }
+    }
+};
+
+int main(){
+    int opc;
+    GestorInventario inv;
+    cout << "Menú-Inventario" << endl;
+    cout << "1. Agregar producto" << endl;
+    cout << "2. Vender producto" << endl;
+    cout << "3. Generar informe" << endl;
+    cout << "4. Salir" << endl;
+    cin >> opc;
+    switch (opc){
+        case 1:{
+            int cant;
+            string nombre, codigo;
+            double precio;
+            cout << "Ingrese la cantidad de productos para agregar: ";
+            cin >> cant;
+            for (int i = 0; i < cant; i++){
+                cout << "Ingrese el nombre: ";
+                cin >> nombre;
+                cout << "Ingrese el precio: ";
+                cin >> precio;
+                cout << "Ingrese el codigo: ";
+                cin >> codigo;
+                inv.agregarProducto(new Producto(nombre, precio, codigo));
+            }
+            break;
+        }
+        case 2:{
+            string codigo;
+            cout << "Ingrese el código: ";
+            cin >> codigo;
+            inv.venderProducto(codigo);
+            break;
+        }
+        case 3:{
+            inv.generarInforme();
+            break;
+        }
+        case 4:{
+            break;
+        }
+    }
+    return 0;
+}
