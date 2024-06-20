@@ -7,7 +7,7 @@ using namespace std;
 // Clase base Producto
 class Producto {
 protected:
-    string codigo_barras; // Código de barras del producto
+    string codigo_barras; // Codigo de barras del producto
     string nombre; // Nombre del producto
     float precio; // Precio del producto
 
@@ -253,7 +253,7 @@ public:
     }
 
 
-    // Método para verificar si un código de barras ya existe en el inventario
+    // Método para verificar si un codigo de barras ya existe en el inventario
     bool existeCodigoBarras(const string& codigo) const {
         for (int i = 0; i < num_productos; i++) {
             if (productos[i]->get_codigo_barras() == codigo) {
@@ -285,7 +285,7 @@ public:
     }
 };
 
-// Función para validar el código de barras
+// Función para validar el codigo de barras
 bool validarCodigoBarras(string codigo_barras) {
     if (codigo_barras.length() != 6) {
         cout << "Error: El codigo de barras debe tener 6 caracteres." << endl;
@@ -339,12 +339,12 @@ int main() {
                 cout << "Ingrese codigo de barras: ";
                 cin >> codigo_barras;
 
-                // Validar el código de barras
+                // Validar el codigo de barras
                 if (!validarCodigoBarras(codigo_barras)) {
                     break;
                 }
 
-                // Verificar si el código de barras ya existe
+                // Verificar si el codigo de barras ya existe
                 if (inventario.existeCodigoBarras(codigo_barras)) {
                     cout << "Error: El codigo de barras ya existe." << endl;
                     break;
@@ -394,6 +394,10 @@ int main() {
                         } while (num_paginas < 0);
 
                         inventario.agregarProducto(new Libro(codigo_barras, nombre, precio, autor, num_paginas));
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el codigo..." << endl;
                         break;
                     }
                     case 2: {
@@ -408,10 +412,18 @@ int main() {
                         // Verificar si el modelo ya existe
                         if (inventario.existeModelo(modelo)) {
                             cout << "Error: El modelo ya existe." << endl;
+                            cout << "Presiona Enter para continuar...";
+                            cin.ignore();
+                            cin.get();  // Espera a que el usuario presione Enter
+                            cout << "Continuando con el codigo..." << endl;
                             break;
                         }
 
                         inventario.agregarProducto(new Electronico(codigo_barras, nombre, precio, marca, modelo));
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el codigo..." << endl;
                         break;
                     }
                     case 3: {
@@ -431,10 +443,18 @@ int main() {
                         cin.ignore();
                         getline(cin, color);
                         inventario.agregarProducto(new Ropa(codigo_barras, nombre, precio, talla, color));
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el codigo..." << endl;
                         break;
                     }
                     default:
                         cout << "Opcion invalida." << endl;
+                        cout << "Presiona Enter para continuar...";
+                        cin.ignore();
+                        cin.get();  // Espera a que el usuario presione Enter
+                        cout << "Continuando con el codigo..." << endl;
                         break;
                 }
 
@@ -446,6 +466,10 @@ int main() {
                 cout << "Ingrese codigo de barras del producto a eliminar: ";
                 cin >> codigo_barras;
                 inventario.eliminarProducto(codigo_barras);
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el codigo..." << endl;
                 break;
             }
             case 3: {
@@ -454,19 +478,35 @@ int main() {
                 cout << "Ingrese codigo de barras del producto a buscar: ";
                 cin >> codigo_barras;
                 inventario.buscarProducto(codigo_barras);
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el codigo..." << endl;
                 break;
             }
             case 4:
                 // Listar todos los productos
                 inventario.listarProductos();
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el codigo..." << endl;
                 break;
             case 5:
                 // Guardar inventario en archivo
                 inventario.guardarInventario();
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el codigo..." << endl;
                 break;
             case 6:
                 // Cargar inventario desde archivo
                 inventario.cargarInventario();
+                cout << "Presiona Enter para continuar...";
+                cin.ignore();
+                cin.get();  // Espera a que el usuario presione Enter
+                cout << "Continuando con el codigo..." << endl;
                 break;
             case 7:
                 // Salir del programa
@@ -480,4 +520,3 @@ int main() {
 
     return 0;
 }
-
