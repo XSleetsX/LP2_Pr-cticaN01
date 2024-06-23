@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector> // Incluye el header para std::vector
 
 using namespace std;
 
@@ -115,7 +116,7 @@ public:
 template <typename T>
 class Inventario {
 private:
-    T* productos[100]; // Array para almacenar punteros a productos
+    vector<T*> productos; // Vector para almacenar punteros a productos
     int num_productos; // Número de productos en el inventario
 
 public:
@@ -124,134 +125,143 @@ public:
 
     // Método para agregar un producto al inventario
     void agregarProducto(T* producto) {
-        bool existe = false;
-        // Verificar si el producto ya existe en el inventario
-        for (int i = 0; i < num_productos; i++) {
-            if (productos[i]->get_codigo_barras() == producto->get_codigo_barras()) {
-                existe = true;
-                break;
+        try {
+            bool existe = false;
+            // Verificar si el producto ya existe en el inventario
+            for (int i = 0; i < num_productos; i++) {
+                if (productos[i]->get_codigo_barras() == producto->get_codigo_barras()) {
+                    existe = true;
+                    break;
+                }
             }
-        }
-        // Si el producto no existe, agregarlo al inventario
-        if (!existe) {
-            productos[num_productos++] = producto;
-            cout << "Producto agregado con exito." << endl;
-        } else {
-            cout << "El producto ya existe en el inventario." << endl;
+            // Si el producto no existe, agregarlo al inventario
+            if (!existe) {
+                productos.push_back(producto);
+                num_productos++;
+                cout << "Producto agregado con exito." << endl;
+            } else {
+                throw runtime_error("Error: El producto ya existe en el inventario.");
+            }
+        } catch (const exception& e) {
+            cerr << e.what() << endl;
         }
     }
 
     // Método para eliminar un producto del inventario
     void eliminarProducto(string codigo_barras) {
-        for (int i = 0; i < num_productos; i++) {
-            if (productos[i]->get_codigo_barras() == codigo_barras) {
-                delete productos[i];
-                // Desplazar los productos para llenar el hueco dejado por el producto eliminado
-                for (int j = i; j < num_productos - 1; j++) {
-                    productos[j] = productos[j + 1];
+        try {
+            for (int i = 0; i < num_productos; i++) {
+                if (productos[i]->get_codigo_barras() == codigo_barras) {
+                    delete productos[i];
+                    productos.erase(productos.begin() + i);
+                    num_productos--;
+                    cout << "Producto eliminado con exito." << endl;
+                    return;
                 }
-                num_productos--;
-                cout << "Producto eliminado con exito." << endl;
-                return;
             }
+            throw runtime_error("Error: El producto no existe en el inventario.");
+        } catch (const exception& e) {
+            cerr << e.what() << endl;
         }
-        cout << "El producto no existe en el inventario." << endl;
     }
 
     // Método para buscar un producto en el inventario
     void buscarProducto(string codigo_barras) const {
-        for (int i = 0; i < num_productos; i++) {
-            if (productos[i]->get_codigo_barras() == codigo_barras) {
-                productos[i]->mostrarDetalles();
-                return;
+        try {
+            for (int i = 0; i < num_productos; i++) {
+                if (productos[i]->get_codigo_barras() == codigo_barras) {
+                    productos[i]->mostrarDetalles();
+                    return;
+                }
             }
+            throw runtime_error("Error: El producto no existe en el inventario.");
+        } catch (const exception& e) {
+            cerr << e.what() << endl;
         }
-        cout << "El producto no existe en el inventario." << endl;
     }
 
     // Método para listar todos los productos en el inventario
     void listarProductos() const {
-        for (int i = 0; i < num_productos; i++) {
-            productos[i]->mostrarDetalles();
+        try {
+            if (num_productos == 0) {
+                throw runtime_error("Error: No hay productos en el inventario.");
+            }
+            for (int i = 0; i < num_productos; i++) {
+                productos[i]->mostrarDetalles();
+            }
+        } catch (const exception& e) {
+            cerr << e.what() << endl;
         }
     }
 
     // Método para guardar el inventario en un archivo de texto
-    void cargarInventario() {
-        ifstream archivo("reportes.txt");
-        if (archivo.is_open()) {
-            try {
-                string tipo;
-                while (archivo >> tipo) {
-                    string codigo_barras, nombre;
-                    float precio;
-
-                    archivo >> codigo_barras >> nombre >> precio;
-
-                    if (archivo.fail()) {
-                        throw runtime_error("Error: Formato incorrecto al leer datos del archivo.");
-                    }
-
-                    if (tipo == "Libro") {
-                        string autor;
-                        int num_paginas;
-                        archivo >> autor >> num_paginas;
-                        if (archivo.fail()) {
-                            throw runtime_error("Error: Formato incorrecto para datos de Libro.");
-                        }
-                        agregarProducto(new Libro(codigo_barras, nombre, precio, autor, num_paginas));
-                    } else if (tipo == "Electronico") {
-                        string marca, modelo;
-                        archivo >> marca >> modelo;
-                        if (archivo.fail()) {
-                            throw runtime_error("Error: Formato incorrecto para datos de Electronico.");
-                        }
-                        agregarProducto(new Electronico(codigo_barras, nombre, precio, marca, modelo));
-                    } else if (tipo == "Ropa") {
-                        string talla, color;
-                        archivo >> talla >> color;
-                        if (archivo.fail()) {
-                            throw runtime_error("Error: Formato incorrecto para datos de Ropa.");
-                        }
-                        agregarProducto(new Ropa(codigo_barras, nombre, precio, talla, color));
-                    } else {
-                        throw runtime_error("Error: Tipo de producto desconocido en el archivo.");
-                    }
-                }
-                archivo.close();
-                cout << "Inventario cargado exitosamente desde reportes.txt." << endl;
-            } catch (const exception& e) {
-                cerr << e.what() << endl;
-                archivo.close();
+    void guardarInventario() const {
+        try {
+            ofstream archivo("reportes.txt");
+            if (!archivo.is_open()) {
+                throw runtime_error("Error: No se pudo abrir el archivo reportes.txt para guardar el inventario.");
             }
-        } else {
-            cout << "No se pudo abrir el archivo reportes.txt para cargar el inventario." << endl;
+            for (int i = 0; i < num_productos; i++) {
+                archivo << productos[i]->serializar() << endl;
+            }
+            archivo.close();
+            cout << "Inventario guardado exitosamente en reportes.txt." << endl;
+        } catch (const exception& e) {
+            cerr << e.what() << endl;
         }
     }
-
 
     // Método para cargar el inventario desde un archivo de texto
-    void guardarInventario() const {
-        ofstream archivo("reportes.txt");
-        if (archivo.is_open()) {
-            try {
-                for (int i = 0; i < num_productos; i++) {
-                    archivo << productos[i]->serializar() << endl;
-                    if (archivo.fail()) {
-                        throw runtime_error("Error: Fallo al escribir en el archivo.");
-                    }
-                }
-                archivo.close();
-                cout << "Inventario guardado exitosamente en reportes.txt." << endl;
-            } catch (const exception& e) {
-                cerr << e.what() << endl;
-                archivo.close();
+    void cargarInventario() {
+        try {
+            ifstream archivo("reportes.txt");
+            if (!archivo.is_open()) {
+                throw runtime_error("Error: No se pudo abrir el archivo reportes.txt para cargar el inventario.");
             }
-        } else {
-            cout << "No se pudo abrir el archivo reportes.txt para guardar el inventario." << endl;
+            string tipo;
+            while (archivo >> tipo) {
+                string codigo_barras, nombre;
+                float precio;
+
+                archivo >> codigo_barras >> nombre >> precio;
+
+                if (archivo.fail()) {
+                    throw runtime_error("Error: Formato incorrecto al leer datos del archivo.");
+                }
+
+                if (tipo == "Libro") {
+                    string autor;
+                    int num_paginas;
+                    archivo >> autor >> num_paginas;
+                    if (archivo.fail()) {
+                        throw runtime_error("Error: Formato incorrecto para datos de Libro.");
+                    }
+                    agregarProducto(new Libro(codigo_barras, nombre, precio, autor, num_paginas));
+                } else if (tipo == "Electronico") {
+                    string marca, modelo;
+                    archivo >> marca >> modelo;
+                    if (archivo.fail()) {
+                        throw runtime_error("Error: Formato incorrecto para datos de Electronico.");
+                    }
+                    agregarProducto(new Electronico(codigo_barras, nombre, precio, marca, modelo));
+                } else if (tipo == "Ropa") {
+                    string talla, color;
+                    archivo >> talla >> color;
+                    if (archivo.fail()) {
+                        throw runtime_error("Error: Formato incorrecto para datos de Ropa.");
+                    }
+                    agregarProducto(new Ropa(codigo_barras, nombre, precio, talla, color));
+                } else {
+                    throw runtime_error("Error: Tipo de producto desconocido.");
+                }
+            }
+            archivo.close();
+            cout << "Inventario cargado exitosamente desde reportes.txt." << endl;
+        } catch (const exception& e) {
+            cerr << e.what() << endl;
         }
     }
-
+};
 
     // Método para verificar si un codigo de barras ya existe en el inventario
     bool existeCodigoBarras(const string& codigo) const {
