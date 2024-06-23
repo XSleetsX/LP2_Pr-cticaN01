@@ -116,13 +116,14 @@ public:
 template <typename T>
 class Inventario {
 private:
+    //T* productos[100]; // Array para almacenar punteros a productos
     vector<T*> productos; // Vector para almacenar punteros a productos
     int num_productos; // Número de productos en el inventario
 
 public:
     // Constructor de Inventario que inicializa el numero de productos
     Inventario() : num_productos(0) {}
-
+    
     // Método para agregar un producto al inventario
     void agregarProducto(T* producto) {
         try {
@@ -136,6 +137,7 @@ public:
             }
             // Si el producto no existe, agregarlo al inventario
             if (!existe) {
+                //productos[num_productos++] = producto;
                 productos.push_back(producto);
                 num_productos++;
                 cout << "Producto agregado con exito." << endl;
@@ -152,6 +154,10 @@ public:
         try {
             for (int i = 0; i < num_productos; i++) {
                 if (productos[i]->get_codigo_barras() == codigo_barras) {
+                    // Desplazar los productos para llenar el hueco dejado por el producto eliminado
+                    //for (int j = i; j < num_productos - 1; j++) {
+                    //    productos[j] = productos[j + 1];
+                    //}
                     delete productos[i];
                     productos.erase(productos.begin() + i);
                     num_productos--;
@@ -261,7 +267,7 @@ public:
             cerr << e.what() << endl;
         }
     }
-};
+
 
     // Método para verificar si un codigo de barras ya existe en el inventario
     bool existeCodigoBarras(const string& codigo) const {
@@ -293,6 +299,7 @@ public:
         }
         return false;
     }
+    
 };
 
 // Función para validar el codigo de barras
