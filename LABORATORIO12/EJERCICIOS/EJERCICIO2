@@ -1,59 +1,39 @@
 #include <iostream>
-#include <string>
-#include <cereal/archives/binary.hpp>
-#include <cereal/types/string.hpp>
+#include <stdexcept>
 
-class Persona {
-private:
-    std::string nombre;
-    int edad;
-    std::string direccion;
-
-public:
-    // Constructor
-    Persona(const std::string& nombre, int edad, const std::string& direccion)
-        : nombre(nombre), edad(edad), direccion(direccion) {}
-
-    // Métodos para establecer y obtener los valores de los atributos
-    void setNombre(const std::string& nombre) { this->nombre = nombre; }
-    void setEdad(int edad) { this->edad = edad; }
-    void setDireccion(const std::string& direccion) { this->direccion = direccion; }
-
-    std::string getNombre() const { return nombre; }
-    int getEdad() const { return edad; }
-    std::string getDireccion() const { return direccion; }
-
-    // Serialización y deserialización con Cereal
-    template <class Archive>
-    void serialize(Archive& archive) {
-        archive(nombre, edad, direccion);
+// Función que divide dos números enteros
+Int divide(int numerator, int denominator) {
+    If (denominator == 0) {
+        Throw std::runtime_error(“Error: No se puede dividir por cero”);
     }
-};
-
-int main() {
-    // Crear un objeto Persona
-    Persona persona("Juan Pérez", 30, "Calle Falsa 123");
-
-    // Serializar el objeto en un archivo binario
-    {
-        std::ofstream file("persona.bin", std::ios::binary);
-        cereal::BinaryOutputArchive archive(file);
-        archive(persona);
-    }
-
-    // Deserializar el objeto desde el archivo
-    Persona personaDesserializada;
-    {
-        std::ifstream file("persona.bin", std::ios::binary);
-        cereal::BinaryInputArchive archive(file);
-        archive(personaDesserializada);
-    }
-
-    // Mostrar los atributos de la persona deserializada
-    std::cout << "Nombre: " << personaDesserializada.getNombre() << std::endl;
-    std::cout << "Edad: " << personaDesserializada.getEdad() << std::endl;
-    std::cout << "Dirección: " << personaDesserializada.getDireccion() << std::endl;
-
-    return 0;
+    Return numerator / denominator;
 }
+Int main() {
+    Int num1, num2;
+    
+    // Solicitar al usuario que ingrese dos números
+    Std::cout << “Ingrese el numerador: “;
+    Std::cin >> num1;
+    Std::cout << “Ingrese el denominador: “;
+    Std::cin >> num2;
+
+    Try {
+        // Intentar dividir los números
+        Int result = divide(num1, num2);
+        Std::cout << “El resultado de la división es: “ << result << std::endl;
+    } catch (const std::runtime_error& e) {
+        // Manejar la excepción si ocurre
+        Std::cerr << e.what() << std::endl;
+    }
+    // Ejemplos adicionales para probar la función con otros valores
+    Try {
+        Std::cout << “10 / 2 = “ << divide(10, 2) << std::endl;
+        Std::cout << “15 / 0 = “ << divide(15, 0) << std::endl; // Esto generará una excepción
+    } catch (const std::runtime_error& e) {
+        Std::cerr << e.what() << std::endl;
+    }
+
+    Return 0;
+}
+
 
