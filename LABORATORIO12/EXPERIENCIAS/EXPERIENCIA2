@@ -1,0 +1,60 @@
+#include <iostream>
+#include <list>
+#include <algorithm>
+using namespace std;
+
+//Definir la función que ayudará al algoritmo tranformar
+string mayuscula(string p){
+    for (int i = 0; i < p.length(); i++){
+        p[i] = toupper(p[i]);
+    }
+    return p;
+}
+
+int main(){
+    //Declaración de variables para todas las operaciones a realizar
+    string p;
+    int cant, cont1 = 0;
+    //Declaración de la lista tipo string
+    list<string> palabras;
+    
+    //Operación para llenar la lista creada
+    cout << "1. Leer una secuencia de palabras ingresadas por el usuario y almacenarlas en un contenedor list." << endl;
+    cout << "Cuantos palabras desea ingresar: ";
+    cin >> cant;
+    while (cont1 < cant){
+        cout << "Ingrese una palabra: ";
+        cin >> p;
+        palabras.push_back(p);
+        cont1 += 1;
+    }
+    
+    //Usando el algoritmo sort() para ordenar la lista en orde alfabético
+    cout << "\n2. Utiliza el algoritmo sort para ordenar las palabras en orden alfabetico." << endl;
+    palabras.sort();
+    cout << "La lista ordenada: ";
+    for (const auto& pal : palabras){
+        cout << pal << " ";
+    }
+    
+    //Usando el algoritmo count para contar la palabra seleccionada por el usuario
+    cout << "\n \n3. Utilizar el algoritmo count para contar cuantas veces aparece una palabra especifica en la lista." << endl;
+    cout << "La lista actual es: ";
+    for (const auto& pal : palabras){
+        cout << pal << " ";
+    }
+    cout << "\nIngrese una palabra a contar: ";
+    cin >> p;
+    cout << "Se encontraron " << count(palabras.begin(), palabras.end(), p) << " palabras con el nombre " << p << endl;
+
+    //Usando el algoritmo transformar para convertir las minúsculas a mayúsculas
+    cout << "\n4. Utilizar el algoritmo transform para convertir todas las palabras a mayusculas." << endl;  
+    transform(palabras.begin(), palabras.end(), palabras.begin(), [] (string x) { return mayuscula(x); });
+
+    //Mostrar la lista con un for después de los cambios
+    cout << "\n5. Mostrar la lista resultante despues de aplicar los algoritmos." << endl;
+    for (const auto& pal : palabras){
+        cout << pal << " ";
+    }
+    return 0;
+}
