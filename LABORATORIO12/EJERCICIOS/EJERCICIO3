@@ -1,1 +1,59 @@
+#include <iostream>
+#include <string>
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/string.hpp>
+
+class Persona {
+private:
+    std::string nombre;
+    int edad;
+    std::string direccion;
+
+public:
+    // Constructor
+    Persona(const std::string& nombre, int edad, const std::string& direccion)
+        : nombre(nombre), edad(edad), direccion(direccion) {}
+
+    // Métodos para establecer y obtener los valores de los atributos
+    void setNombre(const std::string& nombre) { this->nombre = nombre; }
+    void setEdad(int edad) { this->edad = edad; }
+    void setDireccion(const std::string& direccion) { this->direccion = direccion; }
+
+    std::string getNombre() const { return nombre; }
+    int getEdad() const { return edad; }
+    std::string getDireccion() const { return direccion; }
+
+    // Serialización y deserialización con Cereal
+    template <class Archive>
+    void serialize(Archive& archive) {
+        archive(nombre, edad, direccion);
+    }
+};
+
+int main() {
+    // Crear un objeto Persona
+    Persona persona("Juan Pérez", 30, "Calle Falsa 123");
+
+    // Serializar el objeto en un archivo binario
+    {
+        std::ofstream file("persona.bin", std::ios::binary);
+        cereal::BinaryOutputArchive archive(file);
+        archive(persona);
+    }
+
+    // Deserializar el objeto desde el archivo
+    Persona personaDesserializada;
+    {
+        std::ifstream file("persona.bin", std::ios::binary);
+        cereal::BinaryInputArchive archive(file);
+        archive(personaDesserializada);
+    }
+
+    // Mostrar los atributos de la persona deserializada
+    std::cout << "Nombre: " << personaDesserializada.getNombre() << std::endl;
+    std::cout << "Edad: " << personaDesserializada.getEdad() << std::endl;
+    std::cout << "Dirección: " << personaDesserializada.getDireccion() << std::endl;
+
+    return 0;
+}
 
