@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    //Declaración de variables para todas las operaciones a realizar
+    int suma = 0, cont1 = 0, cont2 = 0, mayor, menor, n, cant, temp;
+    //Declaración del vector tipo int
+    vector<int> numeros;
+    
+    //Operación para llenar el vector creado
+    cout << "Cuantos numeros desea ingresar: ";
+    cin >> cant;
+    while (cont1 < cant){
+        cout << "Ingrese un numero: ";
+        cin >> n;
+        numeros.push_back(n);
+        cont1 += 1;
+    }
+    
+    //Bucle for + acumulador para sumar todos los valores del vector
+    cout << "1. Calcular la suma de todos los numeros en el vector." << endl;
+    for (const auto& num : numeros){
+        suma = suma + num;
+    }
+    cout << "La suma de los numeros es: " << suma << endl;
+
+    //Bucle for + algoritmo para determinar mayor y menor
+    cout << "2. Encontrar el numero maximo y minimo de la lista." << endl;
+    for (const auto& num: numeros){
+        if (cont2 == 0){
+            mayor = num;
+            menor = num;
+            cont2 += 1;
+        } else {
+            if (num >= mayor){
+                mayor = num;
+            } else{
+                if(num<=menor){
+                    menor = num;
+                }
+                
+            }
+        }
+    }
+    cout << "El numero mayor es " << mayor << " y el menor es " << menor << endl;
+    
+    //Ordenamiento burbuja de los elementos del vector
+    cout << "3. Ordenar los numeros de forma ascendente." << endl;
+    for (int i = 0; i < cant - 1; i++){
+        for (int j = i + 1; j < cant; j++){
+            if (numeros[i] > numeros[j]){
+                temp = numeros[i];
+                numeros[i] = numeros[j];
+                numeros[j] = temp;
+            }
+        }
+    }
+    cout << "La lista ordenada: ";
+    for (const auto& num : numeros){
+        cout << num << " ";
+    }
+
+    //Bucle for + conficional if para filtrar números pares
+    cout << "\n4. Eliminar los numeros pares del contenedor." << endl;
+    for (int i = cant - 1; i >= 0; i--){
+        if (numeros[i] % 2 == 0){
+            numeros.erase(numeros.begin() + i);
+        }
+    }
+    cout << "La nueva lista: ";
+    for (const auto& num : numeros){
+        cout << num << " ";
+    }
+    return 0;
+}
