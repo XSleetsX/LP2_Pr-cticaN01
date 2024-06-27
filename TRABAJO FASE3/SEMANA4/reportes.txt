@@ -1,0 +1,4 @@
+Electronico ELE001 Celular 666.000000 Aiphone ltra
+Electronico ELE002 Smarthphone 789.000000 Chamsung 4Promax
+Libro LIB001 Huasipungo 15.000000 JorgeIcaza 45
+Libro LIB002 MioCid 15.000000 Anonimo 78
