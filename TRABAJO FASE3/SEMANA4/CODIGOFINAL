@@ -424,6 +424,7 @@ int main() {
                         cin.ignore();
                         getline(cin, marca);
                         cout << "Ingrese modelo: ";
+                        cin.ignore();
                         getline(cin, modelo);
 
                         // Verificar si el modelo ya existe
